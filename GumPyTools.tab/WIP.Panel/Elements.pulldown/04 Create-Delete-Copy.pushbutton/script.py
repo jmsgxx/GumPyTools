@@ -113,11 +113,11 @@ with Transaction(doc, __title__) as t:
 	bool structural
 
     """
-    pt_start    = XYZ(80, 0, 0)
-    pt_end      = XYZ(80, 20, 0)
-    curve       = Line.CreateBound(pt_start, pt_end)
+    # pt_start    = XYZ(80, 0, 0)
+    # pt_end      = XYZ(80, 20, 0)
+    # curve       = Line.CreateBound(pt_start, pt_end)
 
-    Wall.Create(doc, curve, active_level.Id, False)
+    # Wall.Create(doc, curve, active_level.Id, False)
 
     # ======================================================================================================================
     # ╦ ╦╦╔╗╔╔╦╗╔═╗╦ ╦╔═╗
