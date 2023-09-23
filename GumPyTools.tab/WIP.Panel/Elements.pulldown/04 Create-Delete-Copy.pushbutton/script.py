@@ -14,6 +14,7 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.DB.Structure import StructuralType
 
 import clr
 clr.AddReference("System")
@@ -124,8 +125,24 @@ with Transaction(doc, __title__) as t:
     # ║║║║║║║ ║║║ ║║║║╚═╗
     # ╚╩╝╩╝╚╝═╩╝╚═╝╚╩╝╚═╝WINDOWS
     # ======================================================================================================================
+    host_wall = doc.GetElement(ElementId(309833))
+    pt_start    = XYZ(80, 0, 0)
+    pt_end      = XYZ(80, 20, 0)
 
+    pt_mid = (pt_start + pt_end) / 2
+    window_type = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows)\
+                                                                .WhereElementIsElementType()\
+                                                                    .FirstElement()
 
+    """
+    public FamilyInstance NewFamilyInstance(
+	XYZ location,
+	FamilySymbol symbol,
+	Element host,
+	StructuralType structuralType
+
+    """
+    window = doc.Create.NewFamilyInstance(pt_mid, window_type, host_wall, StructuralType.NonStructural)
 
 
 
