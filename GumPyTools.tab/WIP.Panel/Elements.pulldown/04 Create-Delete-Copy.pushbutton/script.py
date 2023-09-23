@@ -125,14 +125,14 @@ with Transaction(doc, __title__) as t:
     # ║║║║║║║ ║║║ ║║║║╚═╗
     # ╚╩╝╩╝╚╝═╩╝╚═╝╚╩╝╚═╝WINDOWS
     # ======================================================================================================================
-    host_wall = doc.GetElement(ElementId(309833))
-    pt_start    = XYZ(80, 0, 0)
-    pt_end      = XYZ(80, 20, 0)
+    # host_wall = doc.GetElement(ElementId(309833))
+    # pt_start    = XYZ(80, 0, 0)
+    # pt_end      = XYZ(80, 20, 0)
 
-    pt_mid = (pt_start + pt_end) / 2
-    window_type = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows)\
-                                                                .WhereElementIsElementType()\
-                                                                    .FirstElement()
+    # pt_mid = (pt_start + pt_end) / 2
+    # window_type = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Windows)\
+    #                                                             .WhereElementIsElementType()\
+    #                                                                 .FirstElement()
 
     """
     public FamilyInstance NewFamilyInstance(
@@ -142,28 +142,115 @@ with Transaction(doc, __title__) as t:
 	StructuralType structuralType
 
     """
-    window = doc.Create.NewFamilyInstance(pt_mid, window_type, host_wall, StructuralType.NonStructural)
+    # window = doc.Create.NewFamilyInstance(pt_mid, window_type, host_wall, StructuralType.NonStructural)
+
+    # =======================================================================================================================
+    # ╔═╗╔═╗╔╦╗╦╦ ╦ ╦  ╦╔╗╔╔═╗╔╦╗╔═╗╔╗╔╔═╗╔═╗
+    # ╠╣ ╠═╣║║║║║ ╚╦╝  ║║║║╚═╗ ║ ╠═╣║║║║  ║╣ 
+    # ╚  ╩ ╩╩ ╩╩╩═╝╩   ╩╝╚╝╚═╝ ╩ ╩ ╩╝╚╝╚═╝╚═╝
+    # =======================================================================================================================
+    """
+    public FamilyInstance NewFamilyInstance(
+	XYZ location,
+	FamilySymbol symbol,
+	StructuralType structuralType
 
 
+    """
+    # def get_type_by_name(type_name):
+    #     """Extra Function to get Family Type by name."""
+    #     # CREATE RULE
+    #     param_type = ElementId(BuiltInParameter.ALL_MODEL_TYPE_NAME)
+    #     f_param    = ParameterValueProvider(param_type)
+    #     evaluator  = FilterStringEquals()
+    #     f_rule     = FilterStringRule(f_param, evaluator, type_name, True) # Revit 2023 does not need last argument!
+    
+    #     # CREATE FILTER
+    #     filter_type_name = ElementParameterFilter(f_rule)
+    
+    #     # GET ELEMENTS
+    #     return FilteredElementCollector(doc).WherePasses(filter_type_name).WhereElementIsElementType().FirstElement()
 
-# ╔═╗╦ ╦╔═╗╔═╗╔╦╗╔═╗
-# ╚═╗╠═╣║╣ ║╣  ║ ╚═╗
-# ╚═╝╩ ╩╚═╝╚═╝ ╩ ╚═╝#sheets
+    # pt    = XYZ(100, 20, 0)
+    # symbol = get_type_by_name("Placeholder B")
+
+    # doc.Create.NewFamilyInstance(pt, symbol, StructuralType.NonStructural)
 
 
+    # ============================================================================================================================
+    # ╔═╗╦ ╦╔═╗╔═╗╔╦╗╔═╗
+    # ╚═╗╠═╣║╣ ║╣  ║ ╚═╗
+    # ╚═╝╩ ╩╚═╝╚═╝ ╩ ╚═╝#sheets
+    # ============================================================================================================================
+    """"
+    public static ViewSheet Create(
+	Document document,
+	ElementId titleBlockTypeId
+    """
+    # tblock_id = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks) \
+    #                                          .WhereElementIsElementType().FirstElementId()
+    
+    # new_sheet = ViewSheet.Create(doc, tblock_id)
+    # new_sheet.SheetNumber   = "Random Number"
+    # new_sheet.Name          = "Random Name"
 
-# ╦  ╦╦╔═╗╦ ╦╔═╗
-# ╚╗╔╝║║╣ ║║║╚═╗
-#  ╚╝ ╩╚═╝╚╩╝╚═╝#views
+    # =============================================================================================================================
+    # ╦  ╦╦╔═╗╦ ╦╔═╗
+    # ╚╗╔╝║║╣ ║║║╚═╗
+    #  ╚╝ ╩╚═╝╚╩╝╚═╝#views
+    # =============================================================================================================================
+
+    """
+    public static View3D CreateIsometric(
+	Document document,
+	ElementId viewFamilyTypeId
+    """
+    # all_view_types = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()
+
+    # view_type = [vt for vt in all_view_types if vt.ViewFamily == ViewFamily.ThreeDimensional][0]
+    # print(view_type)
+
+    # view_3d = View3D.CreateIsometric(doc, view_type.Id)
 
 
+    # ==============================================================================================================================
+    # ╦═╗╔═╗╔═╗╦╔═╗╔╗╔
+    # ╠╦╝║╣ ║ ╦║║ ║║║║
+    # ╩╚═╚═╝╚═╝╩╚═╝╝╚╝#region
+    # ===============================================================================================================================
+    """"
+    public static FilledRegion Create(
+	Document document,
+	ElementId typeId,
+	ElementId viewId,
+	IList<CurveLoop> boundaries
+    """
+    type_id = doc.GetDefaultElementTypeId(ElementTypeGroup.FilledRegionType)
+    
+    #GET POINTS
+    pt_0 = XYZ(120, 0, 0)
+    pt_1 = XYZ(140, 0, 0)
+    pt_2 = XYZ(140, 20, 0)
+    pt_3 = XYZ(120, 20, 0)
+	
+    # CONVERT POINTS INTO LINES
+    l_0 = Line.CreateBound(pt_0, pt_1)
+    l_1 = Line.CreateBound(pt_1, pt_2)
+    l_2 = Line.CreateBound(pt_2, pt_3)
+    l_3 = Line.CreateBound(pt_3, pt_0)
 
+    # GROUP THE LINES AS BOUNDARIES
+    boundary = CurveLoop()
+    boundary.Append(l_0)
+    boundary.Append(l_1)
+    boundary.Append(l_2)
+    boundary.Append(l_3)
 
-# ╦═╗╔═╗╔═╗╦╔═╗╔╗╔
-# ╠╦╝║╣ ║ ╦║║ ║║║║
-# ╩╚═╚═╝╚═╝╩╚═╝╝╚╝#region
+    # LIST OF BOUNDARIES
+    list_boundaries = List[CurveLoop]()
+    list_boundaries.Add(boundary)
 
-
+    filled_region = FilledRegion.Create(doc, type_id, active_view.Id, list_boundaries)
 
 # ╔═╗╦  ╔═╗╔═╗╦═╗
 # ╠╣ ║  ║ ║║ ║╠╦╝
