@@ -120,11 +120,11 @@ with Transaction(doc, __title__) as t:
 
     # Wall.Create(doc, curve, active_level.Id, False)
 
-    # ======================================================================================================================
+    # =================================================================================================================
     # ╦ ╦╦╔╗╔╔╦╗╔═╗╦ ╦╔═╗
     # ║║║║║║║ ║║║ ║║║║╚═╗
     # ╚╩╝╩╝╚╝═╩╝╚═╝╚╩╝╚═╝WINDOWS
-    # ======================================================================================================================
+    # =================================================================================================================
     # host_wall = doc.GetElement(ElementId(309833))
     # pt_start    = XYZ(80, 0, 0)
     # pt_end      = XYZ(80, 20, 0)
@@ -144,11 +144,11 @@ with Transaction(doc, __title__) as t:
     """
     # window = doc.Create.NewFamilyInstance(pt_mid, window_type, host_wall, StructuralType.NonStructural)
 
-    # =======================================================================================================================
+    # =================================================================================================================
     # ╔═╗╔═╗╔╦╗╦╦ ╦ ╦  ╦╔╗╔╔═╗╔╦╗╔═╗╔╗╔╔═╗╔═╗
     # ╠╣ ╠═╣║║║║║ ╚╦╝  ║║║║╚═╗ ║ ╠═╣║║║║  ║╣ 
     # ╚  ╩ ╩╩ ╩╩╩═╝╩   ╩╝╚╝╚═╝ ╩ ╩ ╩╝╚╝╚═╝╚═╝
-    # =======================================================================================================================
+    # =================================================================================================================
     """
     public FamilyInstance NewFamilyInstance(
 	XYZ location,
@@ -176,12 +176,11 @@ with Transaction(doc, __title__) as t:
 
     # doc.Create.NewFamilyInstance(pt, symbol, StructuralType.NonStructural)
 
-
-    # ============================================================================================================================
+    # ================================================================================================================
     # ╔═╗╦ ╦╔═╗╔═╗╔╦╗╔═╗
     # ╚═╗╠═╣║╣ ║╣  ║ ╚═╗
     # ╚═╝╩ ╩╚═╝╚═╝ ╩ ╚═╝#sheets
-    # ============================================================================================================================
+    # =================================================================================================================
     """"
     public static ViewSheet Create(
 	Document document,
@@ -194,11 +193,11 @@ with Transaction(doc, __title__) as t:
     # new_sheet.SheetNumber   = "Random Number"
     # new_sheet.Name          = "Random Name"
 
-    # =============================================================================================================================
+    # =================================================================================================================
     # ╦  ╦╦╔═╗╦ ╦╔═╗
     # ╚╗╔╝║║╣ ║║║╚═╗
     #  ╚╝ ╩╚═╝╚╩╝╚═╝#views
-    # =============================================================================================================================
+    # =================================================================================================================
 
     """
     public static View3D CreateIsometric(
@@ -212,12 +211,11 @@ with Transaction(doc, __title__) as t:
 
     # view_3d = View3D.CreateIsometric(doc, view_type.Id)
 
-
-    # ==============================================================================================================================
+    # =================================================================================================================
     # ╦═╗╔═╗╔═╗╦╔═╗╔╗╔
     # ╠╦╝║╣ ║ ╦║║ ║║║║
     # ╩╚═╚═╝╚═╝╩╚═╝╝╚╝#region
-    # ===============================================================================================================================
+    # =================================================================================================================
     """"
     public static FilledRegion Create(
 	Document document,
@@ -225,50 +223,120 @@ with Transaction(doc, __title__) as t:
 	ElementId viewId,
 	IList<CurveLoop> boundaries
     """
-    type_id = doc.GetDefaultElementTypeId(ElementTypeGroup.FilledRegionType)
+    # type_id = doc.GetDefaultElementTypeId(ElementTypeGroup.FilledRegionType)
     
-    #GET POINTS
-    pt_0 = XYZ(120, 0, 0)
-    pt_1 = XYZ(140, 0, 0)
-    pt_2 = XYZ(140, 20, 0)
-    pt_3 = XYZ(120, 20, 0)
+    # #GET POINTS
+    # pt_0 = XYZ(120, 0, 0)
+    # pt_1 = XYZ(140, 0, 0)
+    # pt_2 = XYZ(140, 20, 0)
+    # pt_3 = XYZ(120, 20, 0)
 	
-    # CONVERT POINTS INTO LINES
-    l_0 = Line.CreateBound(pt_0, pt_1)
-    l_1 = Line.CreateBound(pt_1, pt_2)
-    l_2 = Line.CreateBound(pt_2, pt_3)
-    l_3 = Line.CreateBound(pt_3, pt_0)
+    # # CONVERT POINTS INTO LINES
+    # l_0 = Line.CreateBound(pt_0, pt_1)
+    # l_1 = Line.CreateBound(pt_1, pt_2)
+    # l_2 = Line.CreateBound(pt_2, pt_3)
+    # l_3 = Line.CreateBound(pt_3, pt_0)
 
-    # GROUP THE LINES AS BOUNDARIES
-    boundary = CurveLoop()
-    boundary.Append(l_0)
-    boundary.Append(l_1)
-    boundary.Append(l_2)
-    boundary.Append(l_3)
+    # # GROUP THE LINES AS BOUNDARIES
+    # boundary = CurveLoop()
+    # boundary.Append(l_0)
+    # boundary.Append(l_1)
+    # boundary.Append(l_2)
+    # boundary.Append(l_3)
 
-    # LIST OF BOUNDARIES
-    list_boundaries = List[CurveLoop]()
-    list_boundaries.Add(boundary)
+    # # LIST OF BOUNDARIES
+    # list_boundaries = List[CurveLoop]()
+    # list_boundaries.Add(boundary)
 
-    filled_region = FilledRegion.Create(doc, type_id, active_view.Id, list_boundaries)
-
-# ╔═╗╦  ╔═╗╔═╗╦═╗
-# ╠╣ ║  ║ ║║ ║╠╦╝
-# ╚  ╩═╝╚═╝╚═╝╩╚═#floor
+    # filled_region = FilledRegion.Create(doc, type_id, active_view.Id, list_boundaries)
 
 
+    # =================================================================================================================
+    # ╔═╗╦  ╔═╗╔═╗╦═╗
+    # ╠╣ ║  ║ ║║ ║╠╦╝
+    # ╚  ╩═╝╚═╝╚═╝╩╚═#floor
+    # =================================================================================================================
+    """Floor.Create"""
+
+    """
+    Floor Create(
+	Document document,
+	IList<CurveLoop> profile,
+	ElementId floorTypeId,
+	ElementId levelId
+    """
+    # floor_type_id = doc.GetDefaultElementTypeId(ElementTypeGroup.FloorType)
+
+    # #GET POINTS
+    # pt_0 = XYZ(150, 0, 0)
+    # pt_1 = XYZ(170, 0, 0)
+    # pt_2 = XYZ(170, 20, 0)
+    # pt_3 = XYZ(150, 20, 0)
+	
+    # # CONVERT POINTS INTO LINES
+    # l_0 = Line.CreateBound(pt_0, pt_1)
+    # l_1 = Line.CreateBound(pt_1, pt_2)
+    # l_2 = Line.CreateBound(pt_2, pt_3)
+    # l_3 = Line.CreateBound(pt_3, pt_0)
+
+    # # GROUP THE LINES AS BOUNDARIES
+    # boundary = CurveLoop()
+    # boundary.Append(l_0)
+    # boundary.Append(l_1)
+    # boundary.Append(l_2)
+    # boundary.Append(l_3)
+
+    #  # LIST OF BOUNDARIES
+    # new_boundary = List[CurveLoop]()
+    # new_boundary.Add(boundary)
+    
+
+    # new_floor = Floor.Create(doc, new_boundary, floor_type_id, active_level.Id)
+
+    # =================================================================================================================
+    # ╔═╗╔═╗╔═╗╦ ╦  ╔═╗╦  ╔═╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
+    # ║  ║ ║╠═╝╚╦╝  ║╣ ║  ║╣ ║║║║╣ ║║║ ║ ╚═╗
+    # ╚═╝╚═╝╩   ╩   ╚═╝╩═╝╚═╝╩ ╩╚═╝╝╚╝ ╩ ╚═╝#copy
+    # GET ALL FLOORS IN VIEW
+    # =================================================================================================================
 
 
-# ╔═╗╔═╗╔═╗╦ ╦  ╔═╗╦  ╔═╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
-# ║  ║ ║╠═╝╚╦╝  ║╣ ║  ║╣ ║║║║╣ ║║║ ║ ╚═╗
-# ╚═╝╚═╝╩   ╩   ╚═╝╩═╝╚═╝╩ ╩╚═╝╝╚╝ ╩ ╚═╝#copy
+    """
+    ICollection<ElementId> CopyElement(
+	Document document,
+	ElementId elementToCopy,
+	XYZ translation
+    """
+    
+    # all_floors_in_view = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Floors) \
+    #                                                       .WhereElementIsNotElementType().ToElementIds()
+    # elements_to_copy = List[ElementId](all_floors_in_view)
+
+    # for i in range(1,6):
+    #     vector = XYZ(20*i, 20*i, 0)
+    #     ElementTransformUtils.CopyElements(doc, elements_to_copy, vector)
+
+
+    # =================================================================================================================
+    # ╔╦╗╔═╗╦  ╔═╗╔╦╗╔═╗  ╔═╗╦  ╔═╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
+    #  ║║║╣ ║  ║╣  ║ ║╣   ║╣ ║  ║╣ ║║║║╣ ║║║ ║ ╚═╗
+    # ═╩╝╚═╝╩═╝╚═╝ ╩ ╚═╝  ╚═╝╩═╝╚═╝╩ ╩╚═╝╝╚╝ ╩ ╚═╝#delete elements
+    # ==================================================================================================================
+
+    """
+    public ICollection<ElementId> Delete(
+	ICollection<ElementId> elementIds
+
+    """
+
+    all_floors_in_view = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Floors) \
+                                .WhereElementIsNotElementType().ToElementIds()
+    elements_to_delete = List[ElementId](all_floors_in_view)
+
+    doc.Delete(elements_to_delete)
 
 
 
 
-# ╔╦╗╔═╗╦  ╔═╗╔╦╗╔═╗  ╔═╗╦  ╔═╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
-#  ║║║╣ ║  ║╣  ║ ║╣   ║╣ ║  ║╣ ║║║║╣ ║║║ ║ ╚═╗
-# ═╩╝╚═╝╩═╝╚═╝ ╩ ╚═╝  ╚═╝╩═╝╚═╝╩ ╩╚═╝╝╚╝ ╩ ╚═╝#delete elements
 
-
-    t.Commit()
+    t.Commit()  
