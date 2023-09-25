@@ -42,8 +42,6 @@ model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharing
 file_path = model_path
 file_name = os.path.splitext(os.path.basename(file_path))[0]
 
-os.path.splitext()
-
 suffix = forms.ask_for_string(
     default='suffix',
     prompt='Enter string to append file name:',
