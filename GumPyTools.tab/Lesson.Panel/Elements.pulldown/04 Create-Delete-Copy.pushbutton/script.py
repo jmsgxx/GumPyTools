@@ -326,7 +326,6 @@ with Transaction(doc, __title__) as t:
     """
     public ICollection<ElementId> Delete(
 	ICollection<ElementId> elementIds
-
     """
 
     all_floors_in_view = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Floors) \
@@ -334,9 +333,4 @@ with Transaction(doc, __title__) as t:
     elements_to_delete = List[ElementId](all_floors_in_view)
 
     doc.Delete(elements_to_delete)
-
-
-
-
-
     t.Commit()  
