@@ -35,8 +35,8 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
 
-with Transaction(doc, __title__) as t:
-    t.Start()
+# with Transaction(doc, __title__) as t:
+#     t.Start()
 
     # ----------------------------------------------XXXXXXXX------------------------------------------------
     # ╔═╗╔═╗╔═╗╦ ╦  ╔═╗╦  ╔═╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
@@ -53,22 +53,43 @@ with Transaction(doc, __title__) as t:
     #
     # ElementTransformUtils.CopyElements(doc, walls_to_copy, vector)
     # ========================================================================================================
-    # 🔴 COPY BETWEEN VIEWS
+    # COPY BETWEEN VIEWS
+    #👉 Get TextNotes
+    # textToCopy = FilteredElementCollector(doc, doc.ActiveView.Id)\
+    #     .OfCategory(BuiltInCategory.OST_TextNotes)\
+    #     .WhereElementIsNotElementType()\
+    #     .ToElementIds()
+    #
+    # #👁️ ️Get Views
+    # src_view = doc.ActiveView
+    # dest_view = select_views(__title__,multiple=False)
+    #
+    # #⚙ Transform & Options
+    # transform = Transform.Identity
+    # opts      = CopyPasteOptions()
+    #
+    #
+    # #✅ Copy Elements
+    # ElementTransformUtils.CopyElements(src_view, textToCopy, dest_view, transform, opts)
 
-    textToCopy = FilteredElementCollector(doc, doc.ActiveView.Id)\
-        .OfCategory(BuiltInCategory.OST_TextNotes)\
-        .WhereElementIsNotElementType()\
-        .ToElementIds()
+    # =======================================================================================================
+    # COPY BETWEEN PROJECTS
 
-    # views
-    source_view = doc.ActiveView
-    destinationView = select_views(__title__, multiple=False)
+walls_to_copy = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls)\
+                    .WhereElementIsNotElementType().ToElementIds()
 
-    # transform and options
+all_docs = list(app.Documents)
+doc_a = all_docs[0]
+doc_b = all_docs[1]
+
+with Transaction(doc_b, __title__) as t:
+    t.Start()
+
+    # ⚙ Transform & Options
     transform = Transform.Identity
-    options = CopyPasteOptions
+    opts = CopyPasteOptions()
 
-    # execute
-    ElementTransformUtils.CopyElements(source_view, textToCopy, destinationView, transform, options)
+
+    ElementTransformUtils.CopyElements(doc_a, walls_to_copy, doc_b, transform, opts)
 
     t.Commit()

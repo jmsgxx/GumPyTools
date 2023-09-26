@@ -18,6 +18,7 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 import os
+from datetime import datetime
 
 import clr
 clr.AddReference("System")
@@ -42,11 +43,20 @@ model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharing
 file_path = model_path
 file_name = os.path.splitext(os.path.basename(file_path))[0]
 
-suffix = forms.ask_for_string(
-    default     ='suffix',
-    prompt      ='Enter string to append file name:',
-    title       ='File name'
-)
+# suffix = forms.ask_for_string(
+#     default     ='suffix',
+#     prompt      ='Enter string to append file name:',
+#     title       ='File name'
+# )
+
+current_datetime = datetime.now()
+year    = current_datetime.year
+month   = current_datetime.month
+day     = current_datetime.day
+hour    = current_datetime.hour
+minute  = current_datetime.minute
+second  = current_datetime.second
+time_stamp = "-{}{}{}_{}-{}-{}".format(year, month, day, hour, minute, second)
 
 # 🟡 DIRECTORY TO SAVE THE FILE
 directory = r"C:\Users\gary_mak\Desktop\PDF"
@@ -61,7 +71,7 @@ with Transaction(doc, __title__) as t:
     options.ColorDepth.Color
     options.Combine = True
     options.ExportQuality.DPI4000
-    options.FileName = file_name + "_{}".format(suffix)
+    options.FileName = file_name + time_stamp
     options.HideCropBoundaries = True
     options.HideReferencePlane = True
     options.HideScopeBoxes = True
