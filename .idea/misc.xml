@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="Black">
+    <option name="sdkUUID" value="e7832477-3cb6-49f2-b069-a1f207d07df4" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7 (GumPyTools.extension) (2)" project-jdk-type="Python SDK" />
 </project>
