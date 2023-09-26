@@ -35,7 +35,7 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-current_view = [active_view.Id]
+current_view    = [active_view.Id]
 
 # 🟡 FILE NAME
 model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharingCentralModelPath())
@@ -45,9 +45,9 @@ file_name = os.path.splitext(os.path.basename(file_path))[0]
 os.path.splitext()
 
 suffix = forms.ask_for_string(
-    default='suffix',
-    prompt='Enter string to append file name:',
-    title='File name'
+    default     ='suffix',
+    prompt      ='Enter string to append file name:',
+    title       ='File name'
 )
 
 # 🟡 DIRECTORY TO SAVE THE FILE
