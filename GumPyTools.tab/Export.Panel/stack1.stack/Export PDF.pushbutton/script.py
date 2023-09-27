@@ -52,11 +52,13 @@ file_name = os.path.splitext(os.path.basename(file_path))[0]
 current_datetime = datetime.now()
 year    = current_datetime.year
 month   = current_datetime.month
+if month < 9:
+    month = "0" + month
 day     = current_datetime.day
 hour    = current_datetime.hour
 minute  = current_datetime.minute
 second  = current_datetime.second
-time_stamp = "-{}{}{}_{}-{}-{}".format(year, month, day, hour, minute, second)
+time_stamp = "-{}{}{}_{}.{}.{}".format(year, month, day, hour, minute, second)
 
 # 🟡 DIRECTORY TO SAVE THE FILE
 directory = r"C:\Users\gary_mak\Desktop\PDF"
