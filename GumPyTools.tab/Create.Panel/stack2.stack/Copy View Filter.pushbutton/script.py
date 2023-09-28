@@ -2,10 +2,11 @@
 
 __title__ = 'Copy View Filter'
 __doc__ = """
-This script will copy view filter
-from one view and will paste on another view.
-============================================
-1st version: 27 Sep 2023
+Copy multiple filters from a single
+source view and can be pasted on multiple 
+destination views.
+=====================================
+v1: 27Sep2023
 Author: Joven Mark Gumana
 """
 
@@ -13,7 +14,7 @@ Author: Joven Mark Gumana
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
-# ===================================================================================================
+# ==============================================================
 from Autodesk.Revit.DB import *
 from pyrevit import forms
 
@@ -26,7 +27,7 @@ from System.Collections.Generic import List
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
-# ======================================================================================================
+# ==============================================================
 doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
@@ -39,44 +40,61 @@ active_level    = doc.ActiveView.GenLevel
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
-# =========================================================================================================
+# ==============================================================
 
-# 🟢 get all views
+# =================================
+# 1️⃣ GET ALL VIEWS
+# =================================
 all_views = FilteredElementCollector(doc)\
     .OfCategory(BuiltInCategory.OST_Views)\
     .WhereElementIsNotElementType()\
     .ToElements()
 
-# 🟡 view with filters
+# =================================
+# 2️⃣ GET VIEWS WITH FILTERS
+# =================================
 view_w_filters = [v for v in all_views if v.GetFilters()]
 # only_view_w_filters = [v for v in all_views if v.GetFilters() and not v.IsTemplate]
 # only_templates_w_filters = [v for v in all_views if v.GetFilters() and v.IsTemplate]
 
+# -------------------------------------------------------------
 # ✅ make sure there are views with filters in the project
+# -------------------------------------------------------------
 if not view_w_filters:
     forms.alert('Project has no views with filters and view templates!', exitscript=True)
 
-# 🔵 create dictionary of views
+# =================================
+# ✅ create dictionary of views, key  = name, value =  object
+# =================================
 dict_views_filters = {v.Name: v for v in view_w_filters}
 
 # for k, v in dict_views_filters.items():
 #     print(k, v)
 
-# 🟣 select views from list using pyrevit forms
+# ==================================================================
+# 3️⃣ SELECT SOURCE VIEW FROM PYREVIT FORMS AND DESIGNATE A VARIABLE
+# ==================================================================
 selected_source_view = forms.SelectFromList.show(sorted(dict_views_filters),
                                 title= " Select source view",
                                 multiselect=False,
                                 button_name='Select source view')
 
+# show a warning just in case user didn't select a view
 if not selected_source_view:
     forms.alert('No views selected. Please select view!', exitscript=True)
 
+# get the value of the dictionary using selected_source_view as KEY
 source_view = dict_views_filters[selected_source_view]
 
-# 🔴 select filters to copy
+# ==================================================================
+# 4️⃣ SELECT FILTERS TO COPY
+# ==================================================================
+# get the available filters on the selected views
 filter_ids = source_view.GetFilters()
+# put on a list of filters
 filters = [doc.GetElement(f_id) for f_id in filter_ids]
 
+# create a dictionary of filter filter name: object
 dict_filters = {f.Name: f for f in filters}
 
 selected_filters = forms.SelectFromList.show(sorted(dict_filters),
@@ -88,6 +106,8 @@ if not selected_filters:
     forms.alert('No filters selected. Please select filter!', exitscript=True)
 
 filters_to_copy = [dict_filters[f_name] for f_name in selected_filters]
+
+# to be used below as report result in forms
 filter_names = dict_filters.keys()
 
 

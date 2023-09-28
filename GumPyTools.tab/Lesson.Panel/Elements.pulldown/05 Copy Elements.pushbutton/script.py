@@ -16,6 +16,7 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 from pyrevit.forms import select_views
+from Autodesk.Revit.UI import PostableCommand, RevitCommandId
 
 import clr
 clr.AddReference("System")
@@ -75,21 +76,26 @@ active_level    = doc.ActiveView.GenLevel
     # =======================================================================================================
     # COPY BETWEEN PROJECTS
 
-walls_to_copy = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls)\
-                    .WhereElementIsNotElementType().ToElementIds()
+# walls_to_copy = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls)\
+#                     .WhereElementIsNotElementType().ToElementIds()
+#
+# all_docs = list(app.Documents)
+# doc_a = all_docs[0]
+# doc_b = all_docs[1]
+#
+# with Transaction(doc_b, __title__) as t:
+#     t.Start()
+#
+#     # ⚙ Transform & Options
+#     transform = Transform.Identity
+#     opts = CopyPasteOptions()
+#
+#
+#     ElementTransformUtils.CopyElements(doc_a, walls_to_copy, doc_b, transform, opts)
+#
+#     t.Commit()
 
-all_docs = list(app.Documents)
-doc_a = all_docs[0]
-doc_b = all_docs[1]
-
-with Transaction(doc_b, __title__) as t:
-    t.Start()
-
-    # ⚙ Transform & Options
-    transform = Transform.Identity
-    opts = CopyPasteOptions()
 
 
-    ElementTransformUtils.CopyElements(doc_a, walls_to_copy, doc_b, transform, opts)
 
-    t.Commit()
+

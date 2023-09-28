@@ -6,6 +6,8 @@ This script will export the overall
 plan view in 1-200 on A0 size paper.
 - Centered 
 - 25%
+- ISO A0
+- 1:200
 ===================================
 1st version: 20230925
 Author: Joven Mark Gumana
@@ -43,22 +45,10 @@ model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharing
 file_path = model_path
 file_name = os.path.splitext(os.path.basename(file_path))[0]
 
-# suffix = forms.ask_for_string(
-#     default     ='suffix',
-#     prompt      ='Enter string to append file name:',
-#     title       ='File name'
-# )
-
 current_datetime = datetime.now()
-year    = current_datetime.year
-month   = current_datetime.month
-if month < 9:
-    month = "0" + month
-day     = current_datetime.day
-hour    = current_datetime.hour
-minute  = current_datetime.minute
-second  = current_datetime.second
-time_stamp = "-{}{}{}_{}.{}.{}".format(year, month, day, hour, minute, second)
+current_time = current_datetime.strftime('%Y''%m''%d')
+current_date = current_datetime.strftime('%H.%M.%S')
+time_stamp = "_{}-{}".format(current_time, current_date)
 
 # 🟡 DIRECTORY TO SAVE THE FILE
 directory = r"C:\Users\gary_mak\Desktop\PDF"
@@ -70,9 +60,9 @@ with Transaction(doc, __title__) as t:
     # PDFExportOptions properties
     options = PDFExportOptions()
     options.AlwaysUseRaster = False
-    options.ColorDepth.Color
+    options.ColorDepth = ColorDepthType.Color
     options.Combine = True
-    options.ExportQuality.DPI4000
+    options.ExportQuality = PDFExportQualityType.DPI4000
     options.FileName = file_name + time_stamp
     options.HideCropBoundaries = True
     options.HideReferencePlane = True
@@ -81,14 +71,22 @@ with Transaction(doc, __title__) as t:
     options.MaskCoincidentLines = True
     options.OriginOffsetX = 0
     options.OriginOffsetY = 0
-    options.PaperFormat.ISO_A0
-    options.PaperPlacement.Center
-    options.RasterQuality.High
+    options.PaperFormat = ExportPaperFormat.ISO_A0
+    options.PaperPlacement = PaperPlacementType.Center
+    options.RasterQuality = RasterQualityType.High
     options.ReplaceHalftoneWithThinLines = False
     options.StopOnError = True
     options.ViewLinksInBlue = True
     options.ZoomPercentage = 25
-    options.ZoomType.Zoom
+    options.ZoomType = ZoomType.Zoom
 
-    doc.Export(directory, current_view, options)
+    try:
+        if doc.Export(directory, current_view, options):
+            # SHOW NOTIFICATION THAT PRINT IS FINISHED
+            forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=True)
+
+    # HANDLE ERROR JUST IN CASE
+    except Exception as e:
+        print("An error occurred: {}".format(e))
+
     t.Commit()
