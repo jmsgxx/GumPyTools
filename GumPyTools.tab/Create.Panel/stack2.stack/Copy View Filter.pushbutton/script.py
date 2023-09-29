@@ -63,9 +63,10 @@ view_w_filters = [v for v in all_views if v.GetFilters()]
 if not view_w_filters:
     forms.alert('Project has no views with filters and view templates!', exitscript=True)
 
-# =================================
-# ✅ create dictionary of views, key  = name, value =  object
-# =================================
+
+# -------------------------------------------------------------
+# ✅ create dictionary of views, key=name, value=object
+# -------------------------------------------------------------
 dict_views_filters = {v.Name: v for v in view_w_filters}
 
 # for k, v in dict_views_filters.items():
