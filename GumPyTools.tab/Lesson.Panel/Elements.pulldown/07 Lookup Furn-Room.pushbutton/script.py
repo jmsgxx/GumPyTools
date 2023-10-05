@@ -47,21 +47,27 @@ phase = all_phases[-1]
 # =========================================================================================================
 
 # GET ELEMENTS
-all_furniture    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Furniture).\
-                    WhereElementIsNotElementType().ToElements()
-all_f_system      = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_FurnitureSystems).\
-                    WhereElementIsNotElementType().ToElements()
-all_p_fixtures    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_PlumbingFixtures).\
+# all_furniture    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Furniture).\
+#                     WhereElementIsNotElementType().ToElements()
+# all_f_system      = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_FurnitureSystems).\
+#                     WhereElementIsNotElementType().ToElements()
+# all_p_fixtures    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_PlumbingFixtures).\
+#                     WhereElementIsNotElementType().ToElements()
+
+all_doors    = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).\
                     WhereElementIsNotElementType().ToElements()
 
-all_elements = list(all_furniture) + list(all_f_system) + list(all_p_fixtures)
+for doors in all_doors:
+    print(doors.Name)
+
+# all_elements = list(all_furniture) + list(all_f_system) + list(all_p_fixtures)
 
 # iterate and get room
 
 with Transaction(doc, __title__) as t:
     t.Start()
-    for el in all_elements:
-        room = el.Room[phase]
+    for dr in all_doors:
+        room = dr.Room[phase]
         # print(room)
         if room:
             room_name       = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
@@ -74,10 +80,10 @@ with Transaction(doc, __title__) as t:
             proj_room_number    = el.LookupParameter("JM_ROOM_NUMBER")
 
             # set parameter
-            if proj_room_name:
-                proj_room_name.Set(room_name)
-            if proj_room_number:
-                proj_room_number.Set(room_number)
+            # if proj_room_name:
+            #     proj_room_name.Set(room_name)
+            # if proj_room_number:
+            #     proj_room_number.Set(room_number)
 
     t.Commit()
 
