@@ -38,8 +38,8 @@ element_type = type(element)
 if element_type != Wall:
     forms.alert('Just pick a wall', exitscript=True)
 
-# print(element)
-# print(element_type)
+print(element)
+print(element_type)
 
 # get information
 el_cat          = element.Category.Name

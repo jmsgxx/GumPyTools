@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Copy Param Join'
+__title__ = 'Door Code-Description'
 __doc__ = """
 This script will add description
 on door parameters based on the code.
@@ -45,13 +45,15 @@ def match_set_descr(list_code, dict_code, set_desc_param):
         set_desc_param.Set(value)
 
 
+
+
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
-doc = __revit__.ActiveUIDocument.Document
-uidoc = __revit__.ActiveUIDocument
-app = __revit__.Application
+doc     = __revit__.ActiveUIDocument.Document
+uidoc   = __revit__.ActiveUIDocument
+app     = __revit__.Application
 
 active_view = doc.ActiveView
 active_level = doc.ActiveView.GenLevel
@@ -79,6 +81,9 @@ door_protection_ht_dict     = create_dict(door_protection_ht_path)
 all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors)\
             .WhereElementIsElementType().ToElements()
 
+
+
+
 # ========================================================================================================
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
@@ -91,6 +96,8 @@ that came from the csv file
 """
 with Transaction(doc, __title__) as t:
     t.Start()
+
+    lst_door_feature_code = []
 
     for door in all_doors:
         # 🟢 GET THE SHARED PARAMETER FROM THE MODEL
@@ -108,7 +115,6 @@ with Transaction(doc, __title__) as t:
         sp_dr_panel_code            = door.LookupParameter('Door Panel Code').AsValueString()
         sp_dr_operation_code        = door.LookupParameter('Door Operation Code').AsValueString()
         sp_dr_lock_code             = door.LookupParameter('Door Lock Function Code').AsValueString()
-        # sp_dr_feature_code          = door.LookupParameter('Door Feature Code').AsValueString()
         sp_dr_construction_code     = door.LookupParameter('Door Construction Code').AsValueString()
         sp_dr_prot_pl_wl_code       = door.LookupParameter('Door Protection Pull or Wall Code').AsValueString()
         sp_dr_prot_pl_wl_htx_code   = door.LookupParameter('Door Protection Pull or Wall Height Code').AsValueString()
@@ -116,30 +122,30 @@ with Transaction(doc, __title__) as t:
         sp_dr_prot_ps_tr_htx_code   = door.LookupParameter('Door Protection Push or Track Height Code').AsValueString()
 
         # 🔵 SET THE CORRESPONDING VALUE TO DESC
-        match_set_descr(sp_dr_panel_code, door_panel_dict, door_panel_desc)
-        match_set_descr(sp_dr_operation_code, door_operation_dict, door_operation_desc)
-        match_set_descr(sp_dr_lock_code, door_lock_dict, door_lock_desc)
-        # match_set_descr(sp_dr_feature_code, door_feature_dict, door_feature_desc)
-        match_set_descr(sp_dr_construction_code, door_construction_dict, door_construction_desc)
-        match_set_descr(sp_dr_prot_pl_wl_code, door_protection_dict, door_prot_pl_wl_desc)
-        match_set_descr(sp_dr_prot_pl_wl_htx_code, door_protection_ht_dict, door_prot_pl_wl_htx_desc)
-        match_set_descr(sp_dr_prot_ps_tr_code, door_protection_dict, door_prot_ps_tr_desc)
-        match_set_descr(sp_dr_prot_ps_tr_htx_code, door_protection_ht_dict, door_prot_ps_tr_htx_desc)
+        # match_set_descr(sp_dr_panel_code, door_panel_dict, door_panel_desc)
+        # match_set_descr(sp_dr_operation_code, door_operation_dict, door_operation_desc)
+        # match_set_descr(sp_dr_lock_code, door_lock_dict, door_lock_desc)
+        # match_set_descr(sp_dr_construction_code, door_construction_dict, door_construction_desc)
+        # match_set_descr(sp_dr_prot_pl_wl_code, door_protection_dict, door_prot_pl_wl_desc)
+        # match_set_descr(sp_dr_prot_pl_wl_htx_code, door_protection_ht_dict, door_prot_pl_wl_htx_desc)
+        # match_set_descr(sp_dr_prot_ps_tr_code, door_protection_dict, door_prot_ps_tr_desc)
+        # match_set_descr(sp_dr_prot_ps_tr_htx_code, door_protection_ht_dict, door_prot_ps_tr_htx_desc)
 
+        sp_dr_feature_code = door.LookupParameter('Door Feature Code').AsValueString()
 
+        if isinstance(sp_dr_feature_code, list):
+            codes = [code.strip() for code in sp_dr_feature_code if code is not None]
+        else:
+            codes = [code.strip() for code in (sp_dr_feature_code.split(",") if sp_dr_feature_code else []) if
+                     code is not None]
+        lst_door_feature_code.extend(codes)
+
+        for item in lst_door_feature_code:
+            if item in door_feature_dict:
+                # print("Key '{}' matched in dictionary.".format(item))
+                value = door_feature_dict[item]
+                # print("Retrieved value: {}".format(value))
+                door_feature_desc.Set(value)
+            else:
+                print("Key '{}' not found in dictionary.".format(item))
     t.Commit()
-
-# TODO
-"""
-abandon 'Door Feature Code' for now.
-need to find way to iterate an item and sublist to a dictionary
-
-   # parameter = door.LookupParameter('Door Feature Code')
-        # if parameter is not None and parameter.HasValue:
-        #     sp_dr_feature_code = parameter.AsValueString()
-            # door_feature_desc.Set(sp_dr_feature_code)
-    #         door_feat_codes.append(sp_dr_feature_code)
-    #     print "Door: {0}, Feature Code: {1}".format(door.Id, sp_dr_feature_code)
-    #
-    # print door_feat_codes
-"""
