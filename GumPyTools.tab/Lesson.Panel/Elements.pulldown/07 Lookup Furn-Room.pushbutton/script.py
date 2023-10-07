@@ -47,26 +47,26 @@ phase = all_phases[-1]
 # =========================================================================================================
 
 # GET ELEMENTS
-# all_furniture    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Furniture).\
-#                     WhereElementIsNotElementType().ToElements()
-# all_f_system      = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_FurnitureSystems).\
-#                     WhereElementIsNotElementType().ToElements()
-# all_p_fixtures    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_PlumbingFixtures).\
-#                     WhereElementIsNotElementType().ToElements()
-
-all_doors    = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).\
+all_furniture    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Furniture).\
+                    WhereElementIsNotElementType().ToElements()
+all_f_system      = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_FurnitureSystems).\
+                    WhereElementIsNotElementType().ToElements()
+all_p_fixtures    = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_PlumbingFixtures).\
                     WhereElementIsNotElementType().ToElements()
 
-for doors in all_doors:
-    print(doors.Name)
+# all_doors    = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).\
+#                     WhereElementIsNotElementType().ToElements()
+#
+# for doors in all_doors:
+#     print(doors.Name)
 
-# all_elements = list(all_furniture) + list(all_f_system) + list(all_p_fixtures)
+all_elements = list(all_furniture) + list(all_f_system) + list(all_p_fixtures)
 
 # iterate and get room
 
 with Transaction(doc, __title__) as t:
     t.Start()
-    for dr in all_doors:
+    for el in elements:
         room = dr.Room[phase]
         # print(room)
         if room:

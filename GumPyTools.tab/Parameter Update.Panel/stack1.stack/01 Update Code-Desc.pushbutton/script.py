@@ -28,13 +28,13 @@ from pyrevit import forms
 import os
 import csv
 import clr
-
 clr.AddReference("System")
+from System.Collections.Generic import List
 
 # ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
 # ╠╣ ║ ║║║║║   ║ ║║ ║║║║
 # ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
-# =====================================================================================================
+# ========================================
 
 
 def create_dict(directory):
@@ -48,22 +48,37 @@ def create_dict(directory):
     return data
 
 
-def match_set_descr(list_code, dict_code, set_desc_param):
-    if list_code in dict_code:
-        value = dict_code[list_code]
-        set_desc_param.Set(value)
+def get_list(param_code):
+    param_code_list = []
+    for index, item in enumerate(all_doors):
+        if item is not None:
+            param = item.LookupParameter(param_code)
+            if param is not None:
+                param_code_list.append((index, param.AsValueString()))
+    return param_code_list
+
+
+def set_by_index(filtered_list, lookup_desc, param_dict):
+    for index, value in filtered_list:
+        door_desc = all_doors[index].LookupParameter(lookup_desc)
+        if door_desc is not None and value in param_dict:
+            door_desc.Set(param_dict[value])
+            if value not in param_dict:
+                print("In {}, iterator '{}' does not match with any Dict Key".format(door_desc, value))
+
 
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
-doc     = __revit__.ActiveUIDocument.Document
-uidoc   = __revit__.ActiveUIDocument
-app     = __revit__.Application
 
-active_view = doc.ActiveView
-active_level = doc.ActiveView.GenLevel
+doc      = __revit__.ActiveUIDocument.Document
+uidoc    = __revit__.ActiveUIDocument
+app      = __revit__.Application
+
+active_view     = doc.ActiveView
+active_level    = doc.ActiveView.GenLevel
 
 # ✅-----------------XXX csv XXX-----------------
 door_panel_path             = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Panel.csv')
@@ -81,56 +96,37 @@ door_construction_dict      = create_dict(door_construction_path)
 door_protection_dict        = create_dict(door_protection_path)
 door_protection_ht_dict     = create_dict(door_protection_ht_path)
 
-# ✅ GET ALL DOOR TYPES
-all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors)\
-            .WhereElementIsElementType().ToElements()
 
-
-# ========================================================================================================
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
-# ╩ ╩╩ ╩╩╝╚╝ main
+# ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
-
-"""
-perform the operation to get the proper description based on the given the code and iterate from the dictionary
-that came from the csv file
-"""
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    for door in all_doors:
-        if door:
-            # 🟢 GET THE SHARED PARAMETER FROM THE MODEL
-            door_panel_desc             = door.LookupParameter('Door Panel')
-            door_operation_desc         = door.LookupParameter('Door Operation')
-            door_lock_desc              = door.LookupParameter('Door Lock Function')
-            door_construction_desc      = door.LookupParameter('Door Construction')
-            door_prot_pl_wl_desc        = door.LookupParameter('Door Protection Pull or Wall')
-            door_prot_pl_wl_htx_desc    = door.LookupParameter('Door Protection Pull or Wall Height Text')
-            door_prot_ps_tr_desc        = door.LookupParameter('Door Protection Push or Track')
-            door_prot_ps_tr_htx_desc    = door.LookupParameter('Door Protection Push or Track Height Text')
+    # ✅ GET ALL DOOR TYPES
+    all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors) \
+        .WhereElementIsElementType().ToElements()
 
-            # 🔴 GET THE 'CODE' PARAMETER
-            sp_dr_panel_code            = door.LookupParameter('Door Panel Code').AsValueString()
-            sp_dr_operation_code        = door.LookupParameter('Door Operation Code').AsValueString()
-            sp_dr_lock_code             = door.LookupParameter('Door Lock Function Code').AsValueString()
-            sp_dr_construction_code     = door.LookupParameter('Door Construction Code').AsValueString()
-            sp_dr_prot_pl_wl_code       = door.LookupParameter('Door Protection Pull or Wall Code').AsValueString()
-            sp_dr_prot_pl_wl_htx_code   = door.LookupParameter('Door Protection Pull or Wall Height Code').AsValueString()
-            sp_dr_prot_ps_tr_code       = door.LookupParameter('Door Protection Push or Track Code').AsValueString()
-            sp_dr_prot_ps_tr_htx_code   = door.LookupParameter('Door Protection Push or Track Height Code').AsValueString()
+    # 🟢 CALL THE get_list() TO GET THE LIST OF OBJECT FROM all_doors
+    door_panel_lst = get_list('Door Panel Code')
+    door_op_lst = get_list('Door Operation Code')
+    door_lock_lst = get_list('Door Lock Function Code')
+    door_cons_lst = get_list('Door Construction Code')
+    door_prot_pl_wl_lst = get_list('Door Protection Pull or Wall Code')
+    door_prot_pl_wl_htx_lst = get_list('Door Protection Pull or Wall Height Code')
+    door_prot_ps_tr_lst = get_list('Door Protection Push or Track Code')
+    door_prot_ps_tr_htx_lst = get_list('Door Protection Push or Track Height Code')
 
-            # 🔵 SET THE CORRESPONDING VALUE TO DESC
-            match_set_descr(sp_dr_panel_code, door_panel_dict, door_panel_desc)
-            match_set_descr(sp_dr_operation_code, door_operation_dict, door_operation_desc)
-            match_set_descr(sp_dr_lock_code, door_lock_dict, door_lock_desc)
-            match_set_descr(sp_dr_construction_code, door_construction_dict, door_construction_desc)
-            match_set_descr(sp_dr_prot_pl_wl_code, door_protection_dict, door_prot_pl_wl_desc)
-            match_set_descr(sp_dr_prot_pl_wl_htx_code, door_protection_ht_dict, door_prot_pl_wl_htx_desc)
-            match_set_descr(sp_dr_prot_ps_tr_code, door_protection_dict, door_prot_ps_tr_desc)
-            match_set_descr(sp_dr_prot_ps_tr_htx_code, door_protection_ht_dict, door_prot_ps_tr_htx_desc)
+    # 🟢 CALL THE set_by_index()
+    set_by_index(door_panel_lst, 'Door Panel', door_panel_dict)
+    set_by_index(door_op_lst, 'Door Operation', door_operation_dict)
+    set_by_index(door_lock_lst, 'Door Lock Function', door_lock_dict)
+    set_by_index(door_cons_lst, 'Door Construction', door_construction_dict)
+    set_by_index(door_prot_pl_wl_lst, 'Door Protection Pull or Wall', door_protection_dict)
+    set_by_index(door_prot_pl_wl_htx_lst, 'Door Protection Pull or Wall Height Text', door_protection_ht_dict)
+    set_by_index(door_prot_ps_tr_lst, 'Door Protection Push or Track', door_protection_dict)
+    set_by_index(door_prot_ps_tr_htx_lst, 'Door Protection Push or Track Height Text', door_protection_ht_dict)
 
-            forms.alert('Door Parameter is updated. For Door Feature Code, please use the "Door Feature Update" button.', exitscript=True)
 
     t.Commit()

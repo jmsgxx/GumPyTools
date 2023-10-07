@@ -57,45 +57,39 @@ if element_category != 'Rooms':
     forms.alert('Please pick a Room', exitscript=True)
 
 
-# ------------XXX get boundary of rooms XXX--------------------
-# selected_room = doc.GetElement(room_element.Id)
-#
-# rm_boundary_segments = selected_room.GetBoundarySegments(SpatialElementBoundaryOptions())
-#
-# doors_in_room = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
-#
-#
-#
-# rm_curve_lst = []
-#
-# for segment in rm_boundary_segments:
-#     for curve in segment:
-#         rm_curve_lst.append(curve.GetCurve())
+# ------------XXX get room XXX--------------------
+selected_room = doc.GetElement(room_element.Id)
 
-boundary_segments = room_element.GetBoundarySegments(SpatialElementBoundaryOptions())
-curve_lst = []
-for segment in boundary_segments:
-    for line in segment:
-        curve = line.GetCurve()
-        curve_lst.append(curve)
-
-# Retrieve doors within the room
 doors_in_room = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
 
-# Check for intersection between curves and doors
-door_lst = []
-for segment in boundary_segments:
-    for line in segment:
-        curve = line.GetCurve()
-    for door in doors_in_room:
-        door_location = door.Location
-        if isinstance(door_location, LocationCurve):
-            door_curve = door_location.Curve
-            intersection_result = curve.Intersect(door_curve)
-            if intersection_result:
-                door_lst.append(door)
+# Retrieve doors within the room
 
-print(len(door_lst))
+
+def is_inside(b1, b2):
+    # Check if bounding box b1 is inside bounding box b2
+    return (b2.Min.X <= b1.Min.X and
+            b2.Min.Y <= b1.Min.Y and
+            b2.Min.Z <= b1.Min.Z and
+            b2.Max.X >= b1.Max.X and
+            b2.Max.Y >= b1.Max.Y and
+            b2.Max.Z >= b1.Max.Z)
+
+
+retrieved_doors = []
+
+for door in doors_in_room:
+    # Check if the FamilyInstance is a door
+    if door.Category.Name == 'Doors':
+        # Get the BoundingBox of the DoorInstance
+        door_bounding_box = door.get_BoundingBox(None)
+
+        # Check if the door's bounding box is inside the room's bounding box
+        if is_inside(door_bounding_box, selected_room.BoundingBox):
+            retrieved_doors.append(door)
+
+
+print(retrieved_doors)
+
 """
 
 TODO not fixed figure out how to intersect the rooms and doors
