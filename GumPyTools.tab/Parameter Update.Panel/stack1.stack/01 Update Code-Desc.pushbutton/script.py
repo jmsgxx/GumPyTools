@@ -87,6 +87,7 @@ door_lock_path              = os.path.abspath(r'C:\Users\gary_mak\Documents\GitH
 door_construction_path      = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Construction.csv')
 door_protection_path        = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Protection.csv')
 door_protection_ht_path     = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Protection Height.csv')
+door_feature_path             = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Feature.csv')
 
 # ✅ ----------------XXX dictionary XXX------------
 door_panel_dict             = create_dict(door_panel_path)
@@ -95,6 +96,7 @@ door_lock_dict              = create_dict(door_lock_path)
 door_construction_dict      = create_dict(door_construction_path)
 door_protection_dict        = create_dict(door_protection_path)
 door_protection_ht_dict     = create_dict(door_protection_ht_path)
+door_feature_dict             = create_dict(door_feature_path)
 
 
 # ╔╦╗╔═╗╦╔╗╔
@@ -128,5 +130,46 @@ with Transaction(doc, __title__) as t:
     set_by_index(door_prot_ps_tr_lst, 'Door Protection Push or Track', door_protection_dict)
     set_by_index(door_prot_ps_tr_htx_lst, 'Door Protection Push or Track Height Text', door_protection_ht_dict)
 
+    # 🔷 this is a special section for "DOOR FEATURE CODE"
+    """
+    'Door Feature Code' consists of a combination of single item string and a combination of strings separated by comma (,)
+    take note. Python will not treat it as a list so you need to split it and put in new list. Get their index. Be mindful
+    of NoneType.
+    """
+    door_feat_lst = []
+    for doors in all_doors:
+        dr_code = doors.LookupParameter('Door Feature Code').AsValueString()
+        door_feat_lst.append(dr_code)
+
+    split_list = []
+    for index, value in enumerate(door_feat_lst):
+        if value is not None:
+            split_values = value.split(', ')
+            for split_value in split_values:
+                split_list.append((index, split_value))
+
+
+    def change_value(door_feat_list, door_dict):
+        for item in door_feat_list.split(','):
+            item = item.strip()
+            if item in door_dict:
+                yield door_dict[item]
+            else:
+                yield item
+
+
+    new_value_param = []
+    for value in door_feat_lst:
+        if value is not None:
+            new_value = ', '.join(change_value(value, dict(door_feature_dict)))
+        else:
+            new_value = None  # keep None values
+        new_value_param.append(new_value)
+
+    for index, door in enumerate(all_doors):
+        if door is not None:
+            door_feature_desc = door.LookupParameter('Door Feature')
+            if door_feature_desc is not None and new_value_param[index] is not None:
+                door_feature_desc.Set(new_value_param[index])
 
     t.Commit()
