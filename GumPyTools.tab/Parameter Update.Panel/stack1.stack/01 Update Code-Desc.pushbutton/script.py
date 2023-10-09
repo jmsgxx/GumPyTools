@@ -7,13 +7,7 @@ on door parameters based on the code.
 Info will be fetched from CSV file
 that came from KOP.
 __________________________________
-NOTE: 'Door Feature' is not included
-as the structure of the list contains
-single item, list, None, '-' and
-Keyerror that isn't on the schedule.
-Dynamo will be used for better
-filtering.
-
+v2: 08 Oct 2023
 v1: 03 Oct 2023
 Author: Joven Mark Gumana
 """
@@ -111,14 +105,14 @@ with Transaction(doc, __title__) as t:
         .WhereElementIsElementType().ToElements()
 
     # 🟢 CALL THE get_list() TO GET THE LIST OF OBJECT FROM all_doors
-    door_panel_lst = get_list('Door Panel Code')
-    door_op_lst = get_list('Door Operation Code')
-    door_lock_lst = get_list('Door Lock Function Code')
-    door_cons_lst = get_list('Door Construction Code')
-    door_prot_pl_wl_lst = get_list('Door Protection Pull or Wall Code')
-    door_prot_pl_wl_htx_lst = get_list('Door Protection Pull or Wall Height Code')
-    door_prot_ps_tr_lst = get_list('Door Protection Push or Track Code')
-    door_prot_ps_tr_htx_lst = get_list('Door Protection Push or Track Height Code')
+    door_panel_lst              = get_list('Door Panel Code')
+    door_op_lst                 = get_list('Door Operation Code')
+    door_lock_lst               = get_list('Door Lock Function Code')
+    door_cons_lst               = get_list('Door Construction Code')
+    door_prot_pl_wl_lst         = get_list('Door Protection Pull or Wall Code')
+    door_prot_pl_wl_htx_lst     = get_list('Door Protection Pull or Wall Height Code')
+    door_prot_ps_tr_lst         = get_list('Door Protection Push or Track Code')
+    door_prot_ps_tr_htx_lst     = get_list('Door Protection Push or Track Height Code')
 
     # 🟢 CALL THE set_by_index()
     set_by_index(door_panel_lst, 'Door Panel', door_panel_dict)
@@ -149,8 +143,8 @@ with Transaction(doc, __title__) as t:
                 split_list.append((index, split_value))
 
 
-    def change_value(door_feat_list, door_dict):
-        for item in door_feat_list.split(','):
+    def change_value(door_feat, door_dict):
+        for item in door_feat.split(','):
             item = item.strip()
             if item in door_dict:
                 yield door_dict[item]
@@ -163,13 +157,48 @@ with Transaction(doc, __title__) as t:
         if value is not None:
             new_value = ', '.join(change_value(value, dict(door_feature_dict)))
         else:
-            new_value = None  # keep None values
+            new_value = None
         new_value_param.append(new_value)
 
+    # set the new value on all parameters after getting the value from the dictionary
     for index, door in enumerate(all_doors):
         if door is not None:
             door_feature_desc = door.LookupParameter('Door Feature')
             if door_feature_desc is not None and new_value_param[index] is not None:
                 door_feature_desc.Set(new_value_param[index])
 
+    # ╔═╗╔═╗╔╗╔╔═╗╔═╗╔╦╗
+    # ║  ║ ║║║║║  ╠═╣ ║
+    # ╚═╝╚═╝╝╚╝╚═╝╩ ╩ ╩ set the 'DOOR REMARKS' value with the concatenation of all changed
+    # value
+    # ================================================================================
+
+    for dr_param in all_doors:
+        if dr_param is None:
+            continue
+        else:
+            parameters = [
+                dr_param.LookupParameter('Door Operation'),
+                dr_param.LookupParameter('Door Panel'),
+                dr_param.LookupParameter('Door Lock Function'),
+                dr_param.LookupParameter('Door Construction'),
+                dr_param.LookupParameter('Door Protection Pull or Wall'),
+                dr_param.LookupParameter('Door Protection Pull or Wall Height Text'),
+                dr_param.LookupParameter('Door Protection Push or Track'),
+                dr_param.LookupParameter('Door Protection Push or Track Height Text'),
+                dr_param.LookupParameter('Door Feature')
+            ]
+
+            # out string parameters, excluding None values
+            string_parameters = [param.AsValueString() for param in parameters if
+                                 param is not None and param.AsValueString() is not None]
+
+            # Concatenate the string parameters
+            concat_string = ','.join(string_parameters)
+
+            concat_door_remarks = dr_param.LookupParameter('Door Remarks')
+            if concat_door_remarks is not None:
+                concat_door_remarks.Set(concat_string)
+
     t.Commit()
+
