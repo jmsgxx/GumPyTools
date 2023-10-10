@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button'
+__title__ = 'Door Mark-Number'
 __doc__ = """
-testing button for anything.
+This script will update the Door Mark
+and Door Number based on the number
+of instances inside the room.
 __________________________________
+v1 = 10 Oct 2023
 Author: Joven Mark Gumana
 """
 
@@ -65,8 +68,8 @@ with Transaction(doc, __title__) as t:
     for room_number, doors in doors_by_room.items():
         for i, door in enumerate(doors):
             door_sequence = str(i + 1).zfill(2)
-            door_mark = "{}-{}XX".format(room_number, door_sequence)
-            door_number = "D{}XX".format(door_sequence)
+            door_mark = "{}-{}".format(room_number, door_sequence)
+            door_number = "D{}".format(door_sequence)
             door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(door_mark)
             door.LookupParameter('Door Number').Set(door_number)
 

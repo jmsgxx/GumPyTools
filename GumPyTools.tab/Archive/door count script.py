@@ -2,6 +2,7 @@
 
 __title__ = 'Count Room.Door'
 __doc__ = """
+DOESN'T WORK
 This script will count doors from
 the selected room and will assign
 numbers on specified parameter.
@@ -57,51 +58,28 @@ if element_category != 'Rooms':
     forms.alert('Please pick a Room', exitscript=True)
 
 
-# ------------XXX get room XXX--------------------
-selected_room = doc.GetElement(room_element.Id)
+# ------------XXX get room XXX-------------------
+phase_list = list(doc.Phases)
+
+phase = phase_list[1]
+
+room = room_element
 
 doors_in_room = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
 
-# Retrieve doors within the room
+door_count = []
 
-
-def is_inside(b1, b2):
-    # Check if bounding box b1 is inside bounding box b2
-    return (b2.Min.X <= b1.Min.X and
-            b2.Min.Y <= b1.Min.Y and
-            b2.Min.Z <= b1.Min.Z and
-            b2.Max.X >= b1.Max.X and
-            b2.Max.Y >= b1.Max.Y and
-            b2.Max.Z >= b1.Max.Z)
-
-
-retrieved_doors = []
-
+# Loop through all doors and check if they are in the room
 for door in doors_in_room:
-    # Check if the FamilyInstance is a door
-    if door.Category.Name == 'Doors':
-        # Get the BoundingBox of the DoorInstance
-        door_bounding_box = door.get_BoundingBox(None)
+    # Get the rooms associated with the door
+    to_room = door.ToRoom[phase]
+    from_room = door.FromRoom[phase]
 
-        # Check if the door's bounding box is inside the room's bounding box
-        if is_inside(door_bounding_box, selected_room.BoundingBox):
-            retrieved_doors.append(door)
-
-
-print(retrieved_doors)
-
-"""
-
-TODO not fixed figure out how to intersect the rooms and doors
-
-"""
+    # Check if either of the rooms is the selected room
+    if to_room == room or from_room == room:
+        door_count.append(door)
 
 
-
-
-
-
-
-
+print(len(door_count))
 
 
