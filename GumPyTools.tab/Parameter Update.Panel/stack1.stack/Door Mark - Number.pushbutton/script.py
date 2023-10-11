@@ -41,9 +41,10 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
+# phase
 all_phase = list(doc.Phases)
 phase = (all_phase[1])
-all_rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
+
 all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
 
 

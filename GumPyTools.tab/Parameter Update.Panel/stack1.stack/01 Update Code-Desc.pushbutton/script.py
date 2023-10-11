@@ -57,8 +57,8 @@ def set_by_index(filtered_list, lookup_desc, param_dict):
         door_desc = all_doors[index].LookupParameter(lookup_desc)
         if door_desc is not None and value in param_dict:
             door_desc.Set(param_dict[value])
-            if value not in param_dict:
-                print("In {}, iterator '{}' does not match with any Dict Key".format(door_desc, value))
+        elif door_desc is not None and value not in param_dict:
+            raise KeyError("In {}, iterator '{}' does not match with any Dict Key".format(door_desc, value))
 
 
 
@@ -149,7 +149,7 @@ with Transaction(doc, __title__) as t:
             if item in door_dict:
                 yield door_dict[item]
             else:
-                yield item
+                raise KeyError("Item '{}' not found in door_dict".format(item))
 
 
     new_value_param = []

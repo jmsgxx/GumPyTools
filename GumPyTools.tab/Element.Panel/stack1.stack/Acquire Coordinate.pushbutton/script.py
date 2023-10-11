@@ -1,9 +1,19 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button'
+__title__ = 'Acquire Coordinates'
 __doc__ = """
-testing button for anything.
+This script will specifically use
+to acquire the coordinates of the
+first link model.
+================================
+HOW TO:
+1. On the Active View, make sure the
+only link visible is the link you
+would want to acquire the coordinates.
+2. Click the button.
+3. Profit.
 __________________________________
+v1: 10 Oct 2023
 Author: Joven Mark Gumana
 """
 
@@ -14,17 +24,10 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 from pyrevit import forms
-import math
 
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
-
-# ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
-# ╠╣ ║ ║║║║║   ║ ║║ ║║║║
-# ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
-# ========================================
-
 
 
 
@@ -39,27 +42,19 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
+link_collect = FilteredElementCollector(doc, active_view.Id).OfClass(RevitLinkInstance)
+
+lk = link_collect.FirstElement()
+
+link_id = lk.Id
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
-# with Transaction(doc, __title__) as t:
-#     t.Start()
-#
-#     t.Commit()
+with Transaction(doc, __title__) as t:
+    t.Start()
 
-# Get the SiteLocation instance.
-site = doc.SiteLocation
+    doc.PublishCoordinates(link_id)
 
-# Angles are in radians when coming from Revit API, so we
-# convert to degrees for display
-angleRatio = math.pi / 180   # angle conversion factor
-
-# Format the prompt information.
-prompt = "Current project's Site location information:"
-prompt += "\n\t" + "Latitude: " + str(site.Latitude / angleRatio) + " degrees"
-prompt += "\n\t" + "Longitude: " + str(site.Longitude / angleRatio) + " degrees"
-
-print(prompt)
-
+    t.Commit()
