@@ -80,10 +80,10 @@ with Transaction(doc, __title__) as t:
             proj_room_number    = el.LookupParameter("JM_ROOM_NUMBER")
 
             # set parameter
-            # if proj_room_name:
-            #     proj_room_name.Set(room_name)
-            # if proj_room_number:
-            #     proj_room_number.Set(room_number)
+            if proj_room_name:
+                proj_room_name.Set(room_name)
+            if proj_room_number:
+                proj_room_number.Set(room_number)
 
     t.Commit()
 

@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button'
+__title__ = 'TR Area Required'
 __doc__ = """
-testing button for anything.
+This button will update all the TR
+to 19.0 sqm in Area_Reqd param as double.
 __________________________________
+v1: 11 OCt 2023
 Author: Joven Mark Gumana
 """
 
