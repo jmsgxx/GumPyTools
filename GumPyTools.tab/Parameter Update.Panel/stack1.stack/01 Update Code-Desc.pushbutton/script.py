@@ -46,20 +46,19 @@ def get_list(param_code):
     param_code_list = []
     for index, item in enumerate(all_doors):
         if item is not None:
-            param = item.LookupParameter(param_code)
-            if param is not None:
-                param_code_list.append((index, param.AsValueString()))
+            params = item.LookupParameter(param_code)
+            if params is not None:
+                param_code_list.append((index, params.AsValueString()))
     return param_code_list
 
 
 def set_by_index(filtered_list, lookup_desc, param_dict):
+    param_error = []
     for index, value in filtered_list:
-        door_desc = all_doors[index].LookupParameter(lookup_desc)
-        if door_desc is not None and value in param_dict:
-            door_desc.Set(param_dict[value])
-        elif door_desc is not None and value not in param_dict:
-            raise KeyError("In {}, iterator '{}' does not match with any Dict Key".format(door_desc, value))
-
+        if value is not None:
+            door_desc = all_doors[index].LookupParameter(lookup_desc)
+            if door_desc is not None and value in param_dict:
+                door_desc.Set(param_dict[value])
 
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
@@ -115,14 +114,14 @@ with Transaction(doc, __title__) as t:
     door_prot_ps_tr_htx_lst     = get_list('Door Protection Push or Track Height Code')
 
     # 🟢 CALL THE set_by_index()
-    set_by_index(door_panel_lst, 'Door Panel', door_panel_dict)
-    set_by_index(door_op_lst, 'Door Operation', door_operation_dict)
-    set_by_index(door_lock_lst, 'Door Lock Function', door_lock_dict)
-    set_by_index(door_cons_lst, 'Door Construction', door_construction_dict)
-    set_by_index(door_prot_pl_wl_lst, 'Door Protection Pull or Wall', door_protection_dict)
-    set_by_index(door_prot_pl_wl_htx_lst, 'Door Protection Pull or Wall Height Text', door_protection_ht_dict)
-    set_by_index(door_prot_ps_tr_lst, 'Door Protection Push or Track', door_protection_dict)
-    set_by_index(door_prot_ps_tr_htx_lst, 'Door Protection Push or Track Height Text', door_protection_ht_dict)
+    set_by_index(door_panel_lst,            'Door Panel', door_panel_dict)
+    set_by_index(door_op_lst,               'Door Operation', door_operation_dict)
+    set_by_index(door_lock_lst,             'Door Lock Function', door_lock_dict)
+    set_by_index(door_cons_lst,             'Door Construction', door_construction_dict)
+    set_by_index(door_prot_pl_wl_lst,       'Door Protection Pull or Wall', door_protection_dict)
+    set_by_index(door_prot_pl_wl_htx_lst,   'Door Protection Pull or Wall Height Text', door_protection_ht_dict)
+    set_by_index(door_prot_ps_tr_lst,       'Door Protection Push or Track', door_protection_dict)
+    set_by_index(door_prot_ps_tr_htx_lst,   'Door Protection Push or Track Height Text', door_protection_ht_dict)
 
     # 🔷 this is a special section for "DOOR FEATURE CODE"
     """
@@ -144,12 +143,20 @@ with Transaction(doc, __title__) as t:
 
 
     def change_value(door_feat, door_dict):
+        errors = []  # List to store error messages
         for item in door_feat.split(','):
             item = item.strip()
-            if item in door_dict:
-                yield door_dict[item]
-            else:
-                raise KeyError("Item '{}' not found in door_dict".format(item))
+            try:
+                if item in door_dict:
+                    yield door_dict[item]
+                else:
+                    raise KeyError("Door Feature Item '{}' not found in door_dict".format(item))
+            except KeyError as e:
+                errors.append(str(e))  # Store the error message
+
+        # Print all errors at the end
+        for error in errors:
+            print(error)
 
 
     new_value_param = []

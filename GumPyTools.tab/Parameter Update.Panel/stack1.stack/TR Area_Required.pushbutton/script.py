@@ -81,10 +81,17 @@ if el_cat != 'Rooms':
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    param = selected_element.LookupParameter('AreaReqd')
+    # param = selected_element.LookupParameter('AreaReqd')
+    # if param:
+    #     value = convert_internal_units(62.3, True)
+    #     param.Set(value)
+
+    param = selected_element.get_Parameter(BuiltInParameter.ROOM_FINISH_CEILING)
     if param:
-        value = convert_internal_units(62.3, True)
-        param.Set(value)
+        # value = convert_internal_units(62.3, True)
+        param.Set('C10')
+
+
 
     t.Commit()
 

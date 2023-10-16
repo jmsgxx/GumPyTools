@@ -47,7 +47,6 @@ phase = (all_phase[1])
 
 all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
 
-
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
@@ -55,6 +54,7 @@ all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).
 with Transaction(doc, __title__) as t:
     t.Start()
 
+    # 🟢 SET THE 'Door Number' AND 'Mark'
     # Group doors by room
     doors_by_room = {}
     for door in all_doors:
@@ -73,5 +73,9 @@ with Transaction(doc, __title__) as t:
             door_number = "D{}".format(door_sequence)
             door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(door_mark)
             door.LookupParameter('Door Number').Set(door_number)
+
+
+    # for door_ins in all_doors:
+
 
     t.Commit()
