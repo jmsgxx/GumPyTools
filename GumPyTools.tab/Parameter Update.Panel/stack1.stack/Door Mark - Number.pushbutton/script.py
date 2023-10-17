@@ -1,12 +1,15 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Door Mark-Number'
+__title__ = 'Wall Tag Update'
 __doc__ = """
-This script will update the Door Mark
-and Door Number based on the number
-of instances inside the room.
+This script will update the wall.
+Number will based from the room.
+Change log:
+Script logic came from Room.Boundaries
+node of Archilab. 
 __________________________________
-v1 = 10 Oct 2023
+v2: 17 Oct 2023
+v1: 16 Oct 2023
 Author: Joven Mark Gumana
 """
 
@@ -16,7 +19,8 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from pyrevit import forms
+from Autodesk.Revit.UI.Selection import *
+from pyrevit import forms, revit
 
 import clr
 clr.AddReference("System")
@@ -41,11 +45,16 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
-# phase
-all_phase = list(doc.Phases)
-phase = (all_phase[1])
+walls = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls).ToElements()
+rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).ToElements()
 
-all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
+with forms.WarningBar(title='Pick an element:'):
+    selected_room = revit.pick_element()
+
+el_cat          = selected_room.Category.Name
+
+if el_cat != 'Rooms':
+    forms.alert('Just pick a Room', exitscript=True)
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
@@ -54,28 +63,20 @@ all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    # 🟢 SET THE 'Door Number' AND 'Mark'
-    # Group doors by room
-    doors_by_room = {}
-    for door in all_doors:
-        room = door.ToRoom[phase]
-        if room:
-            room_number = room.Number
-            if room_number not in doors_by_room:
-                doors_by_room[room_number] = []
-            doors_by_room[room_number].append(door)
+    options = SpatialElementBoundaryOptions()
 
-    # Generate a sequence for each group of doors and assign door numbers
-    for room_number, doors in doors_by_room.items():
-        for i, door in enumerate(doors):
-            door_sequence = str(i + 1).zfill(2)
-            door_mark = "{}-{}".format(room_number, door_sequence)
-            door_number = "D{}".format(door_sequence)
-            door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(door_mark)
-            door.LookupParameter('Door Number').Set(door_number)
+    # Get all the walls linked to the room
+    linked_walls = []
+    for boundary_lst in selected_room.GetBoundarySegments(options):
+        for boundary in boundary_lst:
+            wall = doc.GetElement(boundary.ElementId)
+            if isinstance(wall, Wall):
+                linked_walls.append(wall)
 
-
-    # for door_ins in all_doors:
-
+    # Assign a unique mark value to each wall
+    for i, wall in enumerate(linked_walls):
+        param = wall.get_Parameter(BuiltInParameter.DOOR_NUMBER)
+        if param:
+            param.Set('w{}'.format(i + 1))  # The mark values will be 'w1', 'w2', 'w3', etc.
 
     t.Commit()

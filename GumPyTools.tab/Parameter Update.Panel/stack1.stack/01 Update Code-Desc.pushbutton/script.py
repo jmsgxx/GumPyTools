@@ -1,12 +1,20 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Door Code-Description'
+__title__ = 'Door Update'
 __doc__ = """
-This script will add description
-on door parameters based on the code.
-Info will be fetched from CSV file
-that came from KOP.
+This script will update:
+- Door Panel Code
+- Door Operation Code
+- Door Lock Function Code
+- Door Construction Code
+- Door Protection Pull or Wall Code
+- Door Protection Pull or Wall Height Code
+- Door Protection Push or Track Code
+- Door Protection Push or Track Height Code
+- Door Mark
+- Door Number
 __________________________________
+v3: 16 Oct 2023
 v2: 08 Oct 2023
 v1: 03 Oct 2023
 Author: Joven Mark Gumana
@@ -100,6 +108,12 @@ with Transaction(doc, __title__) as t:
     t.Start()
 
     # ✅ GET ALL DOOR TYPES
+
+    all_phase = list(doc.Phases)
+    phase = (all_phase[1])
+
+    ins_all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
+
     all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors) \
         .WhereElementIsElementType().ToElements()
 
@@ -206,6 +220,29 @@ with Transaction(doc, __title__) as t:
             concat_door_remarks = dr_param.LookupParameter('Door Remarks')
             if concat_door_remarks is not None:
                 concat_door_remarks.Set(concat_string)
+
+    # 🟩 DOOR MARK AND NUMBERING
+    # ===============================================================================-
+
+    # 🟢 SET THE 'Door Number' AND 'Mark'
+    # Group doors by room
+    doors_by_room = {}
+    for door in ins_all_doors:
+        room = door.ToRoom[phase]
+        if room:
+            room_number = room.Number
+            if room_number not in doors_by_room:
+                doors_by_room[room_number] = []
+            doors_by_room[room_number].append(door)
+
+    # Generate a sequence for each group of doors and assign door numbers
+    for room_number, doors in doors_by_room.items():
+        for i, door in enumerate(doors):
+            door_sequence = str(i + 1).zfill(2)
+            door_mark = "{}-{}".format(room_number, door_sequence)
+            door_number = "D{}".format(door_sequence)
+            door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(door_mark)
+            door.LookupParameter('Door Number').Set(door_number)
 
     t.Commit()
 
