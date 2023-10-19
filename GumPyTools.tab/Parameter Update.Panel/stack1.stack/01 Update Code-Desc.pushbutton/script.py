@@ -30,23 +30,36 @@ from pyrevit import forms
 import os
 import csv
 import clr
+import xlrd
 clr.AddReference("System")
-from System.Collections.Generic import List
+
 
 # ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
 # ╠╣ ║ ║║║║║   ║ ║║ ║║║║
 # ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
 # ========================================
 
+directory = r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\NDH_Door Data.xlsx'
+wb = xlrd.open_workbook(directory)
 
-def create_dict(directory):
+
+def create_dict_xl(sheet_name):
     data = {}
-    with open(directory, 'r') as f:
-        param_dict = csv.DictReader(f)
-        for row in param_dict:
-            code = row['code']
-            description = row['description']
-            data[code] = description
+    # Open the workbook and select the worksheet by name
+    sheet = wb.sheet_by_name(sheet_name)
+
+    # index 0 = code, index 1 = description
+    code_index = 0
+    description_index = 1
+
+    # Iterate through each row in the worksheet
+    for j in range(sheet.nrows):
+        code = sheet.cell_value(j, code_index)
+        if isinstance(code, float) and code.is_integer():
+            code = int(code)
+        description = sheet.cell_value(j, description_index)
+        data[code] = description
+
     return data
 
 
@@ -61,18 +74,27 @@ def get_list(param_code):
 
 
 def set_by_index(filtered_list, lookup_desc, param_dict):
-    param_error = []
     for index, value in filtered_list:
         if value is not None:
+            try:
+                value = float(value)
+            except ValueError:
+                # If value is not a number, strip white spaces
+                value = value.strip()
             door_desc = all_doors[index].LookupParameter(lookup_desc)
-            if door_desc is not None and value in param_dict:
-                door_desc.Set(param_dict[value])
+            if door_desc is not None:
+                if value in (key.strip() if isinstance(key, str) else key for key in param_dict):
+                    door_desc.Set(param_dict[value])
+
+
 
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
+
+
 
 doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
@@ -81,23 +103,16 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
-# ✅-----------------XXX csv XXX-----------------
-door_panel_path             = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Panel.csv')
-door_operation_path         = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Operation.csv')
-door_lock_path              = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Lock Function.csv')
-door_construction_path      = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Construction.csv')
-door_protection_path        = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Protection.csv')
-door_protection_ht_path     = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Protection Height.csv')
-door_feature_path             = os.path.abspath(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\Door Feature.csv')
-
 # ✅ ----------------XXX dictionary XXX------------
-door_panel_dict             = create_dict(door_panel_path)
-door_operation_dict         = create_dict(door_operation_path)
-door_lock_dict              = create_dict(door_lock_path)
-door_construction_dict      = create_dict(door_construction_path)
-door_protection_dict        = create_dict(door_protection_path)
-door_protection_ht_dict     = create_dict(door_protection_ht_path)
-door_feature_dict             = create_dict(door_feature_path)
+door_panel_dict                = create_dict_xl('WORK_DR_KEY_PANEL')
+door_operation_dict            = create_dict_xl('WORK_DR_KEY_OPER')
+door_lock_dict                 = create_dict_xl('WORK_DR_KEY_LOCKFCN')
+door_construction_dict         = create_dict_xl('WORK_DR_KEY_CONST')
+door_prot_pull_dict            = create_dict_xl('WORK_DR_KEY_PROTPULL')
+door_prot_pullht_dict          = create_dict_xl('WORK_DR_KEY_PROTPULLHT')
+door_prot_push_dict            = create_dict_xl('WORK_DR_KEY_PROTPUSH')
+door_prot_pushht_dict          = create_dict_xl('WORK_DR_KEY_PROTPUSHHT')
+door_feature_dict              = create_dict_xl('WORK_DR_KEY_FEATURE')
 
 
 # ╔╦╗╔═╗╦╔╗╔
@@ -132,10 +147,10 @@ with Transaction(doc, __title__) as t:
     set_by_index(door_op_lst,               'Door Operation', door_operation_dict)
     set_by_index(door_lock_lst,             'Door Lock Function', door_lock_dict)
     set_by_index(door_cons_lst,             'Door Construction', door_construction_dict)
-    set_by_index(door_prot_pl_wl_lst,       'Door Protection Pull or Wall', door_protection_dict)
-    set_by_index(door_prot_pl_wl_htx_lst,   'Door Protection Pull or Wall Height Text', door_protection_ht_dict)
-    set_by_index(door_prot_ps_tr_lst,       'Door Protection Push or Track', door_protection_dict)
-    set_by_index(door_prot_ps_tr_htx_lst,   'Door Protection Push or Track Height Text', door_protection_ht_dict)
+    set_by_index(door_prot_pl_wl_lst,       'Door Protection Pull or Wall', door_prot_pull_dict)
+    set_by_index(door_prot_pl_wl_htx_lst,   'Door Protection Pull or Wall Height Text', door_prot_pullht_dict)
+    set_by_index(door_prot_ps_tr_lst,       'Door Protection Push or Track', door_prot_push_dict)
+    set_by_index(door_prot_ps_tr_htx_lst,   'Door Protection Push or Track Height Text', door_prot_pushht_dict)
 
     # 🔷 this is a special section for "DOOR FEATURE CODE"
     """
@@ -176,7 +191,10 @@ with Transaction(doc, __title__) as t:
     new_value_param = []
     for value in door_feat_lst:
         if value is not None:
-            new_value = ', '.join(change_value(value, dict(door_feature_dict)))
+            if value == '-' or value == '--':
+                new_value is None
+            else:
+                new_value = ', '.join(change_value(value, dict(door_feature_dict)))
         else:
             new_value = None
         new_value_param.append(new_value)
