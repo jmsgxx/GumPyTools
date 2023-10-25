@@ -72,6 +72,7 @@ with Transaction(doc, __title__) as t:
     options.OriginOffsetX = 0
     options.OriginOffsetY = 0
     options.PaperFormat = ExportPaperFormat.ISO_A0
+    # options.PaperOrientation.Auto
     options.PaperPlacement = PaperPlacementType.Center
     options.RasterQuality = RasterQualityType.High
     options.ReplaceHalftoneWithThinLines = False

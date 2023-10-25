@@ -27,8 +27,7 @@ Author: Joven Mark Gumana
 from Autodesk.Revit.DB import *
 from pyrevit import forms
 
-import os
-import csv
+import re
 import clr
 import xlrd
 clr.AddReference("System")
@@ -173,7 +172,7 @@ with Transaction(doc, __title__) as t:
 
     def change_value(door_feat, door_dict):
         errors = []  # List to store error messages
-        for item in door_feat.split(','):
+        for item in re.split('[,.]', door_feat):
             item = item.strip()
             try:
                 if item in door_dict:
