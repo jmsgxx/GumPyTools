@@ -21,6 +21,7 @@ from Autodesk.Revit.DB import *
 from pyrevit import forms, revit
 import xlsxwriter
 
+import re
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -47,12 +48,15 @@ list_of_categories = List[BuiltInCategory](
                          BuiltInCategory.OST_MedicalEquipment])
 
 multi_cat_filter = ElementMulticategoryFilter(list_of_categories)
-
 elements = FilteredElementCollector(doc, active_view.Id).WherePasses(multi_cat_filter).WhereElementIsNotElementType().ToElements()
 
-casework = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Casework).WhereElementIsNotElementType().ToElements()
 
+param_name = BuiltInParameter.ALL_MODEL_MANUFACTURER
+rule = ParameterFilterRuleFactory.CreateHasValueParameterRule(ElementId(param_name))
+filter_1 = ElementParameterFilter(rule)
 
+casework_el = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Casework)\
+                .WhereElementIsNotElementType().ToElements()
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
@@ -61,16 +65,13 @@ casework = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCateg
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    casework_man = []
-    for obj in casework:
-        casework_type_id = obj.GetTypeId()
-        casework_ins = doc.GetElement(casework_type_id)
-        casework_param = casework_ins.get_Parameter(BuiltInParameter.ALL_MODEL_MANUFACTURER)
-        # print(casework_param.AsString())
-    #     if casework_param is not None:
-    #         casework_man.append(casework_param)
-    # for i in casework_man:
-    #     i.Set('(BY USER)')
+    # for element in casework_el:
+    #     el_type_id = element.GetTypeId()
+    #     el_symbol = doc.GetElement(el_type_id)
+    #     manufacturer_param = el_symbol.get_Parameter(param_name)
+    #     if manufacturer_param.HasValue:
+            # print(manufacturer_param.AsString())
+            # manufacturer_param.Set('(BY USER)')
 
     for element in elements:
         # print(element.Category.Name)
@@ -78,7 +79,7 @@ with Transaction(doc, __title__) as t:
         el_symbol = doc.GetElement(el_type_id)
         # parameter
         manufacturer_val  = el_symbol.get_Parameter(BuiltInParameter.ALL_MODEL_MANUFACTURER)
-        # print(manufacturer_val.IsReadOnly.ToString())
+        print(manufacturer_val.IsReadOnly.ToString())
         if not manufacturer_val.IsReadOnly:
             manufacturer_val.Set('(BY USER)')
 
