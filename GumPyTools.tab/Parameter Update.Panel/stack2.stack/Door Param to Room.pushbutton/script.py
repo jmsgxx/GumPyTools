@@ -3,6 +3,10 @@
 __title__ = 'Door Param to Room'
 __doc__ = """
 This script transfers the Door parameters to Room.
+It will also create the Door Mark and Door Number
+by counting all the selected doors in the seleceted
+room and assigning numbers.
+
 HOW TO:
 - Click the command
 - Select the room you'd want the information
@@ -11,6 +15,7 @@ HOW TO:
 - A print statement will confirm that the
   selected doors was included on the list.
 ----------------------------------------------------
+v2: 29 Oct 2023
 v1: 27 Oct 2023
 Author: Joven Mark Gumana
 """
@@ -63,6 +68,26 @@ door_list = forms.SelectFromList.show(active_doors, multiselect=True, name_attr=
 with Transaction(doc, __title__) as t:
     t.Start()
 
+    # 🟨 ASSIGN DOOR MARK AND NUMBERS
+    doors_by_room = {}
+    for door in door_list:
+        room = selected_room
+        if room:
+            room_number = room.Number
+            if room_number not in doors_by_room:
+                doors_by_room[room_number] = []
+            doors_by_room[room_number].append(door)
+
+    # Generate a sequence for each group of doors and assign door numbers
+    for room_number, doors in doors_by_room.items():
+        for i, door in enumerate(doors):
+            door_sequence = str(i + 1).zfill(2)
+            door_mark = "{}-{}".format(room_number, door_sequence)
+            door_number = "D{}".format(door_sequence)
+            door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).Set(door_mark)
+            door.LookupParameter('Door Number').Set(door_number)
+
+    # 🟡 COPYING DOORS PARAM TO ROOM
     # GET THE LIST TO BE SET
     room_door_marks_list = []
     room_door_clear_heights_list = []
@@ -71,7 +96,6 @@ with Transaction(doc, __title__) as t:
 
     for door in door_list:
         # 🟦 GET DOOR PARAMETERS TO COPY
-
         # -------xxx get the type first xxx------
         dr_type_id      = door.GetTypeId()
         door_symbol     = doc.GetElement(dr_type_id)
@@ -130,13 +154,13 @@ room_name = selected_room.LookupParameter('Name')
 
 print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
 print('=' * 50)
-print("DOOR NUMBER: " + '\n'.join(room_door_marks_list))
+print("DOOR NUMBER: \n" + '\n'.join(room_door_marks_list))
 print('=' * 50)
-print("DOOR CLEAR HEIGHT: " + '\n'.join(room_door_clear_heights_list))
+print("DOOR CLEAR HEIGHT: \n" + '\n'.join(room_door_clear_heights_list))
 print('=' * 50)
-print("DOOR CLEAR WIDTH: " + '\n'.join(room_door_clear_widths_list))
+print("DOOR CLEAR WIDTH: \n" + '\n'.join(room_door_clear_widths_list))
 print('=' * 50)
-print("DOOR DESCRIPTION: "+'\n' + '\n\n'.join(room_door_remarks_list))
+print("DOOR DESCRIPTION: \n" + '\n' + '\n\n'.join(room_door_remarks_list))
 
 
 
