@@ -25,9 +25,11 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 from pyrevit import forms, revit
-
 import time
 import clr
+from datetime import datetime
+import pyrevit
+from pyrevit import script
 clr.AddReference("System")
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
@@ -114,6 +116,15 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 # =============================================================================================
+current_datetime = datetime.now()
+time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
+
+output = pyrevit.output.get_output()
+output.add_style('background {color: yellow}')
+output.center()
+output.resize(300, 500)
+output.print_md('### Parameters Updated: {}'.format(time_stamp))
+
 room_name = selected_room.LookupParameter('Name')
 
 print("ROOM NAME: {}".format(room_name.AsValueString().upper()))

@@ -29,6 +29,9 @@ from Autodesk.Revit.DB import *
 from pyrevit import forms, revit
 from System.Collections.Generic import List
 from collections import Counter
+from datetime import datetime
+import pyrevit
+from pyrevit import script
 
 import clr
 import revitron
@@ -171,7 +174,8 @@ with Transaction(doc, __title__) as t:
 
     # convert to set to get the unique items
     unique_by_user_cat      = set(by_user_cat)
-    unique_by_user_item     = set(by_user_item)
+    filtered_by_user_item = [item for item in by_user_item if item is not None]
+    unique_by_user_item     = set(filtered_by_user_item)
     unique_by_user_desc     = set(by_user_desc)
 
     #  convert to string
@@ -442,7 +446,23 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 # =============================================================================================
+current_datetime = datetime.now()
+time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 
+output = pyrevit.output.get_output()
+output.add_style('background {color: yellow}')
+output.center()
+output.resize(300, 500)
+output.print_md('### Parameters Updated: {}\n (output is too many to print)'.format(time_stamp))
+print("=" * 50)
+print('SAMPLE OUTPUT.....')
+print("=" * 50)
+print("LOOSE EQUIPMENTS")
+print("CATEGORY: {}".format(room_user_cat.AsValueString()))
+print("CODE:")
+print(room_user_item.AsValueString())
+print("DESCRIPTION:")
+print(room_user_qty.AsValueString())
 
 
 
