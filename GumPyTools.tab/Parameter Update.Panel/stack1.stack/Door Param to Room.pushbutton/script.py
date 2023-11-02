@@ -46,6 +46,12 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
+current_datetime = datetime.now()
+time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
+output = pyrevit.output.get_output()
+output.center()
+output.resize(300, 500)
+
 all_doors = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
 active_doors = [door for door in all_doors if door.Name != 'STANDARD']
 
@@ -68,6 +74,7 @@ door_list = forms.SelectFromList.show(active_doors, multiselect=True, name_attr=
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
+# with revit.Transaction(doc, __title__):
 with Transaction(doc, __title__) as t:
     t.Start()
 
@@ -152,14 +159,6 @@ with Transaction(doc, __title__) as t:
     t.Commit()
 # =====================================================================================================================
 
-# END OF TRANSACTION
-current_datetime = datetime.now()
-time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
-
-output = pyrevit.output.get_output()
-output.add_style('background {color: yellow}')
-output.center()
-output.resize(300, 500)
 output.print_md('### Parameters Updated: {}'.format(time_stamp))
 
 room_name = selected_room.LookupParameter('Name')

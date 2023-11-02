@@ -24,7 +24,7 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from pyrevit import forms
+from pyrevit import forms, revit
 from datetime import datetime
 import pyrevit
 from pyrevit import script
@@ -240,11 +240,8 @@ with Transaction(doc, __title__) as t:
             if concat_door_remarks is not None:
                 concat_door_remarks.Set(concat_string)
 
-
-
     t.Commit()
 #     ==================================================================================
-
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 
