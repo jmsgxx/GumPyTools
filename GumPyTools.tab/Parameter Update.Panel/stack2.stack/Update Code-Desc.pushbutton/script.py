@@ -245,8 +245,5 @@ with Transaction(doc, __title__) as t:
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 
-output = pyrevit.output.get_output()
-output.add_style('background {color: yellow}')
-output.center()
-output.resize(75, 150)
-output.print_md('### Door Parameters Updated: {}'.format(time_stamp))
+forms.alert('Door Parameters updated!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
+

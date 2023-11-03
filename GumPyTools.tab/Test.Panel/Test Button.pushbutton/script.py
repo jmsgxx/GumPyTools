@@ -46,8 +46,7 @@ active_level    = doc.ActiveView.GenLevel
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
-with revit.Transaction(doc, __title__):
-    # code starts here
+with Transaction(doc, __title__) as t:
+    t.Start()
 
-
-
+    t.Commit()
