@@ -1,22 +1,14 @@
 from Autodesk.Revit.DB import *
-new_paint = Paint(elementId, face, materialId)
+import pyrevit
 
-def PaintWallFaces(wall, matId):
-"""Paint any unpainted faces of a given wall"""\
-# type hint:
-doc = wall.Document
-geometryElement = wall.get_Geometry(Options())
-for geometryObject in geometryElement:
-    if geometryObject is Solid:
-        solid = geometryObject
-        for face in solid.Faces:
-            if doc.IsPainted(wall.Id, face) == False:
-                doc.Paint(wall.Id, face, matId)
+all_ref = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_CLines).WhereElementIsNotElementType().ToElements()
+
+t = Transaction(doc, 'ref delete')
 
 
-
-
-
-
-
-
+t.Start()
+for ref in all_ref:
+    ref_id = ref.Id
+    if ref.SubCategories.Name is None:
+        doc.Delete(ref_id)
+t.Commit()

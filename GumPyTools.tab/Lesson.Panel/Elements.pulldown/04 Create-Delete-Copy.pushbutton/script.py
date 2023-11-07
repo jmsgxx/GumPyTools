@@ -231,24 +231,24 @@ with Transaction(doc, __title__) as t:
     # pt_2 = XYZ(140, 20, 0)
     # pt_3 = XYZ(120, 20, 0)
 	
-    # # CONVERT POINTS INTO LINES
-    # l_0 = Line.CreateBound(pt_0, pt_1)
-    # l_1 = Line.CreateBound(pt_1, pt_2)
-    # l_2 = Line.CreateBound(pt_2, pt_3)
-    # l_3 = Line.CreateBound(pt_3, pt_0)
+    # CONVERT POINTS INTO LINES
+    l_0 = Line.CreateBound(pt_0, pt_1)
+    l_1 = Line.CreateBound(pt_1, pt_2)
+    l_2 = Line.CreateBound(pt_2, pt_3)
+    l_3 = Line.CreateBound(pt_3, pt_0)
 
-    # # GROUP THE LINES AS BOUNDARIES
-    # boundary = CurveLoop()
-    # boundary.Append(l_0)
-    # boundary.Append(l_1)
-    # boundary.Append(l_2)
-    # boundary.Append(l_3)
+    # GROUP THE LINES AS BOUNDARIES
+    boundary = CurveLoop()
+    boundary.Append(l_0)
+    boundary.Append(l_1)
+    boundary.Append(l_2)
+    boundary.Append(l_3)
 
-    # # LIST OF BOUNDARIES
-    # list_boundaries = List[CurveLoop]()
-    # list_boundaries.Add(boundary)
+    # LIST OF BOUNDARIES
+    list_boundaries = List[CurveLoop]()
+    list_boundaries.Add(boundary)
 
-    # filled_region = FilledRegion.Create(doc, type_id, active_view.Id, list_boundaries)
+    filled_region = FilledRegion.Create(doc, type_id, active_view.Id, list_boundaries)
 
 
     # =================================================================================================================
