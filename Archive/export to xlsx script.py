@@ -54,9 +54,6 @@ with Transaction(doc, __title__) as t:
     workbook = xlsxwriter.Workbook(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\Output\A4 Template _1.xlsx')
     worksheet = workbook.add_worksheet()
 
-    # var
-    wrap_format = workbook.add_format({'text_wrap': True})
-
     row = 0
 
     for door in door_list:
@@ -76,7 +73,7 @@ with Transaction(doc, __title__) as t:
         worksheet.write('A10', door_mark)
         worksheet.write('B10', door_height+" mm")
         worksheet.write('C10', door_width1 + " + " + door_width2)
-        worksheet.write('D10', door_remarks, wrap_format)
+        worksheet.write('D10', door_remarks)
 
         row += 1
     workbook.close()
