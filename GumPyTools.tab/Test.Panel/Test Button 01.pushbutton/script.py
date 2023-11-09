@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 02'
+__title__ = 'Test Button 01'
 __doc__ = """
 This script is a test.
 __________________________________
@@ -42,6 +42,21 @@ active_level    = doc.ActiveView.GenLevel
 all_phase = list(doc.Phases)
 phase = (all_phase[-1])
 
+
+all_links = FilteredElementCollector(doc).OfClass(RevitLinkInstance).ToElements()
+
+# Find the specific link
+mep_model = None
+for link in all_links:
+    link_name = link.Name
+    if 'EUM' in link_name:
+        mep_model = link
+
+
+linked_doc = mep_model.GetLinkDocument()
+
+
+#  list of categories you're looking on the link
 list_of_categories = List[BuiltInCategory]([
     BuiltInCategory.OST_DataDevices,
     BuiltInCategory.OST_ElectricalFixtures,
@@ -51,24 +66,10 @@ list_of_categories = List[BuiltInCategory]([
 
 level_filter = ElementLevelFilter(active_level.Id)
 category_filter = ElementMulticategoryFilter(list_of_categories)
+
 combined_filter = LogicalAndFilter(category_filter, level_filter)
-
-all_elements_in_level = FilteredElementCollector(doc).WherePasses(combined_filter).WhereElementIsNotElementType().ToElements()
-
-# ROOM
-all_links = FilteredElementCollector(doc).OfClass(RevitLinkInstance).ToElements()
-
-# Find the specific link
-ar_model = None
-for link in all_links:
-    link_name = link.Name
-    if 'ARC' in link_name:
-        ar_model = link
-
-linked_doc = ar_model.GetLinkDocument()
-
-all_rooms_in_level = FilteredElementCollector(linked_doc).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
-
+#  filtered elements in the link
+all_elements_in_link = FilteredElementCollector(linked_doc).WherePasses(combined_filter).WhereElementIsNotElementType().ToElements()
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
@@ -76,31 +77,8 @@ all_rooms_in_level = FilteredElementCollector(linked_doc).OfCategory(BuiltInCate
 # =========================================================================================================
 with Transaction(doc, __title__) as t:
     t.Start()
-    for room in all_rooms_in_level:
-        boundary_option = SpatialElementBoundaryOptions()
-        boundary_segments = room.GetBoundarySegments(boundary_option)
 
-        if boundary_segments:
-            base = CurveLoop()
-
-            for segment in boundary_segments[0]:
-                base.Append(segment.GetCurve())
-            try:
-                cuboid = GeometryCreationUtilities.CreateExtrusionGeometry([base], XYZ.BasisZ, 2100)
-
-                num_faces = cuboid.Faces.Size
-                num_edges = cuboid.Edges.Size
-
-                print('Number of faces: ', num_faces)
-                print('Number of edges: ', num_edges)
-
-            except Exception as e:
-                print("An error occurred: ", e)
-
-        else:
-            print("No boundary segments found for room.")
-    # ================================================================================================================
-    for element in all_elements_in_level:
+    for element in all_elements_in_link:
         if element:
             #  type param
             el_type_id = element.GetTypeId()
@@ -109,9 +87,8 @@ with Transaction(doc, __title__) as t:
                 type_description_param = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
                 description_param = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION)
                 type_image_param = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
-                # print(type_description_param.AsString())
-                # print(type_image_param.AsValueString())
-
+                print(type_description_param.AsString())
+                print(description_param.AsValueString())
 
             #  instance param
             element_id = element.Id
