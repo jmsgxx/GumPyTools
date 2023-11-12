@@ -84,7 +84,7 @@ worksheet = workbook.add_worksheet()
 headings = ['Element ID', 'Category', 'Family', 'Type', 'Image', 'PosX', 'PosY', 'PosZ', 'Room']
 for i, heading in enumerate(headings):
     worksheet.write(0, i, heading)
-
+worksheet.set_column(0, len(headings), 30)
 # ===========================================================================================================
 
 # 🟩 BS elements
@@ -163,23 +163,23 @@ with Transaction(doc, __title__) as t:
 
 # ================================================================================================================
     # 🔵 ELEMENT
-
-
     room_numbers = []   # extracted from temp rooms
     room_name = None
+
+    row = 1
     for element in all_elements_in_level:
         if element:
-            #  type param
-            el_type_id = element.GetTypeId()
-            el_type = doc.GetElement(el_type_id)
-            if el_type:
-                type_description    = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
-                type_image          = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
-
             #  instance param
             element_id = element.Id
             category_name = element.Category.Name
             family_name = element.get_Parameter(BuiltInParameter.ELEM_FAMILY_PARAM).AsValueString()
+
+            #  type param
+            el_type_id = element.GetTypeId()
+            el_type = doc.GetElement(el_type_id)
+            if el_type:
+                type_description = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
+                type_image = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
 
             element_location = element.Location
             if element_location is not None:
@@ -190,10 +190,10 @@ with Transaction(doc, __title__) as t:
 
             # room of elements
             room_active = element.Room[phase]
-            room_active_name = room_active.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
-            room_name = room_active_name
             if room_active:
-                room_active_number  = room_active.Number
+                room_active_name = room_active.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
+                room_name = room_active_name  # room name
+                room_active_number = room_active.Number  # room number
                 room_numbers.append(room_active_number)
 
         drawings_dict = {}  # initialize a dictionary
@@ -209,35 +209,29 @@ with Transaction(doc, __title__) as t:
                 drawings_dict[room_numbers[i]] += 1
             room_numbers[i] = "{}.{}".format(room_numbers[i], str(drawings_dict[room_numbers[i]]).zfill(2))
 
-
-    # write to Excel
-    row = 1
-    for room_number in room_numbers:
-        print('Updated Room Number:\n')
-        print(room_name.upper())
-        print(room_number)
-        print('--x--' * 4)
         # 🆗 WRITE TO EXCEL
-        worksheet.write('A' + str(row+1), int((str(element_id))))
-        worksheet.write('B' + str(row+1), category_name)
-        worksheet.write('C' + str(row+1), family_name)
-        worksheet.write('D' + str(row+1), type_description.AsValueString())
-        worksheet.write('E' + str(row+1), type_image.AsValueString().strip())
-        worksheet.write('F' + str(row+1), pos_x)
-        worksheet.write('G' + str(row+1), pos_y)
-        worksheet.write('H' + str(row+1), pos_z)
-        worksheet.write('I' + str(row+1), room_number)
+        worksheet.write('A' + str(row + 1), int((str(element_id))))
+        worksheet.write('B' + str(row + 1), category_name)
+        worksheet.write('C' + str(row + 1), family_name)
+        worksheet.write('D' + str(row + 1), type_description.AsValueString())
+        worksheet.write('E' + str(row + 1), type_image.AsValueString().strip())
+        worksheet.write('F' + str(row + 1), pos_x)
+        worksheet.write('G' + str(row + 1), pos_y)
+        worksheet.write('H' + str(row + 1), pos_z)
+        for room_number in room_numbers:
+            worksheet.write('I' + str(row + 1), room_number)
 
-        row += 1
+        row += 1  # increment row at the end of the loop
 
     workbook.close()
 
     if t.GetStatus() == TransactionStatus.Started:
         t.RollBack()
 # ==========================================================================================================
-
+output.close_others(all_open_outputs=True)
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 forms.alert('Excel exported!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
+
 
 
