@@ -228,7 +228,6 @@ with Transaction(doc, __title__) as t:
     if t.GetStatus() == TransactionStatus.Started:
         t.RollBack()
 # ==========================================================================================================
-output.close_others(all_open_outputs=True)
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 forms.alert('Excel exported!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)

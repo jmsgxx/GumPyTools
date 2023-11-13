@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 01'
+__title__ = 'AR Wall info Export'
 __doc__ = """
-This script is a test.
+This script will export information
+of walls on current Level such as:
+- Element ID
+- Wall Type
+- Room Number
+- Start X, Y, Z
+- End X, Y, Z
+- Instance Mark
 __________________________________
-
+HOW TO:
+- Just run the script and select
+destination file. It will export out in a few
+seconds
+==================================
+v1: 13 Nov 2023
 Author: Joven Mark Gumana
 """
 
@@ -13,7 +25,6 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-import pyrevit
 from pyrevit import script, forms, revit
 from System.Collections.Generic import List
 from datetime import datetime
@@ -21,12 +32,6 @@ import xlsxwriter
 
 import clr
 clr.AddReference("System")
-
-
-# ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
-# ╠╣ ║ ║║║║║   ║ ║║ ║║║║
-# ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
-# ========================================
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
