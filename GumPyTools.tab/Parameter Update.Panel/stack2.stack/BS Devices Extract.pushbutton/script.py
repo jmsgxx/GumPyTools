@@ -47,7 +47,7 @@ from Autodesk.Revit.DB import *
 from System.Collections.Generic import List
 from pyrevit import script, forms, revit
 from datetime import datetime
-
+import time
 import xlsxwriter
 import clr
 clr.AddReference("System")
@@ -146,6 +146,8 @@ with Transaction(doc, __title__) as t:
             print("Room Name:   {}".format(rm_link_name))  # print statement to check rm_link_name
             print("Room Number: {}".format(rm_link_number))  # print statement to check rm_link_number
             print('-' * 50)
+
+    time.sleep(5)
 
     # CHECK THE CURRENT MODEL AFTER THE CREATION OF TEMPORARY ROOM
     current_level_filter = ElementLevelFilter(active_level.Id)

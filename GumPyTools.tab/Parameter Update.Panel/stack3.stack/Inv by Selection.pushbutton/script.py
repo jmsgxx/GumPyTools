@@ -1,23 +1,24 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Inv Param to Room'
+__title__ = 'Inv by Selection'
 __doc__ = """
-This script will set first the loose
-furniture to have the 'Manufacturer'
-parameter to '(BY USER)' by selecting
-all the  elements that is under 'By User'
-View Filter which are colored Blue.
-It will then segregate the Loose items and
-Built-in items and copy the necessary
-parameters to Room Parameter.
-============================================
+NOT FINISHED. NEED TO COLLECT THE ELEMENTS
+PROPERLY.
+
+This script will select only specific
+elements to be assigned on a specific
+room.
+
+REASON:
+There are multiple rooms in a single
+active view.
+
 HOW TO:
- - Click the command to select
- room.
- - A confirmation prompt will pop up
- after the script was executed.
---------------------------------------------
-v1: Oct 31 2023
+1. Select a room.
+2. If there's no error, window select
+elements to update.
+--------------------------------------
+v1: 15 Nov 2023
 Author: Joven Mark Gumana
 """
 
@@ -30,22 +31,13 @@ from pyrevit import forms, revit
 from System.Collections.Generic import List
 from collections import Counter
 from datetime import datetime
-import pyrevit
-from pyrevit import script
 
 import clr
 import revitron
 clr.AddReference("System")
 
 
-# ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
-# ╠╣ ║ ║║║║║   ║ ║║ ║║║║
-# ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
-# ========================================
 
-
-
-# ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
@@ -68,8 +60,8 @@ el_cat          = selected_room.Category.Name
 if el_cat != 'Rooms':
     forms.alert('Just pick a Room', exitscript=True)
 
-# COLLECTOR OF ELEMENTS TO SET '(BY USER)'
-collector = FilteredElementCollector(doc, active_view.Id).WhereElementIsNotElementType()
+# Use the rectangle picking tool to identify model elements to select.
+collector = uidoc.Selection.PickElementsByRectangle("Select by rectangle")
 
 # 🟠 ROOM PARAMETERS
 # loose param
@@ -77,7 +69,6 @@ room_user_cat   = selected_room.LookupParameter('Room Inventory By User Category
 room_user_item  = selected_room.LookupParameter('Room Inventory By User Items')
 room_user_desc  = selected_room.LookupParameter('Room Inventory By User Item Description')
 room_user_qty   = selected_room.LookupParameter('Room Inventory By User Item Quantities')
-
 
 
 # ╔╦╗╔═╗╦╔╗╔
