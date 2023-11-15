@@ -86,7 +86,7 @@ with Transaction(doc, __title__) as t:
             if element_name != "":
                 elements.append(element)
 
-    by_user_lst         = []    # family instance '(BY USER)'
+    by_user_lst  = []    # family instance '(BY USER)'
     built_in_lst = []
 
     for element in elements:
