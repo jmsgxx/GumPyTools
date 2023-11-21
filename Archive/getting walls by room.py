@@ -29,7 +29,7 @@ import time
 import clr
 from datetime import datetime
 import pyrevit
-from Autodesk.Revit.UI.Selection import ObjectType
+from pyrevit import script
 clr.AddReference("System")
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
@@ -54,6 +54,9 @@ el_cat          = selected_room.Category.Name
 if el_cat != 'Rooms':
     forms.alert('Just pick a Room', exitscript=True)
 
+calculator      = SpatialElementGeometryCalculator(doc)
+results         = calculator.CalculateSpatialElementGeometry(selected_room)
+space_solid     = results.GetGeometry()
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
@@ -61,18 +64,22 @@ if el_cat != 'Rooms':
 # =========================================================================================================
 with Transaction(doc, __title__) as t:
     t.Start()
-    # TODO fix the wall
+
     wall_list       = []  # list of wall that has "FIN" on wall.Name
     mark_wall       = []
     type_mark_wall  = []
     desc_wall       = []
 
-    selection = uidoc.Selection
-    wall_element_list = doc.GetElement(selection.PickObject(ObjectType.Element, 'Get element').ElementId)
+    for face in space_solid.Faces:
+        spatial_sub_face_list = results.GetBoundaryFaceInfo(face)
+        if len(spatial_sub_face_list) == 0:
+            continue
 
-    for wall_element in wall_element_list:
-        if "FIN" in wall_element.Name:
-            wall_list.append(wall_element)
+        for sub_face in spatial_sub_face_list:
+            host_id     = sub_face.SpatialBoundaryElement.HostElementId
+            wall        = doc.GetElement(host_id)
+            if "FIN" in wall.Name:
+                wall_list.append(wall)
 
     # room parameter
     room_data_set_param = selected_room.LookupParameter('Room Wall Data Set 1')

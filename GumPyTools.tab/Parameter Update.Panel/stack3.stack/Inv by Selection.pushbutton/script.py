@@ -164,8 +164,9 @@ with Transaction(doc, __title__) as t:
     split_by_user_qty = [str(item) for item in by_user_qty]
 
     # convert to set to get the unique items
-    unique_by_user_cat      = set(by_user_cat)
-    filtered_by_user_item = [item for item in by_user_item if item is not None]
+    filtered_by_user_cat    = [item for item in by_user_cat if item is not None]
+    unique_by_user_cat      = set(filtered_by_user_cat)
+    filtered_by_user_item   = [item for item in by_user_item if item is not None]
     unique_by_user_item     = set(filtered_by_user_item)
     unique_by_user_desc     = set(by_user_desc)
 
