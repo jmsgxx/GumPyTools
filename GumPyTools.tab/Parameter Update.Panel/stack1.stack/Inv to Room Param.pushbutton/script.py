@@ -2,14 +2,14 @@
 
 __title__ = 'Inv Param to Room'
 __doc__ = """
-This script will set first the loose
-furniture to have the 'Manufacturer'
-parameter to '(BY USER)' by selecting
-all the  elements that is under 'By User'
-View Filter which are colored Blue.
-It will then segregate the Loose items and
-Built-in items and copy the necessary
-parameters to Room Parameter.
+YOU CANNOT USE THIS IN ONE WHOLE FLOOR!!!
+
+WHAT IT DOES:
+- Set the ‘Manufacturer’ parameter of loose furniture to ‘(BY USER)’.
+- Select all elements under the ‘By User’ View Filter 
+  that are colored blue.
+- Segregate loose items and built-in items.
+- Copy the necessary parameters to Room Parameter.
 ============================================
 HOW TO:
  - Click the command to select
@@ -27,22 +27,11 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 from pyrevit import forms, revit
-from System.Collections.Generic import List
 from collections import Counter
 from datetime import datetime
-import pyrevit
-from pyrevit import script
-
 import clr
-import revitron
+
 clr.AddReference("System")
-
-
-# ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
-# ╠╣ ║ ║║║║║   ║ ║║ ║║║║
-# ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
-# ========================================
-
 
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗

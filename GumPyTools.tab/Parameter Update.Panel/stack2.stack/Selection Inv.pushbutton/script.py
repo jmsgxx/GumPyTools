@@ -2,9 +2,6 @@
 
 __title__ = 'Selection Inv'
 __doc__ = """
-NOT FINISHED. NEED TO COLLECT THE ELEMENTS
-PROPERLY.
-
 This script will select only specific
 elements to be assigned on a specific
 room.
@@ -27,13 +24,13 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI.Selection import ObjectType
 from pyrevit import forms, revit
+import pyrevit
 from System.Collections.Generic import List
 from collections import Counter
 from datetime import datetime
-
 import clr
-import revitron
 clr.AddReference("System")
 
 
@@ -60,8 +57,15 @@ el_cat          = selected_room.Category.Name
 if el_cat != 'Rooms':
     forms.alert('Just pick a Room', exitscript=True)
 
-# Use the rectangle picking tool to identify model elements to select.
-collector = uidoc.Selection.PickElementsByRectangle("Select by rectangle")
+selection = uidoc.Selection
+picked_obj = selection.PickObjects(ObjectType.Element, 'Select Objects')
+
+element_ids = []
+for obj in picked_obj:
+    element_id = obj.ElementId
+    element_ids.append(element_id)
+
+collector = [doc.GetElement(element_id) for element_id in element_ids]
 
 # 🟠 ROOM PARAMETERS
 # loose param
@@ -440,8 +444,19 @@ with Transaction(doc, __title__) as t:
 # =============================================================================================
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
+output = pyrevit.output.get_output()
+output.center()
+output.resize(200, 300)
 
-forms.alert('Parameters updated!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
+output.print_md('### Parameters Updated: {}'.format(time_stamp))
+
+room_name = selected_room.LookupParameter('Name')
+
+print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
+print('=' * 50)
+print("Total Built-In Furniture: {}".format(len(built_in_lst)))
+print('=' * 50)
+print("Total By User Furniture: {}".format(len(by_user_lst)))
 
 
 

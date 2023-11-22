@@ -4,8 +4,8 @@ __title__ = 'Door Param to Room'
 __doc__ = """
 This script transfers the Door parameters to Room.
 It will also create the Door Mark and Door Number
-by counting all the selected doors it will update
-it's parameter automatically.
+by counting all the selected doors in the seleceted
+room and assigning numbers.
 
 HOW TO:
 - Click the command
@@ -14,9 +14,7 @@ HOW TO:
 - Select the doors that you want
 - A print statement will confirm that the
   selected doors was included on the list.
-  If not it will give an error print statement.
 ----------------------------------------------------
-v3: 22 Nov 2023 - picked doors instead of checkbox
 v2: 29 Oct 2023
 v1: 27 Oct 2023
 Author: Joven Mark Gumana
@@ -33,6 +31,7 @@ from pyrevit import forms, revit
 import clr
 from datetime import datetime
 import pyrevit
+from pyrevit import script
 
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -54,6 +53,9 @@ output = pyrevit.output.get_output()
 output.center()
 output.resize(300, 500)
 
+all_doors = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
+active_doors = [door for door in all_doors if door.Name != 'STANDARD']
+
 # 🔵 ROOM
 # =============================================================================================================
 with forms.WarningBar(title='Pick an element:'):
@@ -66,6 +68,8 @@ if el_cat != 'Rooms':
 
 # ===========================================================================================================
 # 🔵 DOOR
+# door_list = forms.SelectFromList.show(active_doors, multiselect=True, name_attr='Name', button_name='Select Doors')
+
 door_pick = uidoc.Selection.PickObjects(ObjectType.Element, 'Select Doors')
 
 door_ids = []
@@ -145,7 +149,7 @@ with Transaction(doc, __title__) as t:
     room_door_clear_heights_str         = '\n\n'.join(room_door_clear_heights_list)
     room_door_clear_widths_str          = '\n\n'.join(room_door_clear_widths_list)
     room_door_remarks_str               = '\n\n'.join(room_door_remarks_list)
-
+    #
     # 🟪 ROOM PARAMETERS
     room                        = selected_room
     room_door_marks             = room.LookupParameter('Room Door Marks')

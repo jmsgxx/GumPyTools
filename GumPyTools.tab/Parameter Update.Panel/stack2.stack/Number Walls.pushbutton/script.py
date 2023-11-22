@@ -64,8 +64,9 @@ with Transaction(doc, __title__) as t:
     elements = [doc.GetElement(element_id) for element_id in element_ids]
 
     for wall_element in elements:
-        if "FIN" in wall_element.Name:
-            wall_list.append(wall_element)
+        if wall_element:
+            if "FIN" in wall_element.Name:
+                wall_list.append(wall_element)
 
     for number, wall in enumerate(wall_list, start=1):
         # number the wall mark based on the number of the walls in the room
