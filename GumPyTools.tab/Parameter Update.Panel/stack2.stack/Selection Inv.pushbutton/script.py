@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Inv by Selection'
+__title__ = 'Selection Inv'
 __doc__ = """
 NOT FINISHED. NEED TO COLLECT THE ELEMENTS
 PROPERLY.

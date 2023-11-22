@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Door Update'
+__title__ = 'Door Code-Desc'
 __doc__ = """
 This script will update:
 - Door Panel Code

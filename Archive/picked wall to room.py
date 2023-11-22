@@ -10,11 +10,12 @@ Room Parameter: Wall Data Set 1 - this is
 a concatenation of the 3 Wall Parameters.
 
 HOW TO:
-Select the room. It will automatically 
-generate the needed parameters. 
-This will be confirmed by a print 
-statement at the end of the script.
+1. Run Command.
+2. It will prompt you to select the finish
+walls to be numbered.
+3. Select Room to put the info.
 -----------------------------------------
+v2. 22 Nov 2023
 v1: 30 Oct 2023
 Author: Joven Mark Gumana
 """
@@ -29,60 +30,44 @@ import time
 import clr
 from datetime import datetime
 import pyrevit
-from pyrevit import script
+from Autodesk.Revit.UI.Selection import ObjectType
 clr.AddReference("System")
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
-
-
 doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-
-
-with forms.WarningBar(title='Pick an element:'):
-    selected_room = revit.pick_element()
-
-el_cat          = selected_room.Category.Name
-
-if el_cat != 'Rooms':
-    forms.alert('Just pick a Room', exitscript=True)
-
-calculator      = SpatialElementGeometryCalculator(doc)
-results         = calculator.CalculateSpatialElementGeometry(selected_room)
-space_solid     = results.GetGeometry()
-
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
 with Transaction(doc, __title__) as t:
     t.Start()
-
     wall_list       = []  # list of wall that has "FIN" on wall.Name
     mark_wall       = []
     type_mark_wall  = []
     desc_wall       = []
 
-    for face in space_solid.Faces:
-        spatial_sub_face_list = results.GetBoundaryFaceInfo(face)
-        if len(spatial_sub_face_list) == 0:
-            continue
+    selection = uidoc.Selection
+    wall_pick = selection.PickObjects(ObjectType.Element, 'Select Finish Walls')   # pickobject"S" prompts to select multiple objects
 
-        for sub_face in spatial_sub_face_list:
-            host_id     = sub_face.SpatialBoundaryElement.HostElementId
-            wall        = doc.GetElement(host_id)
-            if "FIN" in wall.Name:
-                wall_list.append(wall)
+    element_ids = []
+    for picked_walls in wall_pick:
+        element_id = picked_walls.ElementId
+        element_ids.append(element_id)
 
-    # room parameter
-    room_data_set_param = selected_room.LookupParameter('Room Wall Data Set 1')
+    elements = [doc.GetElement(element_id) for element_id in element_ids]
+
+    for wall_element in elements:
+        if "FIN" in wall_element.Name:
+            wall_list.append(wall_element)
+
 
     for number, wall in enumerate(wall_list, start=1):
         # number the wall mark based on the number of the walls in the room
@@ -104,6 +89,16 @@ with Transaction(doc, __title__) as t:
         type_mark_wall.append(wall_type_mark.AsValueString())
         desc_wall.append(wall_type_description.AsValueString())
 
+    # room selection
+    with forms.WarningBar(title='Pick an element:'):
+        selected_room = revit.pick_element()
+
+    el_cat = selected_room.Category.Name
+    if el_cat != 'Rooms':
+        forms.alert('Just pick a Room', exitscript=True)
+
+    # room parameter
+    room_data_set_param = selected_room.LookupParameter('Room Wall Data Set 1')
     room_wall_data          = list(zip(mark_wall, type_mark_wall, desc_wall))
     room_wall_data_sorted   = sorted(room_wall_data)
 
