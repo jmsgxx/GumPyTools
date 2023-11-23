@@ -48,10 +48,11 @@ active_level    = doc.ActiveView.GenLevel
 # =========================================================================================================
 with Transaction(doc, __title__) as t:
     t.Start()
-    wall_list       = []  # list of wall that has "FIN" on wall.Name
-    mark_wall       = []
-    type_mark_wall  = []
-    desc_wall       = []
+    wall_list           = []  # list of wall that has "FIN" on wall.Name
+    mark_wall           = []
+    type_mark_wall      = []
+    desc_wall           = []
+    wall_number_list    = []
 
     selection = uidoc.Selection
     wall_pick = selection.PickObjects(ObjectType.Element, 'Select Finish Walls')   # pickobject"S" prompts to select multiple objects
@@ -74,13 +75,26 @@ with Transaction(doc, __title__) as t:
         wall_number     = wall.LookupParameter('Wall Number')
         wall_mark.Set("w{}".format(number))
         wall_number.Set(wall_mark.AsValueString())
+        wall_number_list.append(wall_number)
 
     t.Commit()
 # =============================================================================================
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 
-forms.alert('Parameters updated!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
+# forms.alert('Parameters updated!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
+output = pyrevit.output.get_output()
+output.center()
+output.resize(300, 500)
+
+output.print_md('### Parameters Updated: {}'.format(time_stamp))
+
+print("Wall numbers generated:")
+print('=' * 23)
+for index, wall_num in enumerate(wall_number_list, start=1):
+    pad_index = str(index).zfill(2)
+    print("WALL {}: {}".format(pad_index, wall_num.AsValueString()))
+print('=' * 23)
 
 
 

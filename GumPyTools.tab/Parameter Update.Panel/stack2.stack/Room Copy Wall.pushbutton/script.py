@@ -115,7 +115,8 @@ output.print_md('### Parameters Updated: {}'.format(time_stamp))
 
 room_name = selected_room.LookupParameter('Name')
 
-print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
+print("ROOM NAME  : {}".format(room_name.AsValueString().upper()))
+print("ROOM NUMBER: {}".format(selected_room.Number))
 print('=' * 50)
 print("WALL DATA TRANSFERRED: \n {}".format(room_data_set_param.AsString()))
 

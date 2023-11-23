@@ -64,6 +64,8 @@ el_cat          = selected_room.Category.Name
 if el_cat != 'Rooms':
     forms.alert('Just pick a Room', exitscript=True)
 
+forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
+
 # ===========================================================================================================
 # 🔵 DOOR
 door_pick = uidoc.Selection.PickObjects(ObjectType.Element, 'Select Doors')
@@ -163,12 +165,11 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 # =====================================================================================================================
-
 output.print_md('### Parameters Updated: {}'.format(time_stamp))
 
 room_name = selected_room.LookupParameter('Name')
-
 print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
+print("ROOM NUMBER: {}".format(room_number))
 print('=' * 50)
 print("DOOR NUMBER: \n" + '\n'.join(room_door_marks_list))
 print('=' * 50)
