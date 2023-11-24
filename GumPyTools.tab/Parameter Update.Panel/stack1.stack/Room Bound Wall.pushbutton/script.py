@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Wall Param to Room'
+__title__ = 'Room Bound Wall'
 __doc__ = """
 This script will first generate a number that 
 will be written as a Mark instance on a wall. 
@@ -105,7 +105,7 @@ with Transaction(doc, __title__) as t:
         desc_wall.append(wall_type_description.AsValueString())
 
     room_wall_data          = list(zip(mark_wall, type_mark_wall, desc_wall))
-    room_wall_data_sorted   = sorted(room_wall_data)
+    room_wall_data_sorted   = sorted(room_wall_data, key=lambda x: int(x[0][1:]))
 
     # initialize an empty string
     room_data_string = ""
@@ -130,6 +130,7 @@ room_name = selected_room.LookupParameter('Name')
 print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
 print('=' * 50)
 print("WALL DATA TRANSFERRED: \n {}".format(room_data_set_param.AsString()))
+print('=' * 50)
 
 
 

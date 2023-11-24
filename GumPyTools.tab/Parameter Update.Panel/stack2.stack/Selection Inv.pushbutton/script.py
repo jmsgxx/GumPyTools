@@ -55,19 +55,15 @@ with forms.WarningBar(title='Pick an element:'):
 el_cat          = selected_room.Category.Name
 
 if el_cat != 'Rooms':
-    forms.alert('Just pick a Room', exitscript=True)
+    forms.alert('Pick a Room! Do it Again', exitscript=True, warn_icon=True)
 
-forms.alert("Select Furniture", title="Furniture Selection", warn_icon=False)
+forms.alert("You can select elements.", title="Element Selection", warn_icon=False)
 
-selection = uidoc.Selection
-picked_obj = selection.PickObjects(ObjectType.Element, 'Select Objects')
+# 🟢 SELECT ELEMENTS
 
-element_ids = []
-for obj in picked_obj:
-    element_id = obj.ElementId
-    element_ids.append(element_id)
+with forms.WarningBar(title='Pick elements:'):
+    collector = revit.pick_elements("You are selecting multiple elements")
 
-collector = [doc.GetElement(element_id) for element_id in element_ids]
 
 # 🟠 ROOM PARAMETERS
 # loose param

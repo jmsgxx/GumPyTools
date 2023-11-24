@@ -93,7 +93,11 @@ with Transaction(doc, __title__) as t:
         desc_wall.append(wall_type_description.AsValueString())
 
     room_wall_data = list(zip(mark_wall, type_mark_wall, desc_wall))
-    room_wall_data_sorted = sorted(room_wall_data)
+    try:
+        room_wall_data_sorted = sorted(room_wall_data, key=lambda x: int(x[0][1:]))
+    except TypeError as e:
+        forms.alert("{}. Means wall has no data.\nPlease use 'Number Wall' or 'Room Bound Wall'".format(e), warn_icon=True, exitscript=True)
+
 
     # initialize an empty string
     room_data_string = ""
@@ -119,6 +123,7 @@ print("ROOM NAME  : {}".format(room_name.AsValueString().upper()))
 print("ROOM NUMBER: {}".format(selected_room.Number))
 print('=' * 50)
 print("WALL DATA TRANSFERRED: \n {}".format(room_data_set_param.AsString()))
+print('=' * 50)
 
 
 

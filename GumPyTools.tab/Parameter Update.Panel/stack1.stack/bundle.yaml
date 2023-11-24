@@ -1,4 +1,4 @@
 layout:
     - Door Param to Room
-    - Wall Param to Room
+    - Room Bound Wall
     - Inv to Room Param

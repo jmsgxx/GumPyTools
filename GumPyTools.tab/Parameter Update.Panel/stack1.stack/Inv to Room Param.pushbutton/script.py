@@ -118,7 +118,7 @@ with Transaction(doc, __title__) as t:
                           int(BuiltInCategory.OST_Furniture),
                           int(BuiltInCategory.OST_MedicalEquipment),
                           int(BuiltInCategory.OST_PlumbingFixtures)]
-            if not filters or not is_filtered_by_user:  # returns true if objects has no filter and not under '(BY USER)'
+            if not filters or not is_filtered_by_user:  # returns true if objects has no filter and not under '(BY USER)' - meaning built-in
                 if isinstance(category, Category) and category.Id.IntegerValue in categories:
                     built_in_lst.append(element)
                 # print("Element {} is affected by filter {}".format(element.Id.IntegerValue, filter_element.Name))
