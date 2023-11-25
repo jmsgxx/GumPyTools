@@ -24,12 +24,9 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from Autodesk.Revit.UI.Selection import ObjectType
 from pyrevit import forms, revit
 import pyrevit
-from System.Collections.Generic import List
 from collections import Counter
-from datetime import datetime
 import clr
 clr.AddReference("System")
 
@@ -46,10 +43,6 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-
-current_datetime = datetime.now()
-time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
-output = pyrevit.output.get_output()
 
 # room
 with forms.WarningBar(title="Select Room"):
@@ -68,9 +61,9 @@ for element in picked_element:
 with Transaction(doc, __title__) as t:
     t.Start()
 
+    output = pyrevit.output.get_output()
     output.center()
-    output.resize(300, 500)
-    output.print_md('### Parameters Updated: {}'.format(time_stamp))
+    output.resize(300, 600)
 
     for selected_room in selected_rooms:
         # if selected_room.Category.Name != 'Rooms':
@@ -450,8 +443,8 @@ with Transaction(doc, __title__) as t:
         # ---------------------------------------------xxx----------------------------------------------------
         room_name = selected_room.LookupParameter('Name')
         print('=' * 50)
-        print("ROOM NAME  : {}".format(room_name.AsValueString().upper()))
-        print("ROOM NUMBER: {}".format(selected_room.Number))
+        output.print_md('### ROOM NAME   : {}'.format(room_name.AsValueString().upper()))
+        print('ROOM NUMBER : {}'.format(selected_room.Number))
         print("Total Built-In Furniture: {}".format(len(built_in_lst)))
         print("Total By User Furniture: {}".format(len(by_user_lst)))
         print('=' * 50)
