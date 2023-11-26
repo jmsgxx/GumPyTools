@@ -48,11 +48,7 @@ active_level    = doc.ActiveView.GenLevel
 with forms.WarningBar(title="Select Room"):
     picked_element = revit.pick_elements()
 
-selected_rooms = []
-for element in picked_element:
-    element_category = element.Category
-    if element_category.Name == 'Rooms':
-        selected_rooms.append(element)
+selected_rooms = [element for element in picked_element if element.Category.Name == 'Rooms']
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
