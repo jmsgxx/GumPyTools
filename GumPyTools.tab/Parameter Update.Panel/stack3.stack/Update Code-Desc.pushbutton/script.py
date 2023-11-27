@@ -67,9 +67,9 @@ def create_dict_xl(sheet_name):
 def get_list(param_code):
     param_code_list = []
     for index, item in enumerate(all_doors):
-        if item is not None:
+        if item:
             params = item.LookupParameter(param_code)
-            if params is not None:
+            if params:
                 param_code_list.append((index, params.AsValueString()))
     return param_code_list
 
@@ -161,8 +161,10 @@ with Transaction(doc, __title__) as t:
     """
     door_feat_lst = []
     for doors in all_doors:
-        dr_code = doors.LookupParameter('Door Feature Code').AsValueString()
-        door_feat_lst.append(dr_code)
+        if doors:
+            dr_code = doors.LookupParameter('Door Feature Code')
+            if dr_code:
+                door_feat_lst.append(dr_code.AsValueString())
 
     split_list = []
     for index, value in enumerate(door_feat_lst):

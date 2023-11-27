@@ -25,6 +25,7 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.DB.Architecture import Room
 from pyrevit import script, forms, revit
 from System.Collections.Generic import List
 from datetime import datetime
@@ -49,7 +50,6 @@ output.center()
 # ======================================================================================================
 # ⭕ PREPARE EXCEL EXPORT
 file_path = forms.save_excel_file(title='Select destination file')
-# workbook = xlsxwriter.Workbook(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\Output\Data Devices from MEP.xlsx')
 workbook = xlsxwriter.Workbook(file_path)
 worksheet = workbook.add_worksheet()
 headings = ['Element ID', 'Wall Type', 'Room', 'Start X', 'Start Y', 'Start z', 'End X', 'End Y', 'End Z', 'Mark']

@@ -60,6 +60,7 @@ with Transaction(doc, __title__) as t:
     output = pyrevit.output.get_output()
     output.center()
     output.resize(300, 600)
+    output.print_md('### NUMBER OF SELECTED ITEMS   : {}'.format(len(selected_rooms)))
 
     for selected_room in selected_rooms:
         # if selected_room.Category.Name != 'Rooms':
@@ -399,11 +400,11 @@ with Transaction(doc, __title__) as t:
                 wall_prot_obj_name = i.Name
                 bi_wall_prot_name.append(wall_prot_obj_name)
 
-                if wall_prot_item_param is not None:
+                if wall_prot_item_param:
                     wall_prot_item = wall_prot_item_param.AsValueString()
                     bi_wall_prot_item.append(wall_prot_item)
 
-                if wall_prot_desc_param is not None:
+                if wall_prot_desc_param:
                     wall_prot_desc = wall_prot_desc_param.AsValueString()
                     bi_wall_prot_desc.append(wall_prot_desc)
 
@@ -427,19 +428,20 @@ with Transaction(doc, __title__) as t:
         room_inv_cat_item_desc4 = selected_room.LookupParameter('Room Inventory Category 4 Item Description')
         room_inv_cat_item_qty4 = selected_room.LookupParameter('Room Inventory Category 4 Item Quantities')
 
-        if room_inv_cat_item4 is not None:
+        if room_inv_cat_item4:
             room_inv_cat_item4.Set(bi_wall_prot_item_str)
 
-        if room_inv_cat_item_desc4 is not None:
+        if room_inv_cat_item_desc4:
             room_inv_cat_item_desc4.Set(bi_wall_prot_desc_str)
 
-        if room_inv_cat_item_qty4 and bi_wall_prot_qty is not None:
+        if room_inv_cat_item_qty4 and bi_wall_prot_qty:
             room_inv_cat_item_qty4.Set(bi_wall_prot_qty_str)
 
         # ---------------------------------------------xxx----------------------------------------------------
         room_name = selected_room.LookupParameter('Name')
+
         print('=' * 50)
-        output.print_md('### ROOM NAME   : {}'.format(room_name.AsValueString().upper()))
+        print('ROOM NAME : {}'.format(room_name.AsValueString().upper()))
         print('ROOM NUMBER : {}'.format(selected_room.Number))
         print("Total Built-In Furniture: {}".format(len(built_in_lst)))
         print("Total By User Furniture: {}".format(len(by_user_lst)))

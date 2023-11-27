@@ -33,6 +33,7 @@ from pyrevit import forms, revit
 import clr
 from datetime import datetime
 import pyrevit
+import sys
 
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -63,6 +64,7 @@ el_cat          = selected_room.Category.Name
 
 if el_cat != 'Rooms':
     forms.alert('Just pick a Room', exitscript=True)
+    sys.exit()
 
 forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
 

@@ -78,7 +78,6 @@ output.center()
 # ===========================================================================================================
 # ⭕ PREPARE EXCEL EXPORT
 file_path = forms.save_excel_file(title='Select destination file')
-# workbook = xlsxwriter.Workbook(r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\Output\Data Devices from MEP.xlsx')
 workbook = xlsxwriter.Workbook(file_path)
 worksheet = workbook.add_worksheet()
 headings = ['Element ID', 'Category', 'Family', 'Type', 'Image', 'PosX', 'PosY', 'PosZ', 'Room']
