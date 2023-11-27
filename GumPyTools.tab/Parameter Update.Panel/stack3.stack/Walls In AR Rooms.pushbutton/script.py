@@ -45,9 +45,26 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
+
+# ╔═╗╦ ╦╔╗╔╔═╗╔╦╗╦╔═╗╔╗╔
+# ╠╣ ║ ║║║║║   ║ ║║ ║║║║
+# ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
+# ======================================================================================================
+
+
+def get_rooms(wall_x):
+    wall_bb = wall_x.get_BoundingBox(None)
+    outline = Outline(wall_bb.Min, wall_bb.Max)
+    bb_filter = BoundingBoxIntersectsFilter(outline)
+    rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).\
+        WherePasses(bb_filter).ToElements()
+    return rooms
+
+
+# ======================================================================================================
 output = script.get_output()
 output.center()
-# ======================================================================================================
+
 # ⭕ PREPARE EXCEL EXPORT
 file_path = forms.save_excel_file(title='Select destination file')
 workbook = xlsxwriter.Workbook(file_path)
@@ -69,24 +86,22 @@ all_walls = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Walls).
 
 row = 1
 for wall in all_walls:
-    wall_location = wall.Location
-    if wall and wall_location:
-        # 🟢 GET ROOM
-        room_number = None
-        if isinstance(wall_location, LocationCurve):
-            location_curve = wall_location
-            midpoint = location_curve.Curve.Evaluate(0.5, True)
-            room = doc.GetRoomAtPoint(midpoint, phase)
-            if room:
-                room_number = room.Number
+    room_number = None
+    if wall.Location:
+        room = get_rooms(wall)
+        for r in room:
+            room_id = ElementId(r.Id.IntegerValue)
+            room_el = doc.GetElement(room_id)
+            room_number = room_el.Number
+
         wall_type_id = wall.GetTypeId()
         type_wall = doc.GetElement(wall_type_id)
         type_wall_name = type_wall.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsValueString()
         wall_id = wall.Id   # wall instance ID
         wall_mark = wall.get_Parameter(BuiltInParameter.DOOR_NUMBER).AsValueString()    # wall instance mark
         # 🔴 GET POINTS
-        wall_start = location_curve.Curve.GetEndPoint(0)
-        wall_end = location_curve.Curve.GetEndPoint(1)
+        wall_start = wall.Location.Curve.GetEndPoint(0)
+        wall_end = wall.Location.Curve.GetEndPoint(1)
         wall_start_x    = wall_start.X
         wall_start_y    = wall_start.Y
         wall_start_z    = wall_start.Z
