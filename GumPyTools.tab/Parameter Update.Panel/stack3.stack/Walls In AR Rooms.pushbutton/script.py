@@ -88,7 +88,7 @@ row = 1
 for wall in all_walls:
     room_number = None
     if wall.Location:
-        room = get_rooms(wall)
+        room = get_rooms(wall)  # type:List[Reference]
         for r in room:
             room_id = ElementId(r.Id.IntegerValue)
             room_el = doc.GetElement(room_id)
@@ -119,6 +119,7 @@ for wall in all_walls:
         worksheet.write('G' + str(row + 1), wall_end_x)
         worksheet.write('H' + str(row + 1), wall_end_y)
         worksheet.write('I' + str(row + 1), wall_end_z)
+        worksheet.write('J' + str(row + 1), wall_mark)
 
         row += 1  # increment row at the end of the loop
 
