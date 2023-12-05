@@ -1,27 +1,35 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Export View Set'
+__title__ = 'PDF by View Set'
 __doc__ = """
-TEST
-===================================
-v1. 04 Dec 2023
+This script will print the specified
+view set. It is advisable to use
+the command "View Set API".
+
+HOW TO:
+- Run the command.
+- Select the desired view set on
+selection interface.
+- Select Print Setting on the 
+selection interface.
+- Find the file on your desktop.
+__________________________________
+v1. 
 Author: Joven Mark Gumana
 """
-
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-import os
-from datetime import datetime
-
-import clr
-clr.AddReference("System")
-from System.Collections.Generic import List
-
 from pyrevit import forms
+from datetime import datetime
+import clr
+import os
+clr.AddReference("System")
+
+
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -31,62 +39,73 @@ doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
 
-active_view     = doc.ActiveView
-active_level    = doc.ActiveView.GenLevel
-current_view    = [active_view.Id]
-
-# 🟡 FILE NAME
 model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharingCentralModelPath())
 file_path = model_path
 file_name = os.path.splitext(os.path.basename(file_path))[0]
 
 current_datetime = datetime.now()
-current_time = current_datetime.strftime('%Y''%m''%d')
-current_date = current_datetime.strftime('%H.%M.%S')
-time_stamp = "_{}-{}".format(current_time, current_date)
+current_date = current_datetime.strftime('%Y''%m''%d')
+current_time = current_datetime.strftime('%H.%M.%S')
 
-# 🟡 DIRECTORY TO SAVE THE FILE
-directory = r"C:\Users\gary_mak\Desktop\PDF"
-
-
-
-
-# 🟢 MAIN CODE
 with Transaction(doc, __title__) as t:
-    t.Start()
-
-    # PDFExportOptions properties
-    ExportPDFSettings.FindByName(doc, "RADS1")
-    options = PDFExportOptions()
-    options.AlwaysUseRaster = False
-    options.ColorDepth = ColorDepthType.Color
-    options.Combine = False
-    options.ExportQuality = PDFExportQualityType.DPI4000
-    options.FileName = file_name + time_stamp
-    options.HideCropBoundaries = True
-    options.HideReferencePlane = True
-    options.HideScopeBoxes = True
-    options.HideUnreferencedViewTags = True
-    options.MaskCoincidentLines = True
-    options.OriginOffsetX = 0
-    options.OriginOffsetY = 0
-    options.PaperFormat = ExportPaperFormat.ISO_A3
-    # options.PaperOrientation.Auto
-    options.PaperPlacement = PaperPlacementType.Center
-    options.RasterQuality = RasterQualityType.High
-    options.ReplaceHalftoneWithThinLines = False
-    options.StopOnError = True
-    options.ViewLinksInBlue = True
-    options.ZoomPercentage = 100
-    options.ZoomType = ZoomType.Zoom
-
     try:
-        if doc.Export(directory, current_view, options):
-            # SHOW NOTIFICATION THAT PRINT IS FINISHED
-            forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=True)
+        t.Start()
 
-    # HANDLE ERROR JUST IN CASE
+        # 🟡 DIRECTORY TO SAVE THE FILE
+        directory = r"C:\Users\gary_mak\Desktop\PDF"
+
+        print_manager               = doc.PrintManager
+        print_manager.PrintRange    = PrintRange.Select
+        print_manager.CombinedFile  = True
+
+        view_sheet_setting          = print_manager.ViewSheetSetting
+
+        # 🟢 CHOOSE VIEW SET FROM THE LIST
+        my_view_set = None
+        collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
+        collector_name = sorted([item.Name for item in collector])
+        chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set')
+        for view_set in collector:
+            for name_view_set in collector_name:
+                if view_set.Name == chosen_view_set:
+                    my_view_set = ViewSet()
+                    for sheet in view_set.Views:
+                        my_view_set.Insert(sheet)
+                    break
+
+        for sheet in my_view_set:
+            sheet_number = sheet.SheetNumber
+            sheet_name = sheet.Name
+
+        # Set the current view sheet set to your ViewSet
+        view_sheet_setting.CurrentViewSheetSet.Views = my_view_set
+
+        # If you want to print to a file, set PrintToFile to true and specify the file path
+        print_manager.PrintToFile = True
+        print_manager.PrintToFileName = directory + "{}-{}-{}.pdf".format(file_name,current_date, current_time)
+
+        # Get the PrintSetup from the active document
+        print_setup = doc.PrintManager.PrintSetup
+
+        # 🟡 CHOOSE PRINT SETTING
+        print_collector = FilteredElementCollector(doc).OfClass(PrintSetting)
+        print_collector_name = sorted(item.Name for item in print_collector)
+        chosen_print_setting = forms.SelectFromList.show(print_collector_name, button_name='Select Setting')
+        my_print_setting = None
+        for print_setting in print_collector:
+            if print_setting.Name == chosen_print_setting:
+                my_print_setting = print_setting
+                break
+
+        # Set the current print setting to your PrintSetting
+        print_setup.CurrentPrintSetting = my_print_setting
+
+        # Finally, you can print the view set
+        print_manager.SubmitPrint()
+
+        t.Commit()
+
+        forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=True)
+
     except Exception as e:
-        print("An error occurred: {}".format(e))
-
-    t.Commit()
+        pass
