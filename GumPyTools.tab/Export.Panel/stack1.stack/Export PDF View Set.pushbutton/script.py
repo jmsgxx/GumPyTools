@@ -5,11 +5,15 @@ __doc__ = """
 This script will export the selected
 view set to pdf. Will always be combined
 by default.
-Current the same as 'PDF By View Set'
-without selecting the destination file
+Currently the same as 'PDF By View Set'
+without selecting the destination file.
 
 TODO: Study how to pdf multiple file
 on view set.
+
+NOTE: By using this export, label names
+on pdf is already set and ready for extraction
+via Bluebeam.
 
 HOW TO:
 - Run Command.
@@ -63,6 +67,9 @@ directory = r"C:\Users\gary_mak\Desktop\PDF"
 with Transaction(doc, __title__) as t:
     t.Start()
 
+    illegal_char = ['\\', '/', ':', '*', '?', '<', '>', '"', '|']
+
+
     sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
     collector_name = sorted([item.Name for item in sheet_set_collector])
     chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set')
@@ -75,6 +82,10 @@ with Transaction(doc, __title__) as t:
                 for sheet in view_set.Views:
                     sheet_number = sheet.SheetNumber
                     sheet_name = sheet.Name
+                    # new_sheet_name = sheet_name
+                    # for char in illegal_char:
+                    #     if char in new_sheet_name:
+                    #         new_sheet_name = new_sheet_name.replace(char, "-")
                     sheets_id.append(sheet.Id)
                 break
     options = PDFExportOptions()
@@ -103,7 +114,7 @@ with Transaction(doc, __title__) as t:
     try:
         if doc.Export(directory, sheets_id, options):
             # SHOW NOTIFICATION THAT PRINT IS FINISHED
-            forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=True)
+            forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=False)
 
     # HANDLE ERROR JUST IN CASE
     except Exception as e:

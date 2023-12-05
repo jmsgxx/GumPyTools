@@ -3,8 +3,11 @@
 __title__ = 'PDF by View Set'
 __doc__ = """
 THIS IS THE SAME AS EXPORT PDF
-WITHOUT SELECTING DESTINATION
-FOLDER
+WITHOUT SELECTING A DESTINATION
+FOLDER.
+
+Cons: Label name isn't set unlike
+the PDFExportOptions command.
 
 This script will print the specified
 view set. It is advisable to use
