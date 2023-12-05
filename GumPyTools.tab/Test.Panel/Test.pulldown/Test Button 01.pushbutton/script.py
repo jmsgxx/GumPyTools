@@ -20,7 +20,6 @@ import os
 clr.AddReference("System")
 
 
-
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
@@ -28,3 +27,6 @@ clr.AddReference("System")
 doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
+
+
+
