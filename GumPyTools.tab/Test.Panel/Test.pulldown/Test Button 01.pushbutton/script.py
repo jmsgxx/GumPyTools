@@ -39,7 +39,7 @@ directory = r"C:\Users\gary_mak\Desktop\PDF"
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    my_view_set = List[ElementId]
+    my_view_set = List[ElementId]()
     for vs in collector:
         sheet_number = vs.SheetNumber
         sheet_name = vs.Name
@@ -48,7 +48,6 @@ with Transaction(doc, __title__) as t:
             my_view_set.Add(vs.Id)
 
         view_set = List[my_view_set]
-
 
         # Set the PDF export options
         options = PDFExportOptions()
