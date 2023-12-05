@@ -22,6 +22,7 @@ Author: Joven Mark Gumana
 from Autodesk.Revit.DB import *
 from pyrevit import forms
 import clr
+import sys
 clr.AddReference("System")
 
 
@@ -43,10 +44,13 @@ with Transaction(doc, __title__) as t:
 
     deleted_view_set = []
     deleted_view_set_names = []
-    for view_set in collector:
-        if view_set.Name in chosen_view_set:
-            deleted_view_set.append(view_set.Id)
-            deleted_view_set_names.append(view_set.Name)
+    if not chosen_view_set:
+        sys.exit()
+    else:
+        for view_set in collector:
+            if view_set.Name in chosen_view_set:
+                deleted_view_set.append(view_set.Id)
+                deleted_view_set_names.append(view_set.Name)
 
     for view_id in deleted_view_set:
         doc.Delete(view_id)

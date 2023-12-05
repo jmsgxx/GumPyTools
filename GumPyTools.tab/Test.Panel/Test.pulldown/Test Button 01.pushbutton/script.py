@@ -17,6 +17,7 @@ from pyrevit import forms
 from datetime import datetime
 import clr
 import os
+import sys
 clr.AddReference("System")
 
 
@@ -27,6 +28,11 @@ clr.AddReference("System")
 doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
+
+
+active_view     = doc.ActiveView
+active_level    = doc.ActiveView.GenLevel
+current_view    = [active_view.Id]
 
 
 

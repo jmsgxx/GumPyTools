@@ -2,6 +2,10 @@
 
 __title__ = 'PDF by View Set'
 __doc__ = """
+THIS IS THE SAME AS EXPORT PDF
+WITHOUT SELECTING DESTINATION
+FOLDER
+
 This script will print the specified
 view set. It is advisable to use
 the command "View Set API".
@@ -27,6 +31,7 @@ from pyrevit import forms
 from datetime import datetime
 import clr
 import os
+import sys
 clr.AddReference("System")
 
 
@@ -65,47 +70,46 @@ with Transaction(doc, __title__) as t:
         collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
         collector_name = sorted([item.Name for item in collector])
         chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set')
-        for view_set in collector:
-            for name_view_set in collector_name:
-                if view_set.Name == chosen_view_set:
-                    my_view_set = ViewSet()
-                    for sheet in view_set.Views:
-                        my_view_set.Insert(sheet)
-                    break
-
-        for sheet in my_view_set:
-            sheet_number = sheet.SheetNumber
-            sheet_name = sheet.Name
+        if not chosen_view_set:
+            sys.exit()
+        else:
+            for view_set in collector:
+                for name_view_set in collector_name:
+                    if view_set.Name == chosen_view_set:
+                        my_view_set = ViewSet()
+                        for sheet in view_set.Views:
+                            my_view_set.Insert(sheet)
+                        break
 
         # Set the current view sheet set to your ViewSet
         view_sheet_setting.CurrentViewSheetSet.Views = my_view_set
 
         # If you want to print to a file, set PrintToFile to true and specify the file path
         print_manager.PrintToFile = True
-        print_manager.PrintToFileName = directory + "{}-{}-{}.pdf".format(file_name,current_date, current_time)
+        print_manager.PrintToFileName = directory[:-3] + "{}-{}-{}.pdf".format(file_name, current_date, current_time)
 
         # Get the PrintSetup from the active document
         print_setup = doc.PrintManager.PrintSetup
 
         # 🟡 CHOOSE PRINT SETTING
+        my_print_setting = None
         print_collector = FilteredElementCollector(doc).OfClass(PrintSetting)
         print_collector_name = sorted(item.Name for item in print_collector)
         chosen_print_setting = forms.SelectFromList.show(print_collector_name, button_name='Select Setting')
-        my_print_setting = None
-        for print_setting in print_collector:
-            if print_setting.Name == chosen_print_setting:
-                my_print_setting = print_setting
-                break
+        if not chosen_print_setting:
+            sys.exit()
+        else:
+            for print_setting in print_collector:
+                if print_setting.Name == chosen_print_setting:
+                    my_print_setting = print_setting
+                    break
 
-        # Set the current print setting to your PrintSetting
+        # Set the current print setting
         print_setup.CurrentPrintSetting = my_print_setting
 
-        # Finally, you can print the view set
+        # Print
         print_manager.SubmitPrint()
 
         t.Commit()
-
-        forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=True)
-
     except Exception as e:
         pass
