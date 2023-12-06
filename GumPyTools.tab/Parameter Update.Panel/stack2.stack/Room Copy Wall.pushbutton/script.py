@@ -2,30 +2,40 @@
 
 __title__ = 'Room Copy Wall'
 __doc__ = """
-This script will collect the the wall data
-that was generated beforehand. This is a stand
-alone command since some walls shares multiple
-rooms
+This script will collect wall data that
+was generated beforehand and will be copied
+to a room parameter. This is a stand alone
+command since some walls shares multiple
+rooms. 
+
+NOTE: You can select multiple rooms. It will
+automatically designate the walls to its
+respective rooms.
 
 HOW TO:
 1. Run Command.
-2. A prompt will let you know the command is
+2. Select the desired room.
+3. A prompt will let you know the command is
 executed
 -----------------------------------------
 v1. 22 Nov 2023
 Author: Joven Mark Gumana
 """
 
+
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from Autodesk.Revit.DB.Architecture import Room
 from pyrevit import forms, revit
 import clr
+import sys
 from datetime import datetime
 import pyrevit
-from Autodesk.Revit.UI.Selection import ObjectType
+from Snippets import _x_selection
 clr.AddReference("System")
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
@@ -38,6 +48,8 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
+selection       = uidoc.Selection   #type:Selection
+
 
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
@@ -51,10 +63,13 @@ with Transaction(doc, __title__) as t:
     t.Start()
 
     # room selection
-    with forms.WarningBar(title='Pick an element:'):
-        selected_objects = revit.pick_elements()
 
-    selected_rooms = [element for element in selected_objects if element.Category.Name == 'Rooms']
+    filter_type = _x_selection.ISelectionFilter_Classes([Room])
+    selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
+
+    selected_rooms = [doc.GetElement(el) for el in selected_element]
+    if not selected_rooms:
+        sys.exit()
 
     output.center()
     output.resize(300, 500)

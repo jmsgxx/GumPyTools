@@ -28,12 +28,14 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from Autodesk.Revit.UI.Selection import ObjectType
+from Autodesk.Revit.DB.Architecture import Room
+from Autodesk.Revit.UI.Selection import ObjectType, Selection
 from pyrevit import forms, revit
 import clr
 from datetime import datetime
 import pyrevit
 import sys
+from Snippets import _x_selection
 
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -48,6 +50,7 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
+selection = uidoc.Selection #type:Selection
 
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
@@ -55,29 +58,27 @@ output = pyrevit.output.get_output()
 output.center()
 output.resize(300, 500)
 
-# 🔵 ROOM
 # =============================================================================================================
-with forms.WarningBar(title='Pick an element:'):
-    selected_room = revit.pick_element()
+# 🔵 ROOM
+filter_type = _x_selection.ISelectionFilter_Classes([Room])
+selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
 
-el_cat          = selected_room.Category.Name
-
-if el_cat != 'Rooms':
-    forms.alert('Just pick a Room', exitscript=True)
+selected_room = None
+for el in selected_element:
+    selected_room = doc.GetElement(el)
+if not selected_room:
     sys.exit()
 
 forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
 
 # ===========================================================================================================
 # 🔵 DOOR
-door_pick = uidoc.Selection.PickObjects(ObjectType.Element, 'Select Doors')
+door_elements = uidoc.Selection.PickObjects(ObjectType.Element, 'Select Doors')
 
-door_ids = []
-for single_door in door_pick:
-    door_el_id = single_door.ElementId
-    door_ids.append(door_el_id)
+if not door_elements:
+    sys.exit()
 
-door_list = [doc.GetElement(dr_id) for dr_id in door_ids]
+door_list = [doc.GetElement(el) for el in door_elements]
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║

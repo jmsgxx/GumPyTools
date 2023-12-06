@@ -37,3 +37,18 @@ class ISelectionFilter_Categories(ISelectionFilter):
         if element.Category.BuiltInCategory in self.allowed_categories:
             return True
 
+
+class WallSelectionFilterFIN(ISelectionFilter):
+    def __init__(self, allowed_types):
+        """ ISelectionFilter made to filter with types
+        will select wall name with 'FIN'
+        :param allowed_types: list of allowed Types"""
+        self.allowed_types = allowed_types
+
+    def AllowElement(self, element):
+        if type(element) in self.allowed_types:
+            type_param = element.Name
+            if "FIN" in type_param:
+                return True
+
+

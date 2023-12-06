@@ -24,11 +24,15 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Snippets._x_selection import ISelectionFilter_Classes
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from Autodesk.Revit.DB.Architecture import Room
 from pyrevit import forms, revit
 import time
 import clr
 from datetime import datetime
 import pyrevit
+import sys
 from pyrevit import script
 clr.AddReference("System")
 
@@ -41,28 +45,23 @@ clr.AddReference("System")
 doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
+selection = uidoc.Selection     # type: Selection
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-current_datetime = datetime.now()
-time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
-
-
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
 with Transaction(doc, __title__) as t:
     t.Start()
-    with forms.WarningBar(title='Pick an element:'):
-        picked_objects = revit.pick_elements()
 
-    selected_rooms = [element for element in picked_objects if element.Category.Name == 'Rooms']
+    filter_type = ISelectionFilter_Classes([Room])
+    selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
 
-    output = pyrevit.output.get_output()
-    output.center()
-    output.resize(300, 500)
-    output.print_md('### Parameters Updated: {}'.format(time_stamp))
+    selected_rooms = [doc.GetElement(el) for el in selected_element]
+    if not selected_rooms:
+        sys.exit()
 
     for selected_room in selected_rooms:
         calculator      = SpatialElementGeometryCalculator(doc)
@@ -119,6 +118,9 @@ with Transaction(doc, __title__) as t:
         room_data_set_param.Set(room_data_string)
         # END OF TRANSACTION
         # ----------------------------xxx-----------------------------------
+        output = pyrevit.output.get_output()
+        output.center()
+        output.resize(300, 500)
         room_name = selected_room.LookupParameter('Name')
         print('=' * 50)
         print("ROOM NAME: {}".format(room_name.AsValueString().upper()))

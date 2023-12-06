@@ -24,12 +24,15 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Snippets import _x_selection
 from pyrevit import forms, revit
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from Autodesk.Revit.DB.Architecture import Room
 import pyrevit
 from collections import Counter
+import sys
 import clr
 clr.AddReference("System")
-
 
 
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -43,12 +46,20 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
+selection = uidoc.Selection     # type: Selection
 
 # room
-with forms.WarningBar(title="Select Room"):
-    picked_element = revit.pick_elements()
+# with forms.WarningBar(title="Select Room"):
+#     picked_element = revit.pick_elements()
+#
+# selected_rooms = [element for element in picked_element if element.Category.Name == 'Rooms']
 
-selected_rooms = [element for element in picked_element if element.Category.Name == 'Rooms']
+filter_type = _x_selection.ISelectionFilter_Classes([Room])
+selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
+
+selected_rooms = [doc.GetElement(el) for el in selected_element]
+if not selected_rooms:
+    sys.exit()
 
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
@@ -106,7 +117,7 @@ with Transaction(doc, __title__) as t:
                     el_filter = filter_element.GetElementFilter()  # type 'LogicalAndFilter' / 'LogicalOrFilter'
 
                     # Check if the element satisfies the filter
-                    if el_filter.PassesFilter(element):
+                    if el_filter and el_filter.PassesFilter(element):
                         if filter_element.Name == 'By User':
                             is_filtered_by_user = True
                             if manufacturer_val is not None and not manufacturer_val.IsReadOnly:
@@ -365,7 +376,8 @@ with Transaction(doc, __title__) as t:
         # convert to set to get the unique items
         filtered_san_fit_item = [item for item in bi_san_fit_item if item is not None]
         unique_bi_san_fit_item = set(filtered_san_fit_item)
-        unique_bi_san_fit_desc = set(bi_san_fit_desc)
+        filtered_san_fit_desc = [item for item in bi_san_fit_desc if item is not None]
+        unique_bi_san_fit_desc = set(filtered_san_fit_desc)
         # convert to string
         bi_san_fit_item_str = '\n'.join(unique_bi_san_fit_item)
         bi_san_fit_desc_str = '\n'.join(unique_bi_san_fit_desc)
@@ -444,7 +456,7 @@ with Transaction(doc, __title__) as t:
         print('ROOM NAME : {}'.format(room_name.AsValueString().upper()))
         print('ROOM NUMBER : {}'.format(selected_room.Number))
         print("Total Built-In Furniture: {}".format(len(built_in_lst)))
-        print("Total By User Furniture: {}".format(len(by_user_lst)))
+        print("Total Loose Furniture: {}".format(len(by_user_lst)))
         print('=' * 50)
 
     t.Commit()
