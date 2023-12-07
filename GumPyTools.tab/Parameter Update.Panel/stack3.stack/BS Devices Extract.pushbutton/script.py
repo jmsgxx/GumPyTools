@@ -51,6 +51,7 @@ import time
 import xlsxwriter
 import clr
 clr.AddReference("System")
+import sys
 
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
@@ -71,167 +72,193 @@ phase = (all_phase[1])
 output = script.get_output()
 output.center()
 
+# 🔴 USER INPUT
+# ==============================================================================================================
+user_input = forms.ask_for_string(prompt="Did you check if the AR Model is loaded?", title='Check link',
+                                  default='Yes or No')
 
-# ╔═╗═╗ ╦╔═╗╔═╗╦
-# ║╣ ╔╩╦╝║  ║╣ ║
-# ╚═╝╩ ╚═╚═╝╚═╝╩═╝
-# ===========================================================================================================
-# ⭕ PREPARE EXCEL EXPORT
-file_path = forms.save_excel_file(title='Select destination file')
-workbook = xlsxwriter.Workbook(file_path)
-worksheet = workbook.add_worksheet()
-headings = ['Element ID', 'Category', 'Family', 'Type', 'Image', 'PosX', 'PosY', 'PosZ', 'Room']
-for i, heading in enumerate(headings):
-    worksheet.write(0, i, heading)
-worksheet.set_column(0, len(headings), 30)
-# ===========================================================================================================
+new_user_input = user_input.upper()
+if user_input == 'NO':  # stop and try again
+    forms.alert("Please check first then run the command again", warn_icon=True, exitscript=True)
+else:   # execute the command
 
-# 🟩 BS elements
-list_of_categories = List[BuiltInCategory]([
-    BuiltInCategory.OST_DataDevices,
-    BuiltInCategory.OST_ElectricalFixtures,
-    BuiltInCategory.OST_CommunicationDevices,
-    BuiltInCategory.OST_SecurityDevices,
-    BuiltInCategory.OST_NurseCallDevices])
+    # ╔═╗═╗ ╦╔═╗╔═╗╦
+    # ║╣ ╔╩╦╝║  ║╣ ║
+    # ╚═╝╩ ╚═╚═╝╚═╝╩═╝
+    # ===========================================================================================================
+    # ⭕ PREPARE EXCEL EXPORT
+    file_path = forms.save_excel_file(title='Select destination file')
+    workbook = xlsxwriter.Workbook(file_path)
+    worksheet = workbook.add_worksheet()
+    headings = ['Element ID', 'Category', 'Family', 'Type', 'Image', 'PosX', 'PosY', 'PosZ', 'Room']
+    for i, heading in enumerate(headings):
+        worksheet.write(0, i, heading)
+    worksheet.set_column(0, len(headings), 30)
+    # ===========================================================================================================
 
-level_filter = ElementLevelFilter(active_level.Id)
-category_filter = ElementMulticategoryFilter(list_of_categories)
-combined_filter = LogicalAndFilter(category_filter, level_filter)
+    # 🟩 BS elements
+    list_of_categories = List[BuiltInCategory]([
+        BuiltInCategory.OST_DataDevices,
+        BuiltInCategory.OST_ElectricalFixtures,
+        BuiltInCategory.OST_CommunicationDevices,
+        BuiltInCategory.OST_SecurityDevices,
+        BuiltInCategory.OST_NurseCallDevices])
 
-all_elements_in_level = FilteredElementCollector(doc).WherePasses(combined_filter).WhereElementIsNotElementType().ToElements()
+    level_filter = ElementLevelFilter(active_level.Id)
+    category_filter = ElementMulticategoryFilter(list_of_categories)
+    combined_filter = LogicalAndFilter(category_filter, level_filter)
 
-# 🟦 ROOM
-all_links = FilteredElementCollector(doc).OfClass(RevitLinkInstance).ToElements()
+    all_elements_in_level = FilteredElementCollector(doc).WherePasses(combined_filter)\
+        .WhereElementIsNotElementType().ToElements()
 
-# Find the specific link
-ar_model = None
-for link in all_links:
-    link_name = link.Name
-    if 'ARC' in link_name:
-        ar_model = link
+    # 🟧 Check the link
+    all_links_view = FilteredElementCollector(doc, active_view.Id).OfClass(RevitLinkInstance).ToElements()
 
-linked_doc = ar_model.GetLinkDocument()
-all_rooms_in_link_level = FilteredElementCollector(linked_doc).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
+    # clean the name of the links
+    new_link_lst = []
+    for links in all_links_view:
+        link_name = links.Name
+        parts_link = link_name.split(':')
+        new_sel_link = parts_link[0] + ":" + parts_link[1][:3]
+        new_link_lst.append(new_sel_link)
 
-# ╔╦╗╔═╗╦╔╗╔
-# ║║║╠═╣║║║║
-# ╩ ╩╩ ╩╩╝╚╝#main
-# =========================================================================================================
-with Transaction(doc, __title__) as t:
+    selected_link = forms.SelectFromList.show(new_link_lst, multiselect=False, button_name='Select')
+    if not selected_link:
+        sys.exit()
 
-    t.Start()
-    # 🟢 ROOM
-    for room_link in all_rooms_in_link_level:
-        if room_link and room_link.Location:    # exclude the unplaced rooms
-            room_loc = room_link.Location.Point
 
-            room_copy = doc.Create.NewRoom(active_level, UV(room_loc.X, room_loc.Y))
-            #  name
-            room_copy_name = room_copy.get_Parameter(BuiltInParameter.ROOM_NAME)
-            rm_link_name = room_link.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
-            if rm_link_name:
-                room_copy_name.Set(str(rm_link_name.upper()))
-            else:
-                continue
+    # Find the specific link
+    ar_model = None
+    for link in all_links_view:
+        link_name = link.Name
+        if selected_link in link_name:
+            ar_model = link
 
-            # number
-            room_copy_number = room_copy.get_Parameter(BuiltInParameter.ROOM_NUMBER)
-            rm_link_number = room_link.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
-            if rm_link_number:
-                room_copy_number.Set(str(rm_link_number))
-            else:
-                continue
-            print('Creating Room.....')
-            print("Room Name:   {}".format(rm_link_name))  # print statement to check rm_link_name
-            print("Room Number: {}".format(rm_link_number))  # print statement to check rm_link_number
-            print('-' * 50)
+    linked_doc = ar_model.GetLinkDocument()
 
-    time.sleep(5)
+    # 🟦 ROOM
+    all_rooms_in_link_level = FilteredElementCollector(linked_doc).OfCategory(BuiltInCategory.OST_Rooms)\
+        .WhereElementIsNotElementType().ToElements()
 
-    # CHECK THE CURRENT MODEL AFTER THE CREATION OF TEMPORARY ROOM
-    current_level_filter = ElementLevelFilter(active_level.Id)
+    # ╔╦╗╔═╗╦╔╗╔
+    # ║║║╠═╣║║║║
+    # ╩ ╩╩ ╩╩╝╚╝#main
+    # =========================================================================================================
+    with Transaction(doc, __title__) as t:
 
-    rooms_current = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Rooms)\
-        .WherePasses(current_level_filter).WhereElementIsNotElementType().ToElements()
-    print("Total Room in link:      {}".format(len(all_rooms_in_link_level)))
-    print("Total Room in current:   {}".format(len(rooms_current)))
+        t.Start()
+        # 🟢 ROOM
+        for room_link in all_rooms_in_link_level:
+            if room_link and room_link.Location:    # exclude the unplaced rooms
+                room_loc = room_link.Location.Point
 
-    for room_cur in rooms_current:
-        print('ROOM CREATED')
-        print('Room Name: {}'.format(room_cur.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()))
-        print('Room Number: {}'.format(room_cur.Number))
-        print('=' * 50)
+                room_copy = doc.Create.NewRoom(active_level, UV(room_loc.X, room_loc.Y))
+                #  name
+                room_copy_name = room_copy.get_Parameter(BuiltInParameter.ROOM_NAME)
+                rm_link_name = room_link.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
+                if rm_link_name:
+                    room_copy_name.Set(str(rm_link_name.upper()))
+                else:
+                    continue
 
-# ================================================================================================================
-    # 🔵 ELEMENT
-    room_numbers = []   # extracted from temp rooms
-    room_name = None
+                # number
+                room_copy_number = room_copy.get_Parameter(BuiltInParameter.ROOM_NUMBER)
+                rm_link_number = room_link.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
+                if rm_link_number:
+                    room_copy_number.Set(str(rm_link_number))
+                else:
+                    continue
+                print('Creating Room.....')
+                print("Room Name:   {}".format(rm_link_name))  # print statement to check rm_link_name
+                print("Room Number: {}".format(rm_link_number))  # print statement to check rm_link_number
+                print('-' * 50)
 
-    row = 1
-    for element in all_elements_in_level:
-        if element:
-            #  instance param
-            element_id = element.Id
-            category_name = element.Category.Name
-            family_name = element.get_Parameter(BuiltInParameter.ELEM_FAMILY_PARAM).AsValueString()
+        time.sleep(5)
 
-            #  type param
-            el_type_id = element.GetTypeId()
-            el_type = doc.GetElement(el_type_id)
-            if el_type:
-                type_description = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
-                type_image = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
+        # CHECK THE CURRENT MODEL AFTER THE CREATION OF TEMPORARY ROOM
+        current_level_filter = ElementLevelFilter(active_level.Id)
 
-            element_location = element.Location
-            if element_location is not None:
-                el_loc_point = element_location.Point
-                pos_x = el_loc_point.X
-                pos_y = el_loc_point.Y
-                pos_z = el_loc_point.Z
+        rooms_current = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Rooms)\
+            .WherePasses(current_level_filter).WhereElementIsNotElementType().ToElements()
+        print("Total Room in link:      {}".format(len(all_rooms_in_link_level)))
+        print("Total Room in current:   {}".format(len(rooms_current)))
 
-            # room of elements
-            room_active = element.Room[phase]
-            if room_active:
-                room_active_name = room_active.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
-                room_name = room_active_name  # room name
-                room_active_number = room_active.Number  # room number
-                room_numbers.append(room_active_number)
+        for room_cur in rooms_current:
+            print('ROOM CREATED')
+            print('Room Name: {}'.format(room_cur.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()))
+            print('Room Number: {}'.format(room_cur.Number))
+            print('=' * 50)
 
-        drawings_dict = {}  # initialize a dictionary
-        for i in range(len(room_numbers)):
-            parts = room_numbers[i].split('.')  # separate the drawing number into parts
+    # ================================================================================================================
+        # 🔵 ELEMENT
+        room_numbers = []   # extracted from temp rooms
+        room_name = None
 
-            if len(parts) == 4:  # skip those AA.BB.CC.01
-                continue
+        row = 1
+        for element in all_elements_in_level:
+            if element:
+                #  instance param
+                element_id = element.Id
+                category_name = element.Category.Name
+                family_name = element.get_Parameter(BuiltInParameter.ELEM_FAMILY_PARAM).AsValueString()
 
-            if room_numbers[i] not in drawings_dict:
-                drawings_dict[room_numbers[i]] = 1
-            else:
-                drawings_dict[room_numbers[i]] += 1
-            room_numbers[i] = "{}.{}".format(room_numbers[i], str(drawings_dict[room_numbers[i]]).zfill(2))
+                #  type param
+                el_type_id = element.GetTypeId()
+                el_type = doc.GetElement(el_type_id)
+                if el_type:
+                    type_description = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
+                    type_image = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
 
-        # 🆗 WRITE TO EXCEL
-        worksheet.write('A' + str(row + 1), int((str(element_id))))
-        worksheet.write('B' + str(row + 1), category_name)
-        worksheet.write('C' + str(row + 1), family_name)
-        worksheet.write('D' + str(row + 1), type_description.AsValueString())
-        worksheet.write('E' + str(row + 1), type_image.AsValueString().strip())
-        worksheet.write('F' + str(row + 1), pos_x)
-        worksheet.write('G' + str(row + 1), pos_y)
-        worksheet.write('H' + str(row + 1), pos_z)
-        for room_number in room_numbers:
-            worksheet.write('I' + str(row + 1), room_number)
+                element_location = element.Location
+                if element_location is not None:
+                    el_loc_point = element_location.Point
+                    pos_x = el_loc_point.X
+                    pos_y = el_loc_point.Y
+                    pos_z = el_loc_point.Z
 
-        row += 1  # increment row at the end of the loop
+                # room of elements
+                room_active = element.Room[phase]
+                if room_active:
+                    room_active_name = room_active.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
+                    room_name = room_active_name  # room name
+                    room_active_number = room_active.Number  # room number
+                    room_numbers.append(room_active_number)
 
-    workbook.close()
+            drawings_dict = {}  # initialize a dictionary
+            for i in range(len(room_numbers)):
+                parts = room_numbers[i].split('.')  # separate the drawing number into parts
 
-    if t.GetStatus() == TransactionStatus.Started:
-        t.RollBack()
-# ==========================================================================================================
-current_datetime = datetime.now()
-time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
-forms.alert('Excel exported!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
+                if len(parts) == 4:  # skip those AA.BB.CC.01
+                    continue
+
+                if room_numbers[i] not in drawings_dict:
+                    drawings_dict[room_numbers[i]] = 1
+                else:
+                    drawings_dict[room_numbers[i]] += 1
+                room_numbers[i] = "{}.{}".format(room_numbers[i], str(drawings_dict[room_numbers[i]]).zfill(2))
+
+            # 🆗 WRITE TO EXCEL
+            worksheet.write('A' + str(row + 1), int((str(element_id))))
+            worksheet.write('B' + str(row + 1), category_name)
+            worksheet.write('C' + str(row + 1), family_name)
+            worksheet.write('D' + str(row + 1), type_description.AsValueString())
+            worksheet.write('E' + str(row + 1), type_image.AsValueString().strip())
+            worksheet.write('F' + str(row + 1), pos_x)
+            worksheet.write('G' + str(row + 1), pos_y)
+            worksheet.write('H' + str(row + 1), pos_z)
+            for room_number in room_numbers:
+                worksheet.write('I' + str(row + 1), room_number)
+
+            row += 1  # increment row at the end of the loop
+
+        workbook.close()
+
+        if t.GetStatus() == TransactionStatus.Started:
+            t.RollBack()
+    # ==========================================================================================================
+    current_datetime = datetime.now()
+    time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
+    forms.alert('Excel exported!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
 
 
 

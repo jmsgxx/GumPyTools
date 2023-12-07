@@ -54,6 +54,10 @@ active_level    = doc.ActiveView.GenLevel
 
 
 def get_rooms(wall_x):
+    """
+    This will return the room location
+    of walls.
+    """
     wall_bb = wall_x.get_BoundingBox(None)
     outline = Outline(wall_bb.Min, wall_bb.Max)
     bb_filter = BoundingBoxIntersectsFilter(outline)
