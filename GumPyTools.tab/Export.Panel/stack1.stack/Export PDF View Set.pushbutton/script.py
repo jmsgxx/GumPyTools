@@ -51,9 +51,9 @@ active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
 # 🟡 FILE NAME
-model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharingCentralModelPath())
-file_path = model_path
-file_name = os.path.splitext(os.path.basename(file_path))[0]
+# model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharingCentralModelPath())
+# file_path = model_path
+# file_name = os.path.splitext(os.path.basename(file_path))[0]
 
 current_datetime = datetime.now()
 current_date = current_datetime.strftime('%Y''%m''%d')
@@ -67,27 +67,46 @@ directory = r"C:\Users\gary_mak\Desktop\PDF"
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    illegal_char = ['\\', '/', ':', '*', '?', '<', '>', '"', '|']
-
-
     sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
     collector_name = sorted([item.Name for item in sheet_set_collector])
     chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set')
+    file_name = None
     if not chosen_view_set:
         sys.exit()
     else:
         sheets_id = []
         for view_set in sheet_set_collector:
+            file_name = view_set.Name
             if view_set.Name == chosen_view_set:
-                for sheet in view_set.Views:
-                    sheet_number = sheet.SheetNumber
-                    sheet_name = sheet.Name
-                    # new_sheet_name = sheet_name
-                    # for char in illegal_char:
-                    #     if char in new_sheet_name:
-                    #         new_sheet_name = new_sheet_name.replace(char, "-")
+                for sheet in view_set.Views:    # type: ViewSheet
                     sheets_id.append(sheet.Id)
                 break
+
+    # ==========================================
+    # 🟢 prepare the options for paper size
+    paper_options = ['A0', 'A1', 'A2', 'A3', 'A4']
+    paper_size = forms.SelectFromList.show(
+        paper_options,
+        button_name='Select',
+        title='Input Paper Size',
+        height=400, width=300
+    )
+    if not paper_size:
+        sys.exit()
+
+    paper_size_dict = {
+        "A0": ExportPaperFormat.ISO_A0,
+        "A1": ExportPaperFormat.ISO_A1,
+        "A2": ExportPaperFormat.ISO_A2,
+        "A3": ExportPaperFormat.ISO_A3,
+        "A4": ExportPaperFormat.ISO_A4,
+    }
+
+    if paper_size in paper_size_dict:
+        paper_size_value = paper_size_dict[paper_size]
+    # 🟢 end of paper size
+    # ==========================================
+
     options = PDFExportOptions()
     options.AlwaysUseRaster = False
     options.ColorDepth = ColorDepthType.Color
@@ -101,7 +120,7 @@ with Transaction(doc, __title__) as t:
     options.MaskCoincidentLines = True
     options.OriginOffsetX = 0
     options.OriginOffsetY = 0
-    options.PaperFormat = ExportPaperFormat.ISO_A3
+    options.PaperFormat = paper_size_value
     # options.PaperOrientation.Auto
     options.PaperPlacement = PaperPlacementType.Center
     options.RasterQuality = RasterQualityType.High

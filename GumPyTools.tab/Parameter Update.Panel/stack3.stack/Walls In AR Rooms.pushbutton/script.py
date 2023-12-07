@@ -12,6 +12,8 @@ of walls on current Level such as:
 - Instance Mark
 __________________________________
 HOW TO:
+- Open desired View level before running
+the script
 - Just run the script and select
 destination file. It will export out in a few
 seconds
@@ -25,7 +27,6 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from Autodesk.Revit.DB.Architecture import Room
 from pyrevit import script, forms, revit
 from System.Collections.Generic import List
 from datetime import datetime

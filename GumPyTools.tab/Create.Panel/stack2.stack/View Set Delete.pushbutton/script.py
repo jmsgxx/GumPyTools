@@ -37,7 +37,7 @@ app      = __revit__.Application
 
 collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
 collector_name = sorted([item.Name for item in collector])
-chosen_view_set = forms.SelectFromList.show(collector_name, title="Select View Set to Delete", button_name='Select Set', multiselect=True)
+chosen_view_set = forms.SelectFromList.show(collector_name, title="Select View Set to Delete", button_name='Delete', multiselect=True)
 
 with Transaction(doc, __title__) as t:
     t.Start()

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'View Set API'
+__title__ = 'View Set Create'
 __doc__ = """
 Create a View Set the relies the on 
 the value of project parameter "Plot
@@ -42,32 +42,47 @@ output = pyrevit.output.get_output()
 output.center()
 output.resize(200, 300)
 
-plot_batch_value    = forms.ask_for_string(title="Param String", prompt="Put parameter value")
-if not plot_batch_value:
+
+all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet)
+
+# 🟥 GET THE VALUE OF PLOT BATCH AND PUT IN THE LIST
+plot_batch = []
+for sheet in all_sheets:
+    if sheet:
+        plot_batch_param = sheet.LookupParameter('Plot Batch')
+        if plot_batch_param.HasValue:
+            plot_batch.append(plot_batch_param.AsString())
+
+
+# 🟦 SELECT PARAM VALUE OF PLOT BATCH FROM THE LIST
+plot_batch_value = forms.SelectFromList.show(set(plot_batch),
+                                             multiselect=True,
+                                             button_name='Select',
+                                             title='Select Plot Batch Value')  # should accept a list on first argument
+
+# plot_batch_value    = forms.ask_for_string(title="Param String", prompt="Put parameter value")
+if not plot_batch_value:    # exit the command if no value chosen
     sys.exit()
+
+
 view_set_name       = forms.ask_for_string(title="View Set Name", prompt="Input view set name")
 if not view_set_name:
     sys.exit()
 
-# collect the view sheets
-view_sheet = FilteredElementCollector(doc).OfClass(ViewSheet)
-
 # initialize view set
 current_view_set = ViewSet()
 
-for vs in view_sheet:
+for vs in all_sheets:
     param_vs = vs.LookupParameter('Plot Batch')
-    if param_vs and param_vs.AsString() == plot_batch_value:
-        current_view_set.Insert(vs)
+    for plot_batch_item in plot_batch_value:
+        if param_vs and param_vs.AsString() == plot_batch_item:
+            current_view_set.Insert(vs)
 
 
 print_manager               = doc.PrintManager
 print_manager.PrintRange    = PrintRange.Select
 view_sheet_setting                              = print_manager.ViewSheetSetting
-view_sheet_setting.CurrentViewSheetSet.Views    = current_view_set
-
-# if len(my_view_set) == 0:
-#     TaskDialog.Show("Error", "No sheet numbers contain '{}'".format(param_vs.AsValueString()))
+view_sheet_setting.CurrentViewSheetSet.Views    = current_view_set      # set to current view set
 
 with Transaction(doc, "Create ViewSet") as t:
     t.Start()
