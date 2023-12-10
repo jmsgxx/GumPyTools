@@ -44,13 +44,14 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from System.Collections.Generic import List
 from pyrevit import script, forms, revit
 from datetime import datetime
 import time
 import xlsxwriter
+import re
 import clr
 clr.AddReference("System")
+from System.Collections.Generic import List
 import sys
 
 
@@ -103,8 +104,12 @@ else:
 
     # 🟩 BS elements
     list_of_categories = List[BuiltInCategory]([
+        BuiltInCategory.OST_DuctTerminal,
+        BuiltInCategory.OST_CableTrayFitting,
         BuiltInCategory.OST_DataDevices,
+        BuiltInCategory.OST_ElectricalEquipment,
         BuiltInCategory.OST_ElectricalFixtures,
+        BuiltInCategory.OST_LightingFixtures,
         BuiltInCategory.OST_CommunicationDevices,
         BuiltInCategory.OST_SecurityDevices,
         BuiltInCategory.OST_NurseCallDevices])
@@ -175,8 +180,6 @@ else:
                 # number
                 room_copy_number = room_copy.get_Parameter(BuiltInParameter.ROOM_NUMBER)
                 rm_link_number = room_link.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
-                if rm_link_number is None:
-                    room_copy_number.Set("")
                 room_copy_number.Set(str(rm_link_number))
 
                 print('Copying Room...({})'.format(str(index).zfill(3)))
@@ -195,12 +198,6 @@ else:
         print("Total Room in link:      {}".format(len(all_rooms_in_link_level)))
         print("Total Room in current:   {}".format(len(rooms_current)))
 
-        # for index, room_cur in enumerate(rooms_current, start=1):
-        #     print('ROOM CREATED {}'.format(index))
-        #     print('Room Name: {}'.format(room_cur.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()))
-        #     print('Room Number: {}'.format(room_cur.Number))
-        #     print('=' * 50)
-
     # ================================================================================================================
         # 🔵 ELEMENT
         room_numbers = []  # extracted from temp rooms
@@ -217,30 +214,36 @@ else:
             #  type param
             el_type_id = element.GetTypeId()
             el_type = doc.GetElement(el_type_id)
-            if el_type:
-                type_description = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
-                type_image = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
+            # if el_type:
+            type_description = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
+            type_image = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_IMAGE)
 
             element_location = element.Location
-            if element_location:
-                el_loc_point = element_location.Point
-                pos_x = el_loc_point.X
-                pos_y = el_loc_point.Y
-                pos_z = el_loc_point.Z
+            # if element_location:
+            el_loc_point = element_location.Point
+            pos_x = el_loc_point.X
+            pos_y = el_loc_point.Y
+            pos_z = el_loc_point.Z
 
             # room of elements
-            room_active = doc.GetRoomAtPoint(el_loc_point, phase)
+            room_active = element.Room[phase]
+            # room_active = doc.GetRoomAtPoint(el_loc_point, phase)
+            room_num_new = None  # Initialize room_num_new before the if block
+            room_active_number = None
             if room_active:
                 room_active_name = room_active.get_Parameter(BuiltInParameter.ROOM_NAME).AsValueString()
                 room_name = room_active_name  # room name
                 room_active_number = room_active.Number  # room number
-                room_num_param = element.get_Parameter(BuiltInParameter.ROOM_NUMBER)
-                parts_room_number = room_active_number.split('.')
-                if len(parts_room_number) == 3:
-                    room_num_add = parts_room_number[0] + parts_room_number[1] + parts_room_number[2] + "01"
-                    if room_num_add is None:
-                        continue
-                    room_active_number = room_num_param.Set(room_num_add)
+                # pattern = r"\.\."
+                # if re.search(pattern, room_active_number):
+                #     room_num_new = re.sub(pattern, ".", room_active_number)
+                # parts_room_number = room_active_number.split('.')
+                # single_dot = r"\."
+                # if re.search(single_dot, room_active_number):
+                #     if len(parts_room_number) == 3:
+                #         room_num_new = parts_room_number[0] + parts_room_number[1] + parts_room_number[2] + "01"
+                #     else:
+                #         room_num_new = room_active_number
 
             # 🆗 WRITE TO EXCEL
             worksheet.write('A' + str(row + 1), int(str(element_id)))
@@ -256,6 +259,8 @@ else:
             row += 1  # increment row at the end of the loop
 
         workbook.close()
+
+        print("Total number of BS Elements: {}".format(len(all_elements_in_level)))
 
         if t.GetStatus() == TransactionStatus.Started:
             t.RollBack()
