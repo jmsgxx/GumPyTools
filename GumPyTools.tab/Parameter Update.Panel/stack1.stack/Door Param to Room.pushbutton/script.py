@@ -61,21 +61,22 @@ output.resize(300, 500)
 # =============================================================================================================
 # 🔵 ROOM
 filter_type = _x_selection.ISelectionFilter_Classes([Room])
-selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
+selected_element = selection.PickObject(ObjectType.Element, filter_type, "Select Room")
 
-selected_room = None
-for el in selected_element:
-    selected_room = doc.GetElement(el)
-if not selected_room:
+if not selected_element:
     sys.exit()
+
+selected_room = doc.GetElement(selected_element)
 
 forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
 
 # ===========================================================================================================
 # 🔵 DOOR
-door_elements = uidoc.Selection.PickObjects(ObjectType.Element, 'Select Doors')
+door_filter = _x_selection.ISelectionFilterCatName(['Doors'])
+door_elements = selection.PickObjects(ObjectType.Element, door_filter, 'Select Doors')
 
 if not door_elements:
+    forms.alert('Just pick a goddamn door.Try again.', exitscript=True)
     sys.exit()
 
 door_list = [doc.GetElement(el) for el in door_elements]

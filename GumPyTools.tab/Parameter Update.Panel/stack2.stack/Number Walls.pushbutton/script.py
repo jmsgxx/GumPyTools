@@ -56,11 +56,13 @@ with Transaction(doc, __title__) as t:
     type_mark_wall      = []
     desc_wall           = []
     wall_number_list    = []
-
-    filter_type = _x_selection.WallSelectionFilterFIN([Wall])
-    wall_pick = selection.PickObjects(ObjectType.Element, filter_type, "Select Walls")
-    if not wall_pick:
-        sys.exit()
+    try:
+        filter_type = _x_selection.WallSelectionFilterSTR([Wall], "FIN")
+        wall_pick = selection.PickObjects(ObjectType.Element, filter_type, "Select Walls")
+        if not wall_pick:
+            sys.exit()
+    except Exception as e:
+        forms.alert(str(e), exitscript=True)
 
     # get the element from 'Reference' format of wall_pick
     wall_list = [doc.GetElement(el) for el in wall_pick]

@@ -63,11 +63,14 @@ with Transaction(doc, __title__) as t:
     t.Start()
 
     # room selection
+    try:
+        filter_type = _x_selection.ISelectionFilter_Classes([Room])
+        selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
 
-    filter_type = _x_selection.ISelectionFilter_Classes([Room])
-    selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
+        selected_rooms = [doc.GetElement(el) for el in selected_element]
+    except Exception as e:
+        forms.alert(str(e), exitscript=True)
 
-    selected_rooms = [doc.GetElement(el) for el in selected_element]
     if not selected_rooms:
         sys.exit()
 

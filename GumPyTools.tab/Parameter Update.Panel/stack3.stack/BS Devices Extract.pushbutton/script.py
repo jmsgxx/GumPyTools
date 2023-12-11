@@ -104,12 +104,9 @@ else:
 
     # 🟩 BS elements
     list_of_categories = List[BuiltInCategory]([
-        BuiltInCategory.OST_DuctTerminal,
-        BuiltInCategory.OST_CableTrayFitting,
         BuiltInCategory.OST_DataDevices,
         BuiltInCategory.OST_ElectricalEquipment,
         BuiltInCategory.OST_ElectricalFixtures,
-        BuiltInCategory.OST_LightingFixtures,
         BuiltInCategory.OST_CommunicationDevices,
         BuiltInCategory.OST_SecurityDevices,
         BuiltInCategory.OST_NurseCallDevices])
@@ -226,8 +223,8 @@ else:
             pos_z = el_loc_point.Z
 
             # room of elements
-            room_active = element.Room[phase]
-            # room_active = doc.GetRoomAtPoint(el_loc_point, phase)
+            # room_active = element.Room[phase]
+            room_active = doc.GetRoomAtPoint(el_loc_point, phase)
             room_num_new = None  # Initialize room_num_new before the if block
             room_active_number = None
             if room_active:
