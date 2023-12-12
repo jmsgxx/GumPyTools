@@ -50,13 +50,10 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-selection = uidoc.Selection #type:Selection
+selection = uidoc.Selection     # type:Selection
 
 current_datetime = datetime.now()
 time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
-output = pyrevit.output.get_output()
-output.center()
-output.resize(300, 500)
 
 # =============================================================================================================
 # 🔵 ROOM
@@ -64,20 +61,18 @@ filter_type = _x_selection.ISelectionFilter_Classes([Room])
 selected_element = selection.PickObject(ObjectType.Element, filter_type, "Select Room")
 
 if not selected_element:
-    sys.exit()
+    forms.alert("Select Room. Try again", exitscript=True)
 
 selected_room = doc.GetElement(selected_element)
-
 forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
-
 # ===========================================================================================================
 # 🔵 DOOR
-door_filter = _x_selection.ISelectionFilterCatName(['Doors'])
-door_elements = selection.PickObjects(ObjectType.Element, door_filter, 'Select Doors')
 
-if not door_elements:
-    forms.alert('Just pick a goddamn door.Try again.', exitscript=True)
-    sys.exit()
+try:
+    door_filter = _x_selection.ISelectionFilterCatName(['Doors'])
+    door_elements = selection.PickObjects(ObjectType.Element, door_filter, 'Select Doors')
+except Exception as e:
+    forms.alert(str(e), exitscript=True)
 
 door_list = [doc.GetElement(el) for el in door_elements]
 
@@ -169,19 +164,23 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 # =====================================================================================================================
-output.print_md('### Parameters Updated: {}'.format(time_stamp))
+output = pyrevit.output.get_output()
+output.center()
+output.resize(300, 500)
+# output.print_md('### Parameters Updated: {}'.format(time_stamp))
 
 room_name = selected_room.LookupParameter('Name')
-print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
-print("ROOM NUMBER: {}".format(room_number))
-print('=' * 50)
-print("DOOR NUMBER: \n" + '\n'.join(room_door_marks_list))
-print('=' * 50)
-print("DOOR CLEAR HEIGHT: \n" + '\n'.join(room_door_clear_heights_list))
-print('=' * 50)
-print("DOOR CLEAR WIDTH: \n" + '\n'.join(room_door_clear_widths_list))
-print('=' * 50)
-print("DOOR DESCRIPTION: \n" + '\n' + '\n\n'.join(room_door_remarks_list))
+# print("ROOM NAME: {}".format(room_name.AsValueString().upper()))
+# print("ROOM NUMBER: {}".format(room_number))
+# print('=' * 50)
+# print("DOOR NUMBER: \n" + '\n'.join(room_door_marks_list))
+# print('=' * 50)
+# print("DOOR CLEAR HEIGHT: \n" + '\n'.join(room_door_clear_heights_list))
+# print('=' * 50)
+# print("DOOR CLEAR WIDTH: \n" + '\n'.join(room_door_clear_widths_list))
+# print('=' * 50)
+# print("DOOR DESCRIPTION: \n" + '\n' + '\n\n'.join(room_door_remarks_list))
+forms.alert("Parameters Updated", exitscript=False, warn_icon=False)
 
 
 

@@ -19,6 +19,8 @@ v1: 15 Nov 2023
 Author: Joven Mark Gumana
 """
 
+import re
+
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
@@ -219,12 +221,20 @@ with Transaction(doc, __title__) as t:
             built_in_cat = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).AsValueString()
             if built_in_cat == 'ARCHITECTURAL WORK':
                 bi_archi.append(item)
-            elif built_in_cat == 'CABINETRY/BUILT-IN FURNITURE':
-                bi_cab_furn.append(item)
             elif built_in_cat == 'SANITARY FITMENT':
                 bi_san_fit.append(item)
             elif built_in_cat == 'WALL PROTECTION':
                 bi_wall_prot.append(item)
+            elif built_in_cat == 'CABINETRY/BUILT-IN FURNITURE' or built_in_cat == 'CABINETRY / BUILT-IN FURNITURE':
+                bi_cab_furn.append(item)
+            # if "/" in built_in_cat:
+            #     built_in_cat_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
+            #     if built_in_cat != 'CABINETRY/BUILT-IN FURNITURE':
+            #         built_in_cat = re.sub(r"\s?/\s?", "/", built_in_cat)
+            #         built_in_cat_param.Set(built_in_cat)
+            #         bi_cab_furn.append(item)
+            #     else:
+            #         bi_cab_furn.append(item)
 
         # built-in param
         room_inv_cat1 = selected_room.LookupParameter('Room Inventory Category 1')

@@ -36,7 +36,6 @@ import os
 import sys
 clr.AddReference("System")
 
-
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
@@ -69,8 +68,10 @@ with Transaction(doc, __title__) as t:
 
     sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
     collector_name = sorted([item.Name for item in sheet_set_collector])
+    collector_dict = {name: name for name in collector_name}
     chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set')
     file_name = None
+
     if not chosen_view_set:
         sys.exit()
     else:

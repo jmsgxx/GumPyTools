@@ -45,7 +45,7 @@ app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-selection = uidoc.Selection     #type: Selection
+selection = uidoc.Selection     # type: Selection
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
@@ -56,18 +56,19 @@ with Transaction(doc, __title__) as t:
     type_mark_wall      = []
     desc_wall           = []
     wall_number_list    = []
-    try:
-        filter_type = _x_selection.WallSelectionFilterSTR([Wall], "FIN")
-        wall_pick = selection.PickObjects(ObjectType.Element, filter_type, "Select Walls")
-        if not wall_pick:
-            sys.exit()
-    except Exception as e:
-        forms.alert(str(e), exitscript=True)
 
-    # get the element from 'Reference' format of wall_pick
-    wall_list = [doc.GetElement(el) for el in wall_pick]
+    wall_pick = [doc.GetElement(el_id) for el_id in selection.GetElementIds()]
+    if not wall_pick:
+        try:
+            filter_type = _x_selection.WallSelectionFilterSTR([Wall], "FIN")
+            wall_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Walls")
+            wall_pick = [doc.GetElement(el) for el in wall_list]
+            if not wall_pick:
+                forms.alert("Select walls.\nTry again.", exitscript=True)
+        except Exception as e:
+            forms.alert(str(e), exitscript=True)
 
-    for number, wall in enumerate(wall_list, start=1):
+    for number, wall in enumerate(wall_pick, start=1):
         # number the wall mark based on the number of the walls in the room
         wall_mark       = wall.get_Parameter(BuiltInParameter.DOOR_NUMBER)
         wall_number     = wall.LookupParameter('Wall Number')

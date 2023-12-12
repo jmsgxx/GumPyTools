@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI.Selection import Selection
 from pyrevit import forms
 from Autodesk.Revit.UI.Selection import ISelectionFilter
 
@@ -8,12 +9,20 @@ import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
 
-doc      = __revit__.ActiveUIDocument.Document
+doc      = __revit__.ActiveUIDocument.Document  # type: Document
 uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
+
+selection = uidoc.Selection # type: Selection
+
+
+
+def get_multiple_element():
+    """get elements in selected items"""
+    return [doc.GetElement(el_id) for el_id in selection.GetElementIds()]
 
 
 class ISelectionFilter_Classes(ISelectionFilter):
