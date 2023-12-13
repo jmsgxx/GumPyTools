@@ -33,3 +33,9 @@ active_view = doc.ActiveView
 active_level = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
+all_levels = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements()
+
+for level in all_levels:
+    # level_name_param = level.LookupParameter('Level Name').AsValueString()
+    print(level.Name)
+
