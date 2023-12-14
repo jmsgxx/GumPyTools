@@ -57,11 +57,14 @@ time_stamp = current_datetime.strftime('%d %b %Y %H%Mhrs')
 
 # =============================================================================================================
 # 🔵 ROOM
+
 filter_type = _x_selection.ISelectionFilter_Classes([Room])
 selected_element = selection.PickObject(ObjectType.Element, filter_type, "Select Room")
 
 if not selected_element:
-    forms.alert("Select Room. Try again", exitscript=True)
+    selected_element = selection.PickObject(ObjectType.Element, filter_type, "Select Room")
+    if not selected_element:
+        forms.alert("Select Room. Try again", exitscript=True)
 
 selected_room = doc.GetElement(selected_element)
 forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
