@@ -90,6 +90,8 @@ with Transaction(doc, __title__) as t:
             ElementIntersectsSolidFilter(room_solid)).ToElements()
 
         # 🟠 ROOM PARAMETERS
+        sel_room_name = selected_room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+        sel_room_number = selected_room.Number
         # loose param
         room_user_cat = selected_room.LookupParameter('Room Inventory By User Category')
         room_user_item = selected_room.LookupParameter('Room Inventory By User Items')
@@ -159,12 +161,13 @@ with Transaction(doc, __title__) as t:
                 model_element_id = item.GetTypeId()
                 model_type = doc.GetElement(model_element_id)
                 """ this is the parameter to get that will set in room """
-                model_type_cat_param = model_type.get_Parameter(
-                    BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).AsValueString()  # type comments
-                model_type_item_param = model_type.get_Parameter(
-                    BuiltInParameter.WINDOW_TYPE_ID).AsValueString()  # type mark
-                model_type_desc_param = model_type.get_Parameter(
-                    BuiltInParameter.ALL_MODEL_DESCRIPTION).AsValueString()  # type description
+                model_type_cat_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).AsValueString()  # type comments
+                if model_type_cat_param is None:
+                    print("Element {} has no description for 'Loose Items' in {} - {}.".format(item.Id,
+                                                                                               sel_room_name,
+                                                                                               sel_room_name))
+                model_type_item_param = model_type.get_Parameter(BuiltInParameter.WINDOW_TYPE_ID).AsValueString()  # type mark
+                model_type_desc_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION).AsValueString()  # type description
 
                 by_user_cat.append(model_type_cat_param)
                 by_user_item.append(model_type_item_param)
@@ -222,7 +225,11 @@ with Transaction(doc, __title__) as t:
             model_type = doc.GetElement(model_element_id)
             # ⭕
             built_in_cat = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS).AsValueString()
-            if built_in_cat == 'ARCHITECTURAL WORK':
+            if built_in_cat is None:
+                print("Element {} has no description for 'Built-in Items' in {} - {}.".format(item.Id,
+                                                                                              sel_room_name,
+                                                                                              sel_room_name))
+            elif built_in_cat == 'ARCHITECTURAL WORK':
                 bi_archi.append(item)
             elif built_in_cat == 'SANITARY FITMENT':
                 bi_san_fit.append(item)
