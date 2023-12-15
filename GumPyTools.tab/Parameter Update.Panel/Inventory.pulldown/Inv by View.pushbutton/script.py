@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Inv Param to Room'
+__title__ = 'Inv by View'
 __doc__ = """
 YOU CANNOT USE THIS IN ONE WHOLE FLOOR!!!
 

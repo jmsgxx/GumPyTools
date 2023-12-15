@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Room Copy Wall'
+__title__ = 'Wall Num to Room'
 __doc__ = """
 This script will collect wall data that
 was generated beforehand and will be copied

@@ -5,15 +5,18 @@ __doc__ = """
 This script will select only specific
 elements to be assigned on a specific
 room.
+NOTE:
+This script automatically detect which filtered
+elements are inside the room.
 
 REASON:
 There are multiple rooms in a single
 active view.
 
 HOW TO:
-1. Select a room.
-2. If there's no error, window select
-elements to update.
+1. Select a room or group of rooms.
+2. It will automatically assign the elements
+ inside it's respective room.
 --------------------------------------
 v1: 15 Nov 2023
 Author: Joven Mark Gumana

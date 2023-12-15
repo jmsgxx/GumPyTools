@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Number Walls'
+__title__ = 'Wall by Selection'
 __doc__ = """
-This script will just number wall.
-A stand alone command because some
-walls shares multiple rooms.
-It has to be done manually disascco-
-ciated with the Room command.
+This script will renumber the selected
+walls.
 __________________________________
 HOW TO:
 1. Run the command.

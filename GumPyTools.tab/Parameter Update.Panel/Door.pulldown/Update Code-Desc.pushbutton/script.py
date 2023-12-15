@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Door Code-Desc'
+__title__ = 'Update Code-Desc'
 __doc__ = """
 This script will update:
 - Door Panel Code
@@ -11,7 +11,16 @@ This script will update:
 - Door Protection Pull or Wall Height Code
 - Door Protection Push or Track Code
 - Door Protection Push or Track Height Code
+
+HOW TO:
+1. Click the command.
+2. Confirm that you want to update by 
+ typing 'Yes' in any case. 
+ Else, type 'No' or exit the propmt.
+3. Print statement will confirm that change
+ been done.
 __________________________________
+v5. 15 Dec 2023
 v4: 29 Oct 2023
 v3: 16 Oct 2023
 v2: 08 Oct 2023

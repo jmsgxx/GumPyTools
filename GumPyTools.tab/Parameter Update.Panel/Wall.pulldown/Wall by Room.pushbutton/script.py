@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Room Bound Wall'
+__title__ = 'Wall by Room'
 __doc__ = """
 This script will first generate a number that 
 will be written as a Mark instance on a wall. 
@@ -10,9 +10,9 @@ Room Parameter: Wall Data Set 1 - this is
 a concatenation of the 3 Wall Parameters.
 
 HOW TO:
-Select the room. It will automatically 
+1. Select the room. It will automatically 
 generate the needed parameters. 
-This will be confirmed by a print 
+2. This will be confirmed by a print 
 statement at the end of the script.
 -----------------------------------------
 v1: 30 Oct 2023

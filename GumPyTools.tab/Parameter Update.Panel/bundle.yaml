@@ -1,8 +1,10 @@
 layout:
     - RIL Room-Door
     - -----
-    - stack1
-    - stack2
-    - stack3
+    - Door
+    - Wall
+    - Inventory
     - -----
-    - stack4
+    - Data Extract
+    - -----
+    - stack1

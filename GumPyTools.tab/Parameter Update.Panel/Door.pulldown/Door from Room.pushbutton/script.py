@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Door Param to Room'
+__title__ = 'Door from Room'
 __doc__ = """
 This script transfers the Door parameters to Room.
 It will also create the Door Mark and Door Number
@@ -9,9 +9,8 @@ it's parameter automatically.
 
 HOW TO:
 - Click the command
-- Select the room you'd want the information
-  to be pasted
-- Select the doors that you want
+- Select the desired room. Confirmation will pop up.
+- Select the door/s that you want.
 - A print statement will confirm that the
   selected doors was included on the list.
   If not it will give an error print statement.
