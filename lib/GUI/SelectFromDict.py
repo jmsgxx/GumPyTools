@@ -166,7 +166,7 @@ class SelectFromDict(my_WPF):
         selected_items = []
         for item in self.main_ListBox.ItemsSource:
             if item.IsChecked:
-                selected_items.append(item.element)
+                selected_items.append(item.elements)
         self.selected_items = selected_items
 
 

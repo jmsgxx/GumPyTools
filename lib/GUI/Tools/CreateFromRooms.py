@@ -150,7 +150,7 @@ class CreateFromRooms(my_WPF):
         self.Close()
 
         try:
-            selected_items = [item.element for item in self.main_ListBox.ItemsSource if item.IsChecked]
+            selected_items = [item.elements for item in self.main_ListBox.ItemsSource if item.IsChecked]
             self.offset    = convert_internal_units(float(self.UI_offset.Text),
                                                         get_internal=True,
                                                         units = 'cm')
