@@ -1,10 +1,18 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 01'
+__title__ = 'Find RIL Rm'
 __doc__ = """
-This script is a test.
-__________________________________
+WARNING: ONLY WORKS ON L0 CURRENTLY.
+STILL WORK IN PROGRESS
 
+This is script will mark the rooms that you
+need with 'Circle' in a specified Department.
+
+HOW TO:
+1. Click the command.
+2. Select the department that you need.
+__________________________________
+v1.18 Dec 2023
 Author: Joven Mark Gumana
 """
 
@@ -16,8 +24,6 @@ from Autodesk.Revit.DB import *
 from Autodesk.Revit.DB.Architecture import Room
 import math
 from pyrevit import forms, revit
-import os
-import sys
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List

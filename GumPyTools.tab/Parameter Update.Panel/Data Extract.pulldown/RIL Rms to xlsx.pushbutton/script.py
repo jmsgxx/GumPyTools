@@ -61,8 +61,8 @@ else:
             headings = ['Room Element Id', 'Room Name', 'Room Number', 'Room SoA']
             for i, heading in enumerate(headings):
                 worksheet.write(0, i, heading)
-            worksheet.set_column('A:A', 15)
-            worksheet.set_column('B:B', 85)
+            worksheet.set_column('A:A', 20)
+            worksheet.set_column('B:B', 100)
             worksheet.set_column('C:C', 15)
             worksheet.set_column('D:D', 15)
 
@@ -73,16 +73,32 @@ else:
                 .WherePasses(ElementLevelFilter(level_filter))\
                 .ToElements()
 
+            department_list = []
+
+            for item in rooms:
+                dept_room_param = item.LookupParameter('Department_BLP')
+                if dept_room_param:
+                    dept_room = dept_room_param.AsString()
+                    if dept_room:
+                        department_list.append(dept_room)
+
+            department_list = list(set(department_list))
+            selected_dept = forms.SelectFromList.show(sorted(department_list), button_name='Select Department')
+            if not selected_dept:
+                forms.alert("No selected department.\nExiting command.", exitscript=True)
+
             collected_rooms = []
 
             for room in rooms:
                 room_class = room.LookupParameter('Rooms_Classification_BLP').AsString()
-                if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
-                    room_el_id = room.Id
-                    room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
-                    room_number = room.Number
-                    room_soa = room.LookupParameter('Room SoA Ref Number').AsString()
-                    collected_rooms.append((room_el_id, room_name, room_number, room_soa))
+                room_dept = room.LookupParameter('Department_BLP').AsString()
+                if room_dept == selected_dept:
+                    if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
+                        room_el_id = room.Id
+                        room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+                        room_number = room.Number
+                        room_soa = room.LookupParameter('Room SoA Ref Number').AsString()
+                        collected_rooms.append((room_el_id, room_name, room_number, room_soa))
 
             row = 1
             for room_el_id, room_name, room_number, room_soa in sorted(collected_rooms, key=lambda x: x[2]):

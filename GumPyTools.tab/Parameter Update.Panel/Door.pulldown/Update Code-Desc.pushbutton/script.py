@@ -151,8 +151,6 @@ with Transaction(doc, __title__) as t:
         all_phase = list(doc.Phases)
         phase = (all_phase[1])
 
-        ins_all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WhereElementIsNotElementType().ToElements()
-
         all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors) \
             .WhereElementIsElementType().ToElements()
 

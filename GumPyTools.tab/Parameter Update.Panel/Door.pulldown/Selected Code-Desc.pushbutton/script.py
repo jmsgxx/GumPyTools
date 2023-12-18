@@ -14,18 +14,13 @@ Not the whole model.
 - Door Protection Push or Track Height Code
 
 HOW TO:
-1. Click the command.
-2. Confirm that you want to update by 
- typing 'Yes' in any case. 
- Else, type 'No' or exit the propmt.
-3. Print statement will confirm that change
+1. Select the desired door and click the command
+    or click the command directly and press 'ok'.
+2. The door descriptions will be according to its code.
+3. Print statement will confirm that change had
  been done.
 __________________________________
-v5. 15 Dec 2023
-v4: 29 Oct 2023
-v3: 16 Oct 2023
-v2: 08 Oct 2023
-v1: 03 Oct 2023
+v1: 18 Dec 2023
 Author: Joven Mark Gumana
 """
 
