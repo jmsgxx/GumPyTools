@@ -108,8 +108,6 @@ def set_by_index(filtered_list, lookup_desc, param_dict):
                     door_desc.Set(param_dict[value])
 
 
-
-
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables

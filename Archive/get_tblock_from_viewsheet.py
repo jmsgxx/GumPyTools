@@ -34,7 +34,7 @@ active_level = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
 views_sheet_ids = FilteredElementCollector(doc).OfClass(ViewSheet).ToElementIds()
-title_block_category_id = ElementId(BuiltInCategory.OST_TitleBlocks)
+tblock_cat_id = ElementId(BuiltInCategory.OST_TitleBlocks)
 
 pharma_rls = []
 
@@ -49,7 +49,7 @@ for v_id in views_sheet_ids:
 
 for sht_id in pharma_rls:
     view_el = doc.GetElement(sht_id)
-    t_block_id = FilteredElementCollector(doc, sht_id).OfCategoryId(title_block_category_id).ToElementIds()
+    t_block_id = FilteredElementCollector(doc, sht_id).OfCategoryId(tblock_cat_id).ToElementIds()
     sheet_number = view_el.SheetNumber
     pharma_dwg_type = view_el.LookupParameter('Drawing Type')
     for tblock in t_block_id:
@@ -64,6 +64,8 @@ for sht_id in pharma_rls:
                 pharma_dwg_type.Set('ROOM LAYOUT SHEET A3')
                 # output_report.append((sheet_number, tblock_name))
             t.Commit()
+
+
 
 # output_report.sort()
 

@@ -2,8 +2,7 @@
 
 __title__ = 'Find RIL Rm'
 __doc__ = """
-WARNING: ONLY WORKS ON L0 CURRENTLY.
-STILL WORK IN PROGRESS
+WARNING: MAKE SURE "LINE" CATEGORY IS TURNED ON.
 
 This is script will mark the rooms that you
 need with 'Circle' in a specified Department.
@@ -11,6 +10,8 @@ need with 'Circle' in a specified Department.
 HOW TO:
 1. Click the command.
 2. Select the department that you need.
+3. To 'Delete' all, right click on the circle,
+select 'Select All Instance in View' and press delete.
 __________________________________
 v1.18 Dec 2023
 Author: Joven Mark Gumana
@@ -40,10 +41,6 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
-
-
-forms.inform_wip()
-
 
 def get_room_center(room_el):
     """
