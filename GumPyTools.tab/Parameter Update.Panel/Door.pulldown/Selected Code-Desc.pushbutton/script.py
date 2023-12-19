@@ -16,10 +16,11 @@ Not the whole model.
 HOW TO:
 1. Select the desired door and click the command
     or click the command directly and press 'ok'.
-2. The door descriptions will be according to its code.
+2. The door descriptions will be  updated according to its code.
 3. Print statement will confirm that change had
- been done.
+ been done or operation has aborted.
 __________________________________
+v2. 19 Dec 2023
 v1: 18 Dec 2023
 Author: Joven Mark Gumana
 """
@@ -32,7 +33,7 @@ Author: Joven Mark Gumana
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from datetime import datetime
-from Snippets._x_selection import ISelectionFilter_Categories
+from Snippets._x_selection import ISelectionFilter_Categories, ISelectionFilter_Classes
 import pyrevit
 from pyrevit import forms, script
 import sys
@@ -51,7 +52,8 @@ clr.AddReference("System")
 # ╚  ╚═╝╝╚╝╚═╝ ╩ ╩╚═╝╝╚╝
 # ========================================
 
-directory = r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\NDH_Door Data.xlsx'
+# directory = r'C:\Users\gary_mak\Documents\GitHub\GumPyTools.extension\lib\Ref\NDH_Door Data.xlsx'
+directory = r'X:\J521\BIM\00_SKA-Tools\SKA_Tools\SKA-Tools.extension\lib\Ref\NDH_Door Data.xlsx'
 wb = xlrd.open_workbook(directory)
 
 
@@ -144,21 +146,21 @@ with Transaction(doc, __title__) as t:
     # ✅ GET ALL DOOR TYPES
     all_phase = list(doc.Phases)
     phase = (all_phase[1])
+    try:
+        all_door_ins = [doc.GetElement(el_id) for el_id in selection.GetElementIds()]   # family instance
+        all_doors = [door.Symbol for door in all_door_ins]  # family symbol
 
-    door_pick = [doc.GetElement(el_id) for el_id in selection.GetElementIds()]
-    if not door_pick:
-        try:
-            filter_type = ISelectionFilter_Categories['Doors']
-            door_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Doors")
-            door_pick = [doc.GetElement(el) for el in door_list]
-            if not door_pick:
+        if not all_doors:
+            filter_clas = ISelectionFilter_Classes([FamilyInstance])
+            door_list = selection.PickObjects(ObjectType.Element, filter_clas)
+            all_doors_list = [doc.GetElement(el) for el in door_list]
+            all_doors = [door.Symbol for door in all_doors_list]
+            if not all_doors:
                 forms.alert("Select Doors.\nTry again.", exitscript=True)
-        except Exception as e:
-            forms.alert(str(e), exitscript=True)
+    except Exception as e:
+        forms.alert(str(e), exitscript=True)
 
 
-    all_doors = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors) \
-        .WhereElementIsElementType().ToElements()
 
     # 🟢 CALL THE get_list() TO GET THE LIST OF OBJECT FROM all_doors
     door_panel_lst              = get_list('Door Panel Code')
