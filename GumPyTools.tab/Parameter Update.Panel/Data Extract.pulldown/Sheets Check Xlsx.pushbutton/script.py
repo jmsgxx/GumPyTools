@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 01'
+__title__ = 'Sheet Check Xlsx'
 __doc__ = """
-This script is a test.
-__________________________________
+This script will export out sheets in excel format.
+Parameters included:
+- Room Number
+- Room Name
+- Titleblock Name
+- Department
 
+HOW TO:
+1. Run the command.
+2. Confirm if you're committed to export out.
+3. Select destination folder.
+4. Select desired Department.
+5. Confirmation will be shown at the end.
+__________________________________
+v1. 20 Dec 2023
 Author: Joven Mark Gumana
 """
 
@@ -97,7 +109,6 @@ collected_info = []
 
 for view in view_sheet:     # type: ViewSheet
     sheet_department    = view.LookupParameter('Sheet Department').AsString()
-    room_department     = view.LookupParameter('Room Department').AsString()
     if sheet_department == sel_dept_list:
         sheet_number    = view.SheetNumber
         sheet_name      = view.Name

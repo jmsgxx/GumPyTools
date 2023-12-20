@@ -47,7 +47,7 @@ tblock_cat_id = ElementId(BuiltInCategory.OST_TitleBlocks)
 
 # 🔴 GET ROOM DEPARTMENT AS LIST OPTION
 room_dept_list = []
-for view_id_temp in views_sheet_ids:
+for view_id_temp in views_sheet_ids:     # type: ElementId
     view_sheet = doc.GetElement(view_id_temp)
     rm_dept_param = view_sheet.LookupParameter('Room Department')
     if rm_dept_param:
@@ -91,7 +91,7 @@ for sht_id in pharma_rls:
 
 # ============================================================================================
 # ⭕ write to excel
-for index, (sheet_number, sheet_name, tblock_name) in enumerate(sorted(output_report), start=2):
+for index, (sheet_number, sheet_name, tblock_name) in enumerate(sorted(output_report), start=1):
     worksheet.write('A{}'.format(index), sheet_number)
     worksheet.write('B{}'.format(index), sheet_name)
     worksheet.write('C{}'.format(index), tblock_name)
