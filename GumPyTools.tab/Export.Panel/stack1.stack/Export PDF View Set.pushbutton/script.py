@@ -66,32 +66,29 @@ directory = r"C:\Users\gary_mak\Desktop\PDF"
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet)
+    sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet).ToElements()
     collector_name = sorted([item.Name for item in sheet_set_collector])
     collector_dict = {name: name for name in collector_name}
-    chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set')
+    chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set',
+                                                title='Select View Set')
     file_name = None
 
     if not chosen_view_set:
         sys.exit()
     else:
         sheets_id = []
-        for view_set in sheet_set_collector:
+        for view_set in sheet_set_collector:        # type: ViewSheetSet
             file_name = view_set.Name
             if view_set.Name == chosen_view_set:
-                for sheet in view_set.Views:    # type: ViewSheet
+                for sheet in view_set.Views:
                     sheets_id.append(sheet.Id)
                 break
 
     # ==========================================
     # 🟢 prepare the options for paper size
     paper_options = ['A0', 'A1', 'A2', 'A3', 'A4']
-    paper_size = forms.SelectFromList.show(
-        paper_options,
-        button_name='Select',
-        title='Input Paper Size',
-        height=400, width=300
-    )
+    paper_size = forms.SelectFromList.show(paper_options, button_name='Select',
+                                           title='Input Paper Size', height=400, width=300)
     if not paper_size:
         sys.exit()
 

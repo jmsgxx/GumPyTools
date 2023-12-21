@@ -43,7 +43,7 @@ output.center()
 output.resize(200, 300)
 
 
-all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet)
+all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
 # 🟥 GET THE VALUE OF PLOT BATCH AND PUT IN THE LIST
 plot_batch = []
