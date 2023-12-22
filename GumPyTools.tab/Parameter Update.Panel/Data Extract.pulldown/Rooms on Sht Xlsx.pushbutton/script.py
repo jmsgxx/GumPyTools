@@ -125,29 +125,29 @@ if not sel_dept:
 """
 ViewSheet >> ViewPort >> View >> ViewType >> Room
 """
-collected_info = []
-
+collected_info = []     # info to be exported to excel
+sheet_id_list = []
 # VIEW SHEET
 for sheet in sheet_collection:  # type: ViewSheet
     sheet_dept      = sheet.LookupParameter('Sheet Department').AsString()
     sheet_dwg_type  = sheet.LookupParameter('Drawing Type').AsString()
     sheet_number    = sheet.SheetNumber
     sheet_name      = sheet.Name
+    sheet_id_list.append(sheet.Id)
     if sheet_dept == sel_dept:
         # VIEW PORT
         viewport_id = sheet.GetAllViewports()   # returns an id
         for ids in viewport_id:
-            viewport = doc.GetElement(ids)
-
+            viewport = doc.GetElement(ids)  # type: Viewport
+            viewport_sht_id = viewport.SheetId
             # VIEW
             view_id = viewport.ViewId
             view = doc.GetElement(view_id)
             # VIEW TYPE
             if view.ViewType == ViewType.FloorPlan:
-
                 # GET THE ROOM
                 level_filter = ElementLevelFilter(sel_level.Id)
-                room_collector = FilteredElementCollector(doc).OfClass(SpatialElement).\
+                room_collector = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).\
                     WherePasses(level_filter).\
                     ToElements()
 
@@ -157,7 +157,7 @@ for sheet in sheet_collection:  # type: ViewSheet
                         room_name_blp   = room.LookupParameter('Room_Name_BLP').AsString()
                         room_number     = room.Number
                         assoc_level     = room.get_Parameter(BuiltInParameter.LEVEL_NAME).AsString()
-                        if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
+                        if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP' and viewport_sht_id in sheet_id_listdd:
                             if room_number:
                                 collected_info.append((
                                     room_name_blp,
@@ -174,7 +174,7 @@ for sheet in sheet_collection:  # type: ViewSheet
 row = 1
 for (room_name_blp, room_number, sheet_number, sheet_name, sheet_dept,
      sheet_dwg_type,
-     assoc_level) in sorted(collected_info, key=lambda x: x[1]):
+     assoc_level) in sorted(collected_info, key=lambda x: x[2]):
 
     worksheet.write(row, 0, room_name_blp)
     worksheet.write(row, 1, room_number)
