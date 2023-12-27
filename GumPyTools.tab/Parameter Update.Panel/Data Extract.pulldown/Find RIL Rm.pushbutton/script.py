@@ -2,7 +2,7 @@
 
 __title__ = 'Find RIL Rm'
 __doc__ = """
-WARNING: MAKE SURE "LINE" CATEGORY IS TURNED ON.
+WARNING: MAKE SURE "LINE" CATEGORY '<Thin Line>' ARE TURNED ON.
 
 This is script will mark the rooms that you
 need with 'Circle' in a specified Department.
