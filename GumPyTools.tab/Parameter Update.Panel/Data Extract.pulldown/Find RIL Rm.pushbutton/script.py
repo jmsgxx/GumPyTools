@@ -42,6 +42,7 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
+
 def get_room_center(room_el):
     """
     gets the center of the room

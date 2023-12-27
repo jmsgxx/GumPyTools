@@ -95,7 +95,7 @@ else:
                 if room_dept == selected_dept:
                     if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
                         room_el_id = room.Id
-                        room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+                        room_name = room.LookupParameter('Room_Name_BLP').AsString()
                         room_number = room.Number
                         room_soa = room.LookupParameter('Room SoA Ref Number').AsString()
                         collected_rooms.append((room_el_id, room_name, room_number, room_soa))

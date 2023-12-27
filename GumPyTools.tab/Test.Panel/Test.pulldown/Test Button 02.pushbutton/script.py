@@ -33,4 +33,24 @@ active_view = doc.ActiveView
 active_level = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
+level_filter = active_level.Id
+
+rooms = FilteredElementCollector(doc)\
+            .OfCategory(BuiltInCategory.OST_Rooms)\
+            .WherePasses(ElementLevelFilter(level_filter))\
+            .ToElements()
+
+for room in rooms:
+    room_class = room.LookupParameter('Rooms_Classification_BLP').AsString()
+    room_dept_param = room.LookupParameter('Department_BLP')
+    room_name_param = room.LookupParameter('Room_Name_BLP')
+    room_number = room.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
+    with Transaction(doc, __title__) as t:
+        t.Start()
+
+        if room_name_param.AsString() == 'REGISTRATION, BOOKING FILE AND GENERAL STORAGE ROOM':
+            room_name_param.Set(str('REGISTRATION, BOOKING FILE & GENERAL STORAGE ROOM'))
+
+        t.Commit()
+
 
