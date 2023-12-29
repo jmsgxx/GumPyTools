@@ -12,12 +12,11 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Snippets._x_selection import ISelectionFilter_Classes
+
+from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
 from Autodesk.Revit.DB import *
-from Autodesk.Revit.DB.Architecture import Room
-from pyrevit import forms
 import pyrevit
+from pyrevit import forms
 import sys
 import clr
 clr.AddReference("System")
@@ -35,56 +34,111 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
-selection = uidoc.Selection     # type: Selection
 
-# 1️⃣ COLLECT ALL SHEETS
-sheet_collection = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).ToElements()
+all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
-# -------------------------------------------------------------------------------
-# 🟢 PREPARE ROOM SELECTION
-selected_rooms = [doc.GetElement(el_id) for el_id in selection.GetElementIds()]
-if not selected_rooms:
-    filter_type = ISelectionFilter_Classes([Room])
-    selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
-    selected_rooms = [doc.GetElement(el) for el in selected_element]
-    if not selected_rooms:
-        forms.alert("Select room.", exitscript=True)
+level_filter = active_level.Id
 
-room_name = None
-room_number = None
+rooms = FilteredElementCollector(doc)\
+            .OfCategory(BuiltInCategory.OST_Rooms)\
+            .WherePasses(ElementLevelFilter(level_filter))\
+            .ToElements()
 
-# VIEW SHEET
-room_sheets = {}
-for sheet in sheet_collection:  # type: ViewSheet
-    sheet_number = sheet.SheetNumber
-    sheet_name = sheet.Name
-    viewport_id = sheet.GetAllViewports()  # returns an id
-    for ids in viewport_id:
-        viewport = doc.GetElement(ids)  # type: Viewport
-        view_id = viewport.ViewId
 
-        view = doc.GetElement(view_id)  # type: View
-        if view.ViewType == ViewType.FloorPlan:
-            # GET THE ROOM
-            for room in selected_rooms:     # type: Room
+sheet_dict = {}
+sheet_rm_dept = {}
+sheet_dwg_type = {}
+
+for sheet in all_sheets:    # type: ViewSheet
+    _sheet_dept                  = sheet.LookupParameter('Sheet Department').AsString()
+    room_dept                   = sheet.LookupParameter('Room Department').AsString()
+    dwg_type                    = sheet.LookupParameter('Drawing Type').AsString()
+    if _sheet_dept:
+        sheet_dict[_sheet_dept]      = _sheet_dept
+    if room_dept:
+        sheet_rm_dept[room_dept]    = room_dept
+    if dwg_type:
+        sheet_dwg_type[dwg_type]    = dwg_type
+
+room_class_dict = {}
+
+
+for room in rooms:
+    room_class = room.LookupParameter('Department_BLP').AsString()
+    if room_class:
+        room_class_dict[room_class] = room_class
+
+
+
+
+components = [Label('Sheet Department:'),
+              ComboBox('sheet_dept', sheet_dict),
+              Label('Sheet Room Department:'),
+              ComboBox('room_dept', sheet_rm_dept),
+              Label('Sheet Drawing Department:'),
+              ComboBox('dwg_type', sheet_dwg_type),
+              Separator(),
+              Label('Room Department:'),
+              ComboBox('rm_class', room_class_dict),
+              Separator(),
+              Button('Select')]
+
+form = FlexForm('Check Rooms if on Sheet', components)
+
+form.show()
+user_inputs = form.values
+# sheets
+sht_depart      = user_inputs['sheet_dept']
+rm_dept         = user_inputs['room_dept']
+dwg_t_dept      = user_inputs['dwg_type']
+# rooms
+room_rm_class      = user_inputs['rm_class']
+
+# TODO: FIX THIS
+# if not (sht_depart, rm_dept, dwg_t_dept, room_rm_class):
+#     sys.exit()
+
+
+
+sheets_in_rad = []
+rooms_lst = []
+
+for sheet in all_sheets:    # type: ViewSheet
+    _sheet_dept              = sheet.LookupParameter('Sheet Department').AsString()
+    room_dept               = sheet.LookupParameter('Room Department').AsString()
+    dwg_type                = sheet.LookupParameter('Drawing Type').AsString()
+    if _sheet_dept == sht_depart:
+        if room_dept == rm_dept:
+            if dwg_type == dwg_t_dept:
+                sheet_number    = sheet.SheetNumber
+                sheet_name      = sheet.Name
+                sheets_in_rad.append(sheet_name)
+
+for room in rooms:
+    room_class = room.LookupParameter('Rooms_Classification_BLP').AsString()
+    room_dept_param = room.LookupParameter('Department_BLP')
+    if room_dept_param:
+        _room_dept = room_dept_param.AsString()
+        if _room_dept == room_rm_class:
+            if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
+                # room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
                 room_name = room.LookupParameter('Room_Name_BLP').AsString()
-                room_number = room.Number
-                room_key = "{} - {}".format(room_name, room_number)
-                if room_key not in room_sheets:
-                    room_sheets[room_key] = []  # Initialize list for the room
-                room_sheets[room_key].append((sheet_number, sheet_name))
+                room_number = room.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
+                rooms_lst.append(room_name)
 
+
+unique_sheet = set(sheets_in_rad)
+unique_room = set(rooms_lst)
+
+missing_rm = [item for item in sorted(unique_room) if item not in unique_sheet]
 
 output = pyrevit.output.get_output()
 output.center()
-output.resize(600, 750)
+output.resize(300, 500)
 
-for room, sheets in room_sheets.items():
-    print('-' * 50)
-    print(room)
-    print('-' * 50)
-    for item in sorted(sheets):
-        print("{} - {}".format(*item))
-    print("\n")
-    print('=' * 50)
 
+if len(missing_rm) == 0:
+    print('All rooms are covered.')
+else:
+    for i in missing_rm:
+        print(i)
