@@ -69,6 +69,7 @@ headings = ['Sheet Number',
             ]
 for i, heading in enumerate(headings):
     worksheet.write(0, i, heading)
+
 worksheet.set_column('A:A', 20)
 worksheet.set_column('B:B', 100)
 worksheet.set_column('C:C', 20)
@@ -77,8 +78,8 @@ worksheet.set_column('E:E', 40)
 worksheet.set_column('F:F', 30)
 # -----------------------------------------------------------------------------------------
 #  1️⃣ COLLECT ELEMENTS NEEDED
-view_sheet = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
-tblock_cat_id = ElementId(BuiltInCategory.OST_TitleBlocks)
+view_sheet      = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
+tblock_cat_id   = ElementId(BuiltInCategory.OST_TitleBlocks)
 
 # -----------------------------------------------------------------------------------------
 #  2️⃣ GET THE LIST
@@ -118,8 +119,8 @@ for view in view_sheet:     # type: ViewSheet
         all_tblock_id = FilteredElementCollector(doc, view.Id).OfCategoryId(tblock_cat_id).ToElementIds()      # get the tblock of filtered view sheet by id
         tblock_name     = None
         for tblock_id in all_tblock_id:
-            t_block_el = doc.GetElement(tblock_id)
-            tblock_name = t_block_el.Name
+            t_block_el      = doc.GetElement(tblock_id)
+            tblock_name     = t_block_el.Name
         collected_info.append((sheet_number, sheet_name, tblock_name, col_sheet_dept, col_room_dept, dwg_type))
 
 # -----------------------------------------------------------------------------------------

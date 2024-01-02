@@ -2,19 +2,23 @@
 
 __title__ = 'Room Docs'
 __doc__ = """
+***MUST RUN ON THE LEVEL YOU WANT TO CHECK***
+
 This script will check if the selected rooms to have an RLS
 has sheets.
 
 NOTE 1: RLS Sheets to have either DEPARTMENTAL  - BLP or 
 REPEATABLE - BLP as value for Rooms_Classification_BLP.
 
-NOTE 2: Print statement may show the Rooms even though they already
-have sheets for 2 reasons.
+NOTE 2: Print statement may show the Rooms even though they
+already have sheets for 2 reasons.
+
     1. Room Name is different in Sheet Name or
     2. Room Name doesn't exist in Sheet Name
 
 HOW TO:
-1. Click the command.
+1. Got to the level view where you want to check the rooms.
+Click the command.
 2. Interface will pop up. Select parameters based on the organization
 of sheets.
 3. Print statement will be shown in the end.
@@ -53,16 +57,21 @@ current_view    = [active_view.Id]
 
 # ===============================================================================
 # 🟠 COLLECT ALL SHEETS
-all_sheets = FilteredElementCollector(doc).\
-            OfClass(ViewSheet).\
-            ToElements()
+try:
+    all_sheets = FilteredElementCollector(doc).\
+                OfClass(ViewSheet).\
+                ToElements()
 
-# 🟠 COLLECT ALL ROOMS
-level_filter = active_level.Id
-rooms = FilteredElementCollector(doc)\
-            .OfCategory(BuiltInCategory.OST_Rooms)\
-            .WherePasses(ElementLevelFilter(level_filter))\
-            .ToElements()
+    # 🟠 COLLECT ALL ROOMS
+    level_filter = active_level.Id
+
+    rooms = FilteredElementCollector(doc)\
+                .OfCategory(BuiltInCategory.OST_Rooms)\
+                .WherePasses(ElementLevelFilter(level_filter))\
+                .ToElements()
+
+except AttributeError:
+    forms.alert("Select desired level to execute the command.\nTry again.", exitscript=True)
 # =================================================================================
 # 1️⃣ GET RELEVANT PARAMETERS
 
@@ -118,7 +127,6 @@ try:     # catch the error
     # rooms
     room_rm_class      = user_inputs['rm_class']
 
-
 # 3️⃣ MAIN CODE
 # =================================================================================
 
@@ -129,8 +137,8 @@ try:     # catch the error
         sht_sheet_dept          = sheet.LookupParameter('Sheet Department').AsString()
         room_dept               = sheet.LookupParameter('Room Department').AsString()
         dwg_type                = sheet.LookupParameter('Drawing Type').AsString()
-        if sht_sheet_dept == sht_depart:
-            if room_dept == rm_dept:
+        if sht_sheet_dept   == sht_depart:
+            if room_dept    == rm_dept:
                 if dwg_type == dwg_t_dept:
                     sheet_number    = sheet.SheetNumber
                     sheet_name      = sheet.Name
@@ -163,8 +171,12 @@ try:     # catch the error
     if len(missing_rm) == 0:
         print('All rooms are covered.')
     else:
-        for i in missing_rm:
-            print(i)
+        print('=' * 50)
+        print("Rooms not documented:")
+        print('=' * 50)
+        for index, i in enumerate(missing_rm, start=1):
+            num = str(index)
+            print("{}. {}".format(num.zfill(3), i))
 
 except KeyError:
     forms.alert("No parameter selected.\nExiting Command.", exitscript=True, warn_icon=True)
