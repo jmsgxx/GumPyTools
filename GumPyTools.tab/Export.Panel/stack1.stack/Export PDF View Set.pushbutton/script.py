@@ -8,9 +8,6 @@ by default.
 Currently the same as 'PDF By View Set'
 without selecting the destination file.
 
-TODO: Study how to pdf multiple file
-on view set.
-
 NOTE: By using this export, label names
 on pdf is already set and ready for extraction
 via Bluebeam.
@@ -19,15 +16,21 @@ HOW TO:
 - Run Command.
 - Select view set.
 - Wait for confirmation.
+
 __________________________________
 v1. 05 Dec 2023
 Author: Joven Mark Gumana
+
+
+TODO: Study how to pdf multiple file
+on view set.
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button)
 from Autodesk.Revit.DB import *
 from pyrevit import forms
 from datetime import datetime
@@ -49,11 +52,6 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
-# 🟡 FILE NAME
-# model_path = ModelPathUtils.ConvertModelPathToUserVisiblePath(doc.GetWorksharingCentralModelPath())
-# file_path = model_path
-# file_name = os.path.splitext(os.path.basename(file_path))[0]
-
 current_datetime = datetime.now()
 current_date = current_datetime.strftime('%Y''%m''%d')
 current_time = current_datetime.strftime('%H.%M.%S')
@@ -65,33 +63,17 @@ directory = r"C:\Users\gary_mak\Desktop\PDF"
 # 🟢 MAIN CODE
 with Transaction(doc, __title__) as t:
     t.Start()
-
-    sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet).ToElements()
-    collector_name = sorted([item.Name for item in sheet_set_collector])
-    collector_dict = {name: name for name in collector_name}
-    chosen_view_set = forms.SelectFromList.show(collector_name, button_name='Select View Set',
-                                                title='Select View Set')
     file_name = None
 
-    if not chosen_view_set:
-        sys.exit()
-    else:
-        sheets_id = []
-        for view_set in sheet_set_collector:        # type: ViewSheetSet
-            file_name = view_set.Name
-            if view_set.Name == chosen_view_set:
-                for sheet in view_set.Views:
-                    sheets_id.append(sheet.Id)
-                break
+    # =============================================================================================
+    # 🔵 COLLECT SHEETS
+    sheet_set_collector = FilteredElementCollector(doc).OfClass(ViewSheetSet).ToElements()
+    collector_name = sorted([item.Name for item in sheet_set_collector])
+    # 🟢 CREATE A DICTIONARY OF VIEW SET
+    collector_dict = {name: name for name in collector_name}
 
-    # ==========================================
-    # 🟢 prepare the options for paper size
-    paper_options = ['A0', 'A1', 'A2', 'A3', 'A4']
-    paper_size = forms.SelectFromList.show(paper_options, button_name='Select',
-                                           title='Input Paper Size', height=400, width=300)
-    if not paper_size:
-        sys.exit()
-
+    # =============================================================================================
+    # 🟠 CREATE A DICTIONARY OF PAPER SIZE
     paper_size_dict = {
         "A0": ExportPaperFormat.ISO_A0,
         "A1": ExportPaperFormat.ISO_A1,
@@ -100,11 +82,40 @@ with Transaction(doc, __title__) as t:
         "A4": ExportPaperFormat.ISO_A4,
     }
 
-    if paper_size in paper_size_dict:
-        paper_size_value = paper_size_dict[paper_size]
-    # 🟢 end of paper size
-    # ==========================================
+    # =============================================================================================
+    # 🟦 UI
+    try:
+        components = [Label('View Set Name:'),
+                      ComboBox('view_set', collector_dict),
+                      Label('Paper Size:'),
+                      ComboBox('paper_size', paper_size_dict),
+                      Separator(),
+                      Button('Select')]
 
+        form = FlexForm('PDF Set', components)
+
+        form.show()
+        user_inputs = form.values
+        # sheets
+        v_set   = user_inputs['view_set']
+        p_size  = user_inputs['paper_size']
+
+    except KeyError:
+        forms.alert("No selected values. Exiting command.", exitscript=True, warn_icon=True)
+    # ===============================================================================================
+    # GET THE IDS FOR EXPORT
+
+    sheets_id = []
+    for view_set in sheet_set_collector:
+        file_name = view_set.Name
+        if view_set.Name == v_set:
+            for sheet in view_set.Views:
+                sheets_id.append(sheet.Id)
+            break
+
+
+    # ===============================================================================================
+    # ⭕ MAIN CODE PDFEXPORT
     options = PDFExportOptions()
     options.AlwaysUseRaster = False
     options.ColorDepth = ColorDepthType.Color
@@ -118,7 +129,7 @@ with Transaction(doc, __title__) as t:
     options.MaskCoincidentLines = True
     options.OriginOffsetX = 0
     options.OriginOffsetY = 0
-    options.PaperFormat = paper_size_value
+    options.PaperFormat = p_size
     # options.PaperOrientation.Auto
     options.PaperPlacement = PaperPlacementType.Center
     options.RasterQuality = RasterQualityType.High
