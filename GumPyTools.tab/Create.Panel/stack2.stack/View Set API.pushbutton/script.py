@@ -63,7 +63,7 @@ plot_batch_value = {name: name for name in set(plot_batch)}
 try:
     components = [Label('Plot Batch Value:'),
                   ComboBox('view_set_val', plot_batch_value),
-                  Label('Paper Size:'),
+                  Label('View Set Name:'),
                   TextBox('input_name'),
                   Separator(),
                   Button('Create')]
@@ -79,7 +79,7 @@ try:
         forms.alert("Please input a view name.\nTry again.", exitscript=True, warn_icon=True)
 
 except KeyError:
-    forms.alert("No values. Exiting command", exitscript=True, warn_icon=True)
+    forms.alert("No values provided. Exiting command", exitscript=True, warn_icon=True)
 
 # =====================================================================================
 # initialize view set
