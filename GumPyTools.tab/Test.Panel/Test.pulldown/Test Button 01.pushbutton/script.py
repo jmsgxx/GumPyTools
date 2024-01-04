@@ -35,20 +35,36 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
+all_schedules = FilteredElementCollector(doc).OfClass(ScheduleSheetInstance).ToElements()
+
 sheet_collection = get_multiple_element()
-view_id_list = []
-# VIEW SHEET
+
+schedule_to_delete = []
+
 with Transaction(doc, __title__) as t:
     t.Start()
+    try:
+        for sheet in sheet_collection:  # type: ViewSheet
+            sheet_id = sheet.Id
+            for schedule in all_schedules:   # type: ScheduleSheetInstance
+                if schedule.OwnerViewId == sheet_id:
+                    sch_id = schedule.ScheduleId
+                    if schedule.Pinned:
+                        schedule.Pinned = False
+                    schedule_to_delete.append(sch_id)
 
-    for sheet in sheet_collection:  # type: ViewSheet
-        viewport_id = sheet.GetAllViewports()   # returns an id
-        for i in viewport_id:
-            view = doc.GetElement(i.Id.IntegerVaue)
-            print(i)
-        # doc.Delete(viewport_id)
+    except Exception:
+        pass
+
+    for item in schedule_to_delete:
+        try:
+            # print(item)
+            doc.Delete(item)
+        except Exception:
+            pass
+
+
 
     t.Commit()
-
 
 
