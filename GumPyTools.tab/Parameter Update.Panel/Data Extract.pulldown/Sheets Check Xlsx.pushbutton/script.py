@@ -16,6 +16,7 @@ HOW TO:
 4. Select desired Department.
 5. Confirmation will be shown at the end.
 __________________________________
+v2. 03 Jan 2024 - UI added, Optimized Excel Export
 v1. 20 Dec 2023
 Author: Joven Mark Gumana
 """

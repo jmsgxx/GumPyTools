@@ -82,7 +82,7 @@ sheet_dwg_type = {}
 
 # sheets
 for sheet in all_sheets:    # type: ViewSheet
-    sht_sheet_dept                  = sheet.LookupParameter('Sheet Department').AsString()
+    sht_sheet_dept              = sheet.LookupParameter('Sheet Department').AsString()
     room_dept                   = sheet.LookupParameter('Room Department').AsString()
     dwg_type                    = sheet.LookupParameter('Drawing Type').AsString()
     if sht_sheet_dept:
@@ -152,9 +152,10 @@ try:     # catch the error
             if _room_dept == room_rm_class:
                 if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
                     # room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+                    room_id         = room.Id.IntegerValue
                     room_name       = room.LookupParameter('Room_Name_BLP').AsString()
                     room_number     = room.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
-                    rooms_lst.append(room_name)
+                    rooms_lst.append("{} - Id: {}".format(room_name, room_id))
 
     unique_sheet = set(sheets_in_rad)
     unique_room = set(rooms_lst)

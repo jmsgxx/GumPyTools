@@ -23,15 +23,19 @@ Parameters to export out:
  5. Confirmation of exportation with number of items will be
  confirmed at the end of the script.
 __________________________________
+v3. 05 Jan 2024  - UI added, Optimized excel export
 v2. 22 Dec 2023
 v1. 21 Dec 2023
 Author: Joven Mark Gumana
+
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, TextBox,
+                          Separator, Button, CheckBox)
 import xlsxwriter
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.DB.Architecture import Room
@@ -94,14 +98,8 @@ sheet_collection = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_
 # 🟦 LEVEL SELECTION
 # GET ALL LEVEL
 level_collector = FilteredElementCollector(doc).OfClass(Level).ToElements()
-all_levels_id = [level.Id for level in level_collector]
 
-all_levels = [doc.GetElement(el_id) for el_id in all_levels_id]
-sel_level = forms.SelectFromList.show(sorted(all_levels), multiselect=False, name_attr='Name',
-                                      button_name='Select Level',
-                                      title='Select Level')
-if not sel_level:
-    sys.exit()
+sel_level_dict = {level.Name: level for level in level_collector}
 # ----------------------------------------------------------------------------------------------------
 sheet_dept_list     = []
 
@@ -118,10 +116,23 @@ for el in sheet_collection:
 create a unique list to choose from
 """
 sheet_dept_list = list(set(sheet_dept_list))
-sel_dept = forms.SelectFromList.show(sorted(sheet_dept_list), multiselect=False, button_name='Select Department',
-                                     title="Select Department")
-if not sel_dept:
-    forms.alert("No department selected.\nCommand will exit", exitscript=True)
+
+sel_dept_dict = {dept: dept for dept in sheet_dept_list}
+try:
+    components = [Label('Select Level:'),
+                  ComboBox('level', sel_level_dict),
+                  Label('Select Department:'),
+                  ComboBox('department', sel_dept_dict),
+                  Separator(),
+                  Button('Select')]
+    form = FlexForm('Rooms in Sheets', components)
+    form.show()
+    user_input = form.values
+
+    sel_level = user_input['level']
+    sel_dept = user_input['department']
+except KeyError:
+    forms.alert("Nothing selected.\nTry again", exitscript=True, warn_icon=True)
 # -----------------------------------------------------------------------------------------
 # 2️⃣ START BREAKING DOWN
 # 🟢 FILTER DOWN
@@ -178,24 +189,9 @@ for sheet in sheet_collection:  # type: ViewSheet
 # -----------------------------------------------------------------------------------------
 # ⭕ EXPORT TO EXCEL
 row = 1
-for (room_id,
-     room_name_blp,
-     room_number,
-     sheet_number,
-     sheet_name,
-     sheet_dept,
-     sheet_dwg_type,
-     assoc_level
-     ) in sorted(collected_info, key=lambda x: x[3]):
-
-    worksheet.write(row, 0, str(room_id))
-    worksheet.write(row, 1, room_name_blp)
-    worksheet.write(row, 2, room_number)
-    worksheet.write(row, 3, str(sheet_number))
-    worksheet.write(row, 4, sheet_name)
-    worksheet.write(row, 5, sheet_dept)
-    worksheet.write(row, 6, sheet_dwg_type)
-    worksheet.write(row, 7, assoc_level)
+for info in sorted(collected_info):
+    for i, data in enumerate(info):
+        worksheet.write(row, i, str(data))
     row += 1
 
 forms.alert("Exported {} items successfully".format(len(collected_info)), warn_icon=False, exitscript=False)

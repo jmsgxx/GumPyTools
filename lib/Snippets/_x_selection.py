@@ -16,11 +16,11 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
-selection = uidoc.Selection # type: Selection
+selection = uidoc.Selection     # type: Selection
 
 
 
-def get_multiple_element():
+def get_multiple_elements():
     """get elements in selected items"""
     return [doc.GetElement(el_id) for el_id in selection.GetElementIds()]
 
