@@ -160,10 +160,8 @@ for sheet in sheet_collection:  # type: ViewSheet
             # VIEW TYPE
             if view.ViewType == ViewType.FloorPlan:
                 # GET THE ROOM
-                level_filter    = ElementLevelFilter(sel_level.Id)
                 # collect only the views that you need by getting view.Id
                 room_collector = FilteredElementCollector(doc, view.Id).OfCategory(BuiltInCategory.OST_Rooms).\
-                    WherePasses(level_filter).\
                     ToElements()
 
                 for room in room_collector:  # type: Room

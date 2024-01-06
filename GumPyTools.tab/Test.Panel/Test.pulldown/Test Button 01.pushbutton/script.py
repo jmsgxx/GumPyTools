@@ -57,157 +57,102 @@ current_view    = [active_view.Id]
 
 # ===============================================================================
 # 🟠 COLLECT ALL SHEETS
-try:
-    all_sheets = FilteredElementCollector(doc).\
-                OfClass(ViewSheet).\
-                ToElements()
 
-    # 🟠 COLLECT ALL ROOMS
-    level_filter = active_level.Id
+user_parameter = 'Sheet Department'
+all_shared_param = FilteredElementCollector(doc).OfClass(SharedParameterElement).ToElements()
 
-    rooms = FilteredElementCollector(doc)\
-                .OfCategory(BuiltInCategory.OST_Rooms)\
-                .WherePasses(ElementLevelFilter(level_filter))\
-                .ToElements()
+param_element = None
 
-except AttributeError:
-    forms.alert("Select desired level to execute the command.\nTry again.", exitscript=True)
-# =================================================================================
-# 1️⃣ GET RELEVANT PARAMETERS
+for shared_param in all_shared_param:
+    if shared_param.Name == user_parameter:
+        param_element = shared_param
+        break
 
-# initiate an empty dictionary
-sheet_dict = {}
-sheet_rm_dept = {}
-sheet_dwg_type = {}
+f_param         = ParameterValueProvider(param_element.Id)
+evaluator       = FilterStringEquals()
+f_param_value   = "RADIOLOGY"
 
-# sheets
-for sheet in all_sheets:    # type: ViewSheet
-    sht_sheet_dept              = sheet.LookupParameter('Sheet Department').AsString()
-    room_dept                   = sheet.LookupParameter('Room Department').AsString()
-    dwg_type                    = sheet.LookupParameter('Drawing Type').AsString()
-    if sht_sheet_dept:
-        sheet_dict[sht_sheet_dept]      = sht_sheet_dept
-    if room_dept:
-        sheet_rm_dept[room_dept]    = room_dept
-    if dwg_type:
-        sheet_dwg_type[dwg_type]    = dwg_type
+f_rule = FilterStringRule(f_param, evaluator, f_param_value)
+filter_name = ElementParameterFilter(f_rule)
 
-room_class_dict = {}
+all_sheets = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets)\
+            .WherePasses(filter_name)\
+            .ToElements()
 
-# rooms
-for room in rooms:
-    room_class = room.LookupParameter('Department_BLP').AsString()
-    if room_class:
-        room_class_dict[room_class] = room_class
+# 🟠 COLLECT ALL ROOMS
+level_filter = active_level.Id
 
-
-# 2️⃣ UI
-# =================================================================================
-try:     # catch the error
-    components = [Label('Sheet Department:'),
-                  ComboBox('sheet_dept', sheet_dict),
-                  Label('Sheet Room Department:'),
-                  ComboBox('room_dept', sheet_rm_dept),
-                  Label('Sheet Drawing Department:'),
-                  ComboBox('dwg_type', sheet_dwg_type),
-                  Separator(),
-                  Label('Room Department:'),
-                  ComboBox('rm_class', room_class_dict),
-                  Separator(),
-                  Button('Select')]
-
-    form = FlexForm('Check Rooms if on Sheet', components)
-
-    form.show()
-    user_inputs = form.values
-    # sheets
-    sht_depart      = user_inputs['sheet_dept']
-    rm_dept         = user_inputs['room_dept']
-    dwg_t_dept      = user_inputs['dwg_type']
-    # rooms
-    room_rm_class      = user_inputs['rm_class']
+rooms = FilteredElementCollector(doc)\
+            .OfCategory(BuiltInCategory.OST_Rooms)\
+            .WherePasses(ElementLevelFilter(level_filter))\
+            .ToElements()
 
 # 3️⃣ MAIN CODE
 # =================================================================================
 
-    sheets_in_rad = []
-    rooms_lst = []
-    room_id_sht = []
-    room_id_lst = []
 
-    for sheet in all_sheets:    # type: ViewSheet
-        sht_sheet_dept          = sheet.LookupParameter('Sheet Department').AsString()
-        room_dept               = sheet.LookupParameter('Room Department').AsString()
-        dwg_type                = sheet.LookupParameter('Drawing Type').AsString()
-        if sht_sheet_dept   == sht_depart:
-            if room_dept    == rm_dept:
-                if dwg_type == dwg_t_dept:
-                    sheet_number    = sheet.SheetNumber
-                    sheet_name      = sheet.Name
-                    sheets_in_rad.append(sheet_name)
+room_id_sht = []
 
-                    viewport_id = sheet.GetAllViewports()
-                    for ids in viewport_id:
-                        viewport = doc.GetElement(ids)      # type: Viewport
-                        view_id = viewport.ViewId
-                        view = doc.GetElement(view_id)      # type: View
+for sheet in all_sheets:    # type: ViewSheet
+    sht_sheet_dept = sheet.LookupParameter('Sheet Department').AsString()
+    if sht_sheet_dept == 'RADIOLOGY':
+        viewport_id = sheet.GetAllViewports()
+        for ids in viewport_id:
+            viewport = doc.GetElement(ids)      # type: Viewport
+            view_id = viewport.ViewId
+            view = doc.GetElement(view_id)      # type: View
 
-                        if view.ViewType == ViewType.FloorPlan:
-                            level_filter = ElementLevelFilter(active_level.Id)
-                            room_collector = FilteredElementCollector(doc, view.Id)\
-                                .OfCategory(BuiltInCategory.OST_Rooms)\
-                                .WherePasses(level_filter)\
-                                .ToElements()
+            if view.ViewType == ViewType.FloorPlan:
+                level_filter = ElementLevelFilter(active_level.Id)
+                room_collector = FilteredElementCollector(doc, view.Id)\
+                    .OfCategory(BuiltInCategory.OST_Rooms)\
+                    .WherePasses(level_filter)\
+                    .ToElements()
 
-                            for room in room_collector:
-                                sht_room_id = room.Id
-                                room_id_sht.append(sht_room_id)
+                for room in room_collector:
+                    sht_room_id = room.Id
+                    room_id_sht.append(sht_room_id)
+
+rooms_lst   = []
+
+for room in rooms:
+    room_class          = room.LookupParameter('Rooms_Classification_BLP').AsString()
+    room_dept_param     = room.LookupParameter('Department_BLP')
+    if room_dept_param:
+        room_dept = room_dept_param.AsString()
+        if room_dept == 'RADIOLOGY':
+            if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
+                # room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+                room_id         = room.Id.IntegerValue
+                room_name       = room.LookupParameter('Room_Name_BLP').AsString()
+                room_number     = room.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
+                rooms_lst.append({room_name: room_id})
 
 
-    for room in rooms:
-        room_class          = room.LookupParameter('Rooms_Classification_BLP').AsString()
-        room_dept_param     = room.LookupParameter('Department_BLP')
-        if room_dept_param:
-            _room_dept = room_dept_param.AsString()
-            if _room_dept == room_rm_class:
-                if room_class == 'DEPARTMENTAL - BLP' or room_class == 'REPEATABLE - BLP':
-                    # room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
-                    room_id         = room.Id.IntegerValue
-                    room_name       = room.LookupParameter('Room_Name_BLP').AsString()
-                    room_number     = room.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
-                    rooms_lst.append({room_name: room_id})
-                    # room_id_lst.append(room_id)
+rooms_dict = {}
+for room_dict in rooms_lst:
+    for room_name, room_id in room_dict.items():
+        rooms_dict[room_name] = room_id
 
-    rooms_dict = {}
-    for room_dict in rooms_lst:
-        for room_name, room_id in room_dict.items():
-            rooms_dict[room_name] = room_id
+missing_rm = []
 
-    # unique_sheet = set(sheets_in_rad)
-    # unique_room = set(rooms_lst)
+for k, v in rooms_dict.items():
+    if k not in room_id_sht:
+        missing_rm.append("{} - {}".format(k, v))
+# -------------------------------------------------------------------------------------
+# print statement
 
-    # missing_rm = [item for item in sorted(unique_room) if item not in unique_sheet]
-    missing_rm = []
+output = pyrevit.output.get_output()
+output.center()
+output.resize(300, 500)
 
-    for k, v in rooms_dict.items():
-        if k not in room_id_sht:
-            missing_rm.append("{} - {}".format(k, v))
-    # -------------------------------------------------------------------------------------
-    # print statement
+if len(missing_rm) == 0:
+    print('All rooms are covered.')
+else:
+    print('=' * 50)
+    print("Rooms not documented:")
+    print('=' * 50)
+    for index, i in enumerate(missing_rm, start=1):
+        num = str(index)
+        print("{}. {}".format(num.zfill(3), i))
 
-    output = pyrevit.output.get_output()
-    output.center()
-    output.resize(300, 500)
-
-    if len(missing_rm) == 0:
-        print('All rooms are covered.')
-    else:
-        print('=' * 50)
-        print("Rooms not documented:")
-        print('=' * 50)
-        for index, i in enumerate(missing_rm, start=1):
-            num = str(index)
-            print("{}. {}".format(num.zfill(3), i))
-
-except KeyError:
-    forms.alert("No parameter selected.\nExiting Command.", exitscript=True, warn_icon=True)
