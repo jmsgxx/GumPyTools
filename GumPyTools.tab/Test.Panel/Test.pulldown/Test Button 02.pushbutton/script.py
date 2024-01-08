@@ -12,11 +12,7 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-import xlsxwriter
-from pyrevit import forms
-from datetime import datetime
-import os
-import sys
+import pyrevit
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -77,7 +73,7 @@ for room in rooms:
                 room_id         = room.Id.IntegerValue
                 room_name       = room.LookupParameter('Room_Name_BLP').AsString()
                 room_number     = room.get_Parameter(BuiltInParameter.ROOM_NUMBER).AsString()
-                rooms_lst.append(room_id)
+                rooms_lst.append({room_name: room_id})
 
 # ---------------------------------------------------------------------------------------------
 sheet_rm_id_lst = []
@@ -105,13 +101,53 @@ for sheet in sheets:
                             sheet_room_id = rm.Id
                             sheet_rm_id_lst.append(sheet_room_id)
 
-print("ROOMS IN MODEL: {}".format(len(rooms_lst)))
-print("ROOMS IN SHEET: {}".format(len(sheet_rm_id_lst)))
+output = pyrevit.output.get_output()
+    output.center()
+    output.resize(300, 500)
 
 
-missing_ids = [ids for ids in rooms_lst if ids not in sheet_rm_id_lst]
-for index, ids in enumerate(missing_ids, start=1):
-    print('{}. {}'.format(index, ids))
+missing_rm = []
+for room_dict in rooms_lst:
+    for rm_name, rm_id in room_dict.items():
+        if str(rm_id) not in [str(item) for item in sheet_rm_id_lst]:
+            missing_rm.append("{} - {}".format(rm_name, rm_id))
+
+for index, item in enumerate(missing_rm, start=1):
+    print("=" * 50)
+    print("Rooms not documented")
+    print("=" * 50)
+    print("{}. {}".format(str(index).zfill(2), item))
+
+
+
+
+# unique_sheet_rm = list(set(sheet_rm_id_lst))
+#
+# missing_ids = [ids for ids in rooms_lst if str(ids) not in [str(item) for item in sheet_rm_id_lst]]
+# for index, ids in enumerate(missing_ids, start=1):
+#     print('{}. {}'.format(index, ids))
+
+# file_path = forms.save_excel_file(title='Select destination file')
+#
+# workbook = xlsxwriter.Workbook(file_path)
+# worksheet = workbook.add_worksheet()
+# headings = ['Model Room', 'Sheet Room']
+# for i, heading in enumerate(headings):
+#     worksheet.write(0, i, heading)
+#     worksheet.set_column(i, i, 15)
+#
+# row = 1
+# for item in rooms_lst:
+#     worksheet.write(row, 0, str(item))
+#     row += 1
+#
+# row = 1
+# for item in unique_sheet_rm:
+#     worksheet.write(row, 1, str(item))
+#     row += 1
+
+
+
 
 
 
