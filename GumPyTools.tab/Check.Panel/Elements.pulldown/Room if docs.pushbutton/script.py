@@ -28,7 +28,7 @@ Author: Joven Mark Gumana
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
 from Autodesk.Revit.DB import *
 import math
-from Autodesk.Revit.DB.Architecture import  Room
+from Autodesk.Revit.DB.Architecture import Room
 import pyrevit
 from pyrevit import forms
 import sys
@@ -44,7 +44,7 @@ from System.Collections.Generic import List
 
 def get_room_center(room_el):
     """
-    gets the center of the room
+    get the center of the room
     """
     bounding = room_el.get_BoundingBox(active_view)
     loc_pt = room_el.Location
@@ -66,20 +66,33 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
+# ===============================================================================
+# ✅ first UI
 
-
-user_dept = forms.ask_for_string(prompt='Which department you want to check?', title="Check Department")
-
-if user_dept:
-    for item in user_dept:
-        if not item.isalpha():
-            forms.alert("Make sure the value exists in 'Sheet Department' parameter.", exitscript=True)
-else:
-    forms.alert("No parameter provided.\nExiting command.", exitscript=True)
-
+sheet_all = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
+f_sheet_all = [i for i in sheet_all if i is not None]
+sheet_all = list(set(f_sheet_all))
+lst_sheet = [item.LookupParameter('Sheet Department').AsString() for item in sheet_all]
+sheet_dict_all = {name: name for name in lst_sheet}
 
 # ===============================================================================
-# 🟠 COLLECT ALL SHEETS
+user_dept = None
+try:
+    components = [Label('Select Department to Check'),
+                  ComboBox('user_dept', sheet_dict_all),
+                  Separator(),
+                  Button('Select Department')]
+
+    form = FlexForm('Check Rooms if on Sheet', components)
+
+    form.show()
+    user_inputs = form.values
+    user_dept      = user_inputs['user_dept']
+
+except KeyError:
+    forms.alert("No parameter selected.\nExiting Command.", exitscript=True, warn_icon=True)
+# ===============================================================================
+# 🟠🟠🟠 COLLECT ALL SHEETS
 
 user_parameter = 'Sheet Department'
 all_shared_param = FilteredElementCollector(doc).OfClass(SharedParameterElement).ToElements()
@@ -93,7 +106,7 @@ for shared_param in all_shared_param:
 
 f_param = ParameterValueProvider(param_element.Id)
 evaluator = FilterStringEquals()
-f_param_value = user_dept.upper()
+f_param_value = user_dept
 
 f_rule = FilterStringRule(f_param, evaluator, f_param_value)
 filter_name = ElementParameterFilter(f_rule)
@@ -104,6 +117,7 @@ all_sheets = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets
 
 
 # 🟠 COLLECT ALL ROOMS
+level_filter = None
 try:
 
     level_filter = active_level.Id
@@ -246,7 +260,12 @@ try:
                             start_angle = 0.0
                             end_angle = 2.0 * math.pi
                             arc = Arc.Create(plane, radius, start_angle, end_angle)
-                            doc.Create.NewDetailCurve(active_view, arc)
+                            circ_elements = [doc.Create.NewDetailCurve(active_view, arc)]
+
+                        for el in circ_elements:
+                            color = Color(255, 0, 0)
+                            ogs = OverrideGraphicSettings().SetProjectionLineColor(color)
+                            active_view.SetElementOverrides(el.Id, ogs)
 
                         t.Commit()
 

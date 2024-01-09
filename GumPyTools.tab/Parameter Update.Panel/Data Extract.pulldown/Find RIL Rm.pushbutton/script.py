@@ -95,7 +95,12 @@ with Transaction(doc, __title__) as t:
                     start_angle = 0.0
                     end_angle = 2.0 * math.pi
                     arc = Arc.Create(plane, radius, start_angle, end_angle)
-                    doc.Create.NewDetailCurve(active_view, arc)
+                    circ_elements = [doc.Create.NewDetailCurve(active_view, arc)]
+
+                for el in circ_elements:
+                    color = Color(255, 0, 255)
+                    ogs = OverrideGraphicSettings().SetProjectionLineColor(color)
+                    active_view.SetElementOverrides(el.Id, ogs)
 
     t.Commit()
 
