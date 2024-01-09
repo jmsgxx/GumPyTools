@@ -201,7 +201,6 @@ try:
 
                             room_collector = FilteredElementCollector(doc, view.Id) \
                                 .OfCategory(BuiltInCategory.OST_Rooms) \
-                                .WherePasses(filter_name) \
                                 .ToElements()
 
                             for rm in room_collector:   # type: Room
@@ -226,12 +225,11 @@ try:
                         rooms_lst.append({room_name: room_id})
 
     missing_rm = []
-    room_to_find = []
+
     for room_dict in rooms_lst:
         for rm_name, rm_id in room_dict.items():
             if str(rm_id) not in [str(item) for item in sheet_rm_id_lst]:
                 missing_rm.append("{} - Id:{}".format(rm_name, rm_id))
-                room_to_find.append(rm_id)
 
                 if with_mark:
                     #  create circle at the center of missing  rooms
