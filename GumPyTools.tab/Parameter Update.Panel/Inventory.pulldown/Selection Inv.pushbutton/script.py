@@ -324,7 +324,7 @@ with Transaction(doc, __title__) as t:
                 cab_furn_obj_name = i.Name
                 bi_cab_furn_name.append(cab_furn_obj_name)
 
-                if cab_furn_item_param is not None:
+                if cab_furn_item_param:
                     cab_furn_item = cab_furn_item_param.AsValueString()
                     bi_cab_furn_item.append(cab_furn_item)
 

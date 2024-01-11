@@ -27,6 +27,7 @@ from datetime import datetime
 import pyrevit
 import clr
 import sys
+from Snippets._context_manager import rvt_transaction, try_except
 clr.AddReference("System")
 
 
@@ -60,6 +61,9 @@ plot_batch_value = {name: name for name in set(plot_batch)}
 
 # =====================================================================================
 # 🟦 UI
+view_set_name = None
+pl_batch_val = None
+
 try:
     components = [Label('Plot Batch Value:'),
                   ComboBox('view_set_val', plot_batch_value),
@@ -96,18 +100,14 @@ print_manager.PrintRange                        = PrintRange.Select
 view_sheet_setting                              = print_manager.ViewSheetSetting
 view_sheet_setting.CurrentViewSheetSet.Views    = current_view_set      # set to current view set
 
-with Transaction(doc, "Create ViewSet") as t:
-    t.Start()
-
-
-    try:
+with rvt_transaction(doc, __title__):
+    with try_except():
         view_sheet_setting.SaveAs(view_set_name)
-        forms.alert("Total number of sheets in set '{}'".format(current_view_set.Size), exitscript=False, warn_icon=False)
-    except Exception as e:
-        output.print_md("### {} Delete first the view set that is causing the problem using 'View Set Delete'.".format(e))
-        sys.exit()
+        forms.alert("Total number of sheets in set '{}'".format(current_view_set.Size),
+                    exitscript=False,
+                    warn_icon=False)
 
-    t.Commit()
+
 
 
 
