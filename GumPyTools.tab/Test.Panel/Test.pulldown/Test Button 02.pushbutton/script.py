@@ -56,5 +56,5 @@ with rvt_transaction(doc, __title__):
                     schedule_view = doc.GetElement(schedule.Id)
                     doc.Delete(schedule_view.Id)
 
-        with try_except():
-            doc.Delete(sheet.Id)
+            with try_except():
+                doc.Delete(sheet.Id)

@@ -73,3 +73,9 @@ class ISelectionFilterCatName(ISelectionFilter):
             return True
 
 
+class CustomFilterCat(ISelectionFilter):
+
+    def AllowElement(self, element):
+        if element.Category.Id == ElementId(BuiltInCategory.OST_Rooms):
+            return True
+

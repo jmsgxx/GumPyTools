@@ -9,7 +9,7 @@ not be used in the future.
 
 WHAT THIS SCRIPT DOES:
 This script will not only delete the sheets, but also
- the views in the entire model.
+the views in the sheet on the entire model.
 
 WHY USE THIS SCRIPT?
 Since models are already segregated at each level, sheets at a
@@ -35,8 +35,10 @@ import sys
 from Snippets._x_selection import get_multiple_elements
 from Snippets._context_manager import rvt_transaction, try_except
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from pyrevit import forms
 import clr
+from Snippets._x_selection import CustomFilterCat, ISelectionFilter_Categories
 clr.AddReference("System")
 from System.Collections.Generic import List
 
@@ -52,6 +54,7 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = active_view.Id
+selection = uidoc.Selection     # type: Selection
 
 ask_user = forms.ask_for_one_item(['Yes', 'No'],
                                   "Do you want to delete?",
@@ -86,6 +89,6 @@ else:
                     doc.Delete(sheet.Id)
 
         if len(sheet_collection) > 1:
-            forms.alert("{} sheets are deleted.".format(len(sheet_collection)), warn_icon=False)
+            forms.alert("{} sheets are deleted.\nIf it is mistake immediately close the file and do not save.".format(len(sheet_collection)))
         else:
-            forms.alert("{} sheet deleted.".format(len(sheet_collection)), warn_icon=False)
+            forms.alert("{} sheet deleted.\nIf it is mistake immediately close the file and do not save.".format(len(sheet_collection)))
