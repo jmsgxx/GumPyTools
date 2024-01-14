@@ -73,9 +73,13 @@ class ISelectionFilterCatName(ISelectionFilter):
             return True
 
 
-class CustomFilterCat(ISelectionFilter):
+class DoorCustomFilter(ISelectionFilter):
 
-    def AllowElement(self, element):
-        if element.Category.Id == ElementId(BuiltInCategory.OST_Rooms):
+    def __init__(self):
+        """
+        ISelection Door Custom Filter
+        """
+
+    def AllowElement(self, elem):
+        if elem.Category.Id == ElementId(BuiltInCategory.OST_Doors):
             return True
-

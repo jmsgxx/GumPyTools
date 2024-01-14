@@ -58,7 +58,8 @@ selection = uidoc.Selection     # type: Selection
 
 ask_user = forms.ask_for_one_item(['Yes', 'No'],
                                   "Do you want to delete?",
-                                  "Delete Sheets")
+                                  "View deletion cannot be undone. Are you sure?",
+                                  title="Delete Sheets")
 
 if not ask_user:
     forms.alert("No selection. Exiting command", exitscript=True)
@@ -86,9 +87,7 @@ else:
                         doc.Delete(schedule_view.Id)
 
                 with try_except():
-                    doc.Delete(sheet.Id)
+                    deleted_sheet = doc.Delete(sheet.Id)
 
-        if len(sheet_collection) > 1:
-            forms.alert("{} sheets are deleted.\nIf it is mistake immediately close the file and do not save.".format(len(sheet_collection)))
-        else:
-            forms.alert("{} sheet deleted.\nIf it is mistake immediately close the file and do not save.".format(len(sheet_collection)))
+                forms.alert("{} sheet/s deleted.\nIf it is a mistake immediately close the file and do not save." \
+                            .format(len(sheet_collection)))
