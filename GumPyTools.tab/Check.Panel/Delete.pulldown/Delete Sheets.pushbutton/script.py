@@ -38,7 +38,6 @@ from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from pyrevit import forms
 import clr
-from Snippets._x_selection import CustomFilterCat, ISelectionFilter_Categories
 clr.AddReference("System")
 from System.Collections.Generic import List
 

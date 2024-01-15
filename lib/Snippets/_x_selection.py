@@ -74,7 +74,6 @@ class ISelectionFilterCatName(ISelectionFilter):
 
 
 class DoorCustomFilter(ISelectionFilter):
-
     def __init__(self):
         """
         ISelection Door Custom Filter

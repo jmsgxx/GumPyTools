@@ -1,7 +1,21 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 01'
+__title__ = '1-sided Protection'
 __doc__ = """
+This script will populate the parameters for
+door protection.
+
+SWING DOOR = PH2
+SLIDING DOor = TK2
+
+HOW TO:
+1. You can select the element/s first or:
+2. Click the command.
+3. Select the desired doors. Parameters will be 
+updated automatically.
+4. Print statement will confirm the changes.
+-----------------------------------------------
+v1. 15 Jan 2024
 Author: Joven Mark Gumana
 """
 
@@ -13,7 +27,6 @@ from Autodesk.Revit.UI.Selection import ISelectionFilter, Selection, ObjectType
 from Snippets._x_selection import DoorCustomFilter, get_multiple_elements
 from Snippets._context_manager import try_except, rvt_transaction
 from Autodesk.Revit.DB import *
-import pyrevit
 from pyrevit import forms
 
 import clr
@@ -61,11 +74,17 @@ for door in door_selection:  # type: FamilyInstance
     door_type_name = door_type.get_Parameter(BuiltInParameter.SYMBOL_FAMILY_NAME_PARAM).AsString()
 
     with rvt_transaction(doc, __title__):
-        if 'SWG' in door_type_name or 'SLID' in door_type_name:
-            dr_pull_wl_ht.Set(str("2"))
-            dr_pull_wl.Set(str("PL"))
+        if 'SWG' in door_type_name:
+            dr_pull_wl_ht.Set(str(""))
+            dr_pull_wl.Set(str(""))
             dr_push_tr_ht.Set(str("2"))
             dr_push_tr.Set(str("PH"))
+            door_count += 1
+        if 'SLID' in door_type_name:
+            dr_pull_wl_ht.Set(str(""))
+            dr_pull_wl.Set(str(""))
+            dr_push_tr_ht.Set(str("2"))
+            dr_push_tr.Set(str("TK"))
             door_count += 1
 
 if door_count == 1:

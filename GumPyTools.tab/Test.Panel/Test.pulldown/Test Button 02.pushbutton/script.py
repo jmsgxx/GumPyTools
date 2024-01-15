@@ -67,6 +67,9 @@ if not selected_rooms:
 
 # =====================================================================================================
 
+swing_count = []
+sliding_count = []
+
 for room in selected_rooms:
     if room.Area > 0:
         room_id = room.Id

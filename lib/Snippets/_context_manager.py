@@ -6,6 +6,7 @@ Author: Joven Mark Gumana
 """
 import contextlib
 import traceback
+from pyrevit import forms
 
 from Autodesk.Revit.DB import Transaction
 
@@ -40,10 +41,7 @@ def try_except(debug=True):
     """
     try:
         yield
-    except:
+    except Exception as e:
         if debug:
-            print(traceback.format_exc())
-
-
-
+            forms.alert(str(e), exitscript=True)
 
