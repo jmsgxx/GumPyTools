@@ -71,6 +71,9 @@ for door in door_selection:  # type: FamilyInstance
     dr_push_tr_ht   = door_type.LookupParameter('Door Protection Push or Track Height Code')
     dr_push_tr      = door_type.LookupParameter('Door Protection Push or Track Code')
 
+    dr_prot_pl_wl_yes      = door_type.LookupParameter('Door Protection Pull or Wall Yes')
+    dr_prot_ph_tk_yes      = door_type.LookupParameter('Door Protection Push or Track Yes')
+
     door_type_name = door_type.get_Parameter(BuiltInParameter.SYMBOL_FAMILY_NAME_PARAM).AsString()
 
     with rvt_transaction(doc, __title__):
@@ -79,12 +82,16 @@ for door in door_selection:  # type: FamilyInstance
             dr_pull_wl.Set(str("PL"))
             dr_push_tr_ht.Set(str("2"))
             dr_push_tr.Set(str("PH"))
+            dr_prot_pl_wl_yes.Set(1)
+            dr_prot_ph_tk_yes.Set(1)
             door_count += 1
         if 'SLID' in door_type_name:
             dr_pull_wl_ht.Set(str("2"))
             dr_pull_wl.Set(str("WL"))
             dr_push_tr_ht.Set(str("2"))
             dr_push_tr.Set(str("TK"))
+            dr_prot_pl_wl_yes.Set(1)
+            dr_prot_ph_tk_yes.Set(1)
             door_count += 1
 
 if door_count == 1:
