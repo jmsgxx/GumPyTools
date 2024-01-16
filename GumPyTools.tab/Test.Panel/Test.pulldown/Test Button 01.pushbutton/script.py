@@ -50,8 +50,8 @@ for room in all_rooms:  # type: Room
         # if room_name_bi not in rooms_list_bi:
         #     rooms_list_bi.append(room_name_bi)
 
-for rm in sorted(room_dict):
-    print("{}: {}".format(rm, room_dict[rm]))
+for i, rm in enumerate(sorted(room_dict)):
+    print("{}. (SKA_NAME){} :\n\t\t (BLP_NAME){}".format(str(i).zfill(3), rm, room_dict[rm]))
     print('\n\n')
     # print(rm)
 
