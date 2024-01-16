@@ -79,8 +79,6 @@ with Transaction(doc, __title__) as t:
     output.print_md('### NUMBER OF SELECTED ITEMS   : {}'.format(len(selected_rooms)))
 
     for selected_room in selected_rooms:
-        # if selected_room.Category.Name != 'Rooms':
-        #     forms.alert("Pick a room element", warn_icon=True, exitscript=True)
 
         calculator = SpatialElementGeometryCalculator(doc)
         results = calculator.CalculateSpatialElementGeometry(selected_room)
@@ -98,10 +96,11 @@ with Transaction(doc, __title__) as t:
         room_user_desc = selected_room.LookupParameter('Room Inventory By User Item Description')
         room_user_qty = selected_room.LookupParameter('Room Inventory By User Item Quantities')
 
-        elements = []
+        elements = []   # elements with category
+
         for element in collector:
-            if element.Category is not None:
-                if element.Category.Name != "":
+            if element.Category:
+                if element.Category.Name:
                     elements.append(element)
 
         by_user_lst = []  # family instance '(BY USER)'
@@ -118,7 +117,7 @@ with Transaction(doc, __title__) as t:
                 is_filtered_by_user = False
 
                 for filter_id in filters:
-                    filter_element = doc.GetElement(filter_id)  # type 'ParameterFilterElement'
+                    filter_element = doc.GetElement(filter_id)  # type: ParameterFilterElement
 
                     # Get the filter from the ParameterFilterElement
                     el_filter = filter_element.GetElementFilter()  # type 'LogicalAndFilter' / 'LogicalOrFilter'

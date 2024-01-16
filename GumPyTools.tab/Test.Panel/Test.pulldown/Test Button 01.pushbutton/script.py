@@ -10,6 +10,7 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.UI.Selection import ISelectionFilter, Selection, ObjectType
+from Autodesk.Revit.DB.Architecture import Room
 from Snippets._x_selection import DoorCustomFilter, get_multiple_elements
 from Snippets._context_manager import try_except, rvt_transaction
 from Autodesk.Revit.DB import *
@@ -35,41 +36,22 @@ active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
 # =================================================================================================================
-door_selection = get_multiple_elements()
+all_rooms = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Rooms).ToElements()
 
-if not door_selection:
-    with try_except():
-        filter_type = DoorCustomFilter()
-        door_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Doors")
-        door_selection = [doc.GetElement(dr) for dr in door_list]
+# rooms_list_bi = []
+# rm_list_blp = []
+room_dict = {}
 
-        if not door_selection:
-            forms.alert("No doors selected. Exiting command.", exitscript=True, warn_icon=False)
+for room in all_rooms:  # type: Room
+    if room.Area > 0:
+        room_name_bi = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+        rm_name_blp = room.LookupParameter('Room_Name_BLP').AsString()
+        room_dict[room_name_bi] = rm_name_blp
+        # if room_name_bi not in rooms_list_bi:
+        #     rooms_list_bi.append(room_name_bi)
 
-# =================================================================================================================
-door_count = 0
-
-for door in door_selection:  # type: FamilyInstance
-    door_type_id = door.GetTypeId()
-    door_type = doc.GetElement(door_type_id)
-
-    dr_pull_wl_ht   = door_type.LookupParameter('Door Protection Pull or Wall Height Code')
-    dr_pull_wl      = door_type.LookupParameter('Door Protection Pull or Wall Code')
-    dr_push_tr_ht   = door_type.LookupParameter('Door Protection Push or Track Height Code')
-    dr_push_tr      = door_type.LookupParameter('Door Protection Push or Track Code')
-
-    door_type_name = door_type.get_Parameter(BuiltInParameter.SYMBOL_FAMILY_NAME_PARAM).AsString()
-
-    with rvt_transaction(doc, __title__):
-        if 'SWG' in door_type_name or 'SLID' in door_type_name:
-            dr_pull_wl_ht.Set(str("2"))
-            dr_pull_wl.Set(str("PL"))
-            dr_push_tr_ht.Set(str("2"))
-            dr_push_tr.Set(str("PH"))
-            door_count += 1
-
-if door_count == 1:
-    forms.alert("{} door is updated".format(door_count))
-else:
-    forms.alert("{} doors are updated".format(door_count))
+for rm in sorted(room_dict):
+    print("{}: {}".format(rm, room_dict[rm]))
+    print('\n\n')
+    # print(rm)
 

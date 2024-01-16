@@ -73,8 +73,15 @@ for door in door_selection:  # type: FamilyInstance
                 dr_push_tr.Set("")
             if not dr_pull_wl_ht and not dr_pull_wl and not dr_push_tr_ht and not dr_push_tr:
                 dr_prot_pl_wl_yes.Set(1)
+            elif dr_pull_wl_ht and dr_pull_wl and dr_push_tr_ht and dr_push_tr:
+                dr_prot_pl_wl_yes.Set(1)
+                dr_prot_ph_tk_yes.Set(1)
+            if dr_push_tr.AsString() == 'PH2':
+                dr_push_tr.Set('PH')
+                dr_push_tr_ht.Set(2)
 
-            #     dr_prot_ph_tk_yes.Set(0)
+
+                #     dr_prot_ph_tk_yes.Set(0)
             # dr_prot_pl_wl_yes.Set(0)
             # dr_prot_ph_tk_yes.Set(0)
 
