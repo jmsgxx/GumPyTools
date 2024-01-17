@@ -5,10 +5,12 @@ __doc__ = """
 Author: Joven Mark Gumana
 """
 
+
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from collections import Counter
 from Autodesk.Revit.UI.Selection import ISelectionFilter, Selection, ObjectType
 from Autodesk.Revit.DB.Architecture import Room
 from Snippets._x_selection import DoorCustomFilter, get_multiple_elements
@@ -35,7 +37,7 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
-# =================================================================================================================
+# # =================================================================================================================
 all_rooms = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Rooms).ToElements()
 
 # rooms_list_bi = []
@@ -54,4 +56,6 @@ for i, rm in enumerate(sorted(room_dict)):
     print("{}. (SKA_NAME){} :\n\t\t (BLP_NAME){}".format(str(i).zfill(3), rm, room_dict[rm]))
     print('\n\n')
     # print(rm)
+
+
 

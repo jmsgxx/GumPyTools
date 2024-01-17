@@ -53,11 +53,6 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 
-# room
-# with forms.WarningBar(title="Select Room"):
-#     picked_element = revit.pick_elements()
-#
-# selected_rooms = [element for element in picked_element if element.Category.Name == 'Rooms']
 
 filter_type = _x_selection.ISelectionFilter_Classes([Room])
 selected_element = selection.PickObjects(ObjectType.Element, filter_type, "Select Room")
@@ -236,14 +231,7 @@ with Transaction(doc, __title__) as t:
                 bi_wall_prot.append(item)
             elif built_in_cat == 'CABINETRY/BUILT-IN FURNITURE' or built_in_cat == 'CABINETRY / BUILT-IN FURNITURE':
                 bi_cab_furn.append(item)
-            # if "/" in built_in_cat:
-            #     built_in_cat_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_COMMENTS)
-            #     if built_in_cat != 'CABINETRY/BUILT-IN FURNITURE':
-            #         built_in_cat = re.sub(r"\s?/\s?", "/", built_in_cat)
-            #         built_in_cat_param.Set(built_in_cat)
-            #         bi_cab_furn.append(item)
-            #     else:
-            #         bi_cab_furn.append(item)
+
 
         # built-in param
         room_inv_cat1 = selected_room.LookupParameter('Room Inventory Category 1')

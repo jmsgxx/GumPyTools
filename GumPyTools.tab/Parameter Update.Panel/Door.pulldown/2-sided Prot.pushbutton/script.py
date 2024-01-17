@@ -28,6 +28,7 @@ from Snippets._x_selection import DoorCustomFilter, get_multiple_elements
 from Snippets._context_manager import try_except, rvt_transaction
 from Autodesk.Revit.DB import *
 from pyrevit import forms
+import math
 
 import clr
 clr.AddReference("System")
@@ -52,9 +53,9 @@ door_selection = get_multiple_elements()
 
 if not door_selection:
     with try_except():
-        filter_type = DoorCustomFilter()
-        door_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Doors")
-        door_selection = [doc.GetElement(dr) for dr in door_list]
+        filter_type     = DoorCustomFilter()
+        door_list       = selection.PickObjects(ObjectType.Element, filter_type, "Select Doors")
+        door_selection  = [doc.GetElement(dr) for dr in door_list]
 
         if not door_selection:
             forms.alert("No doors selected. Exiting command.", exitscript=True, warn_icon=False)
@@ -93,6 +94,23 @@ for door in door_selection:  # type: FamilyInstance
             dr_prot_pl_wl_yes.Set(1)
             dr_prot_ph_tk_yes.Set(1)
             door_count += 1
+        # put a mark on the finished door
+        el_id       = door.Id
+        door_xyz    = door.Location.Point
+        normal      = XYZ.BasisZ
+        if door_xyz:
+            plane = Plane.CreateByNormalAndOrigin(normal, door_xyz)
+            radius = 3
+            start_angle = 0.0
+            end_angle = 2.0 * math.pi
+            arc = Arc.Create(plane, radius, start_angle, end_angle)
+            circ_elements = [doc.Create.NewDetailCurve(active_view, arc)]
+
+        for el in circ_elements:
+            color = Color(255, 0, 0)
+            ogs = OverrideGraphicSettings().SetProjectionLineColor(color)
+            active_view.SetElementOverrides(el.Id, ogs)
+
 
 if door_count == 1:
     forms.alert("{} door is updated".format(door_count))

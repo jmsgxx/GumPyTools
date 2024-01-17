@@ -28,6 +28,7 @@ from Snippets._x_selection import DoorCustomFilter, get_multiple_elements
 from Snippets._context_manager import try_except, rvt_transaction
 from Autodesk.Revit.DB import *
 from pyrevit import forms
+import math
 
 import clr
 clr.AddReference("System")
@@ -93,6 +94,22 @@ for door in door_selection:  # type: FamilyInstance
             dr_prot_pl_wl_yes.Set(0)
             dr_prot_ph_tk_yes.Set(0)
             door_count += 1
+        # put a mark on the finished door
+        el_id = door.Id
+        door_xyz = door.Location.Point
+        normal = XYZ.BasisZ
+        if door_xyz:
+            plane = Plane.CreateByNormalAndOrigin(normal, door_xyz)
+            radius = 3
+            start_angle = 0.0
+            end_angle = 2.0 * math.pi
+            arc = Arc.Create(plane, radius, start_angle, end_angle)
+            circ_elements = [doc.Create.NewDetailCurve(active_view, arc)]
+
+        for el in circ_elements:
+            color = Color(255, 0, 255)
+            ogs = OverrideGraphicSettings().SetProjectionLineColor(color)
+            active_view.SetElementOverrides(el.Id, ogs)
 
 
 if door_count == 1:
