@@ -34,6 +34,7 @@ import sys
 # ===================================================================================================
 from Snippets._x_selection import get_multiple_elements
 from Snippets._context_manager import rvt_transaction, try_except
+from Snippets.Logger import _logger
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from pyrevit import forms
@@ -90,3 +91,6 @@ else:
 
                 forms.alert("{} sheet/s deleted.\nIf it is a mistake immediately close the file and do not save." \
                             .format(len(sheet_collection)))
+
+script_name = __title__
+_logger(script_name)

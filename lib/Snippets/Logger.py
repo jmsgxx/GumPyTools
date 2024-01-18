@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 01'
-__doc__ = """
-This script will collect elements.
-__________________________________
-Author: Joven Mark Gumana
-"""
-
-
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║ 
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
@@ -21,7 +13,7 @@ from datetime import datetime
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
-
+import xlsxwriter
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -48,22 +40,28 @@ def _logger(script_name):
     # get pc and user info
     username = os.environ['USERNAME']
     computer_name = os.environ['COMPUTERNAME']
-    directory = r'X:\J521\BIM\00_SKA-Tools\SKA_Tools'
-    filepath = op.join(directory, 'logger.csv')
+
+    filepath = r'X:\J521\BIM\00_SKA-Tools\SKA_Tools\log_info\logger.csv'
 
     # project info
     project_number = doc.ProjectInformation.get_Parameter(BuiltInParameter.PROJECT_NAME).AsString()
     project_name = doc.ProjectInformation.get_Parameter(BuiltInParameter.PROJECT_NUMBER).AsString()
     file_name = doc.Title
 
-    # put all info parameters together in a single line and add it to a CSV file
-    try:
-        if not os.path.exists(directory):
-            os.mkdir(directory)
+
+    with try_except():
+        if not os.path.isfile(filepath):
+            open(filepath, 'w').close()
         with open(filepath, 'a') as f:
-            items = [username, computer_name, script_name, project_name, project_number, file_name, datestamp, timestamp]
+            items = [
+                username,
+                computer_name,
+                script_name,
+                project_name,
+                project_number,
+                file_name,
+                datestamp,
+                timestamp
+            ]
             lines_to_write = '\n' + ','.join(items)
             f.writelines(lines_to_write)
-
-    except Exception as e:
-        forms.alert(str(e))
