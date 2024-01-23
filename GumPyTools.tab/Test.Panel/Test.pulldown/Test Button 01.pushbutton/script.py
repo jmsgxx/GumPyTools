@@ -34,5 +34,20 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
+all_door_tags = FilteredElementCollector(doc, active_view.Id)\
+    .OfCategory(BuiltInCategory.OST_DoorTags)\
+    .WhereElementIsNotElementType()\
+    .ToElements()
+
+for i in all_door_tags:  # type: IndependentTag
+    tagged = i.GetTaggedLocalElements()
+    for el in tagged:
+        el_type = el.GetTypeId()
+        door_el = doc.GetElement(el_type)
+
+        element_name = door_el.get_Parameter(BuiltInParameter.SYMBOL_FAMILY_NAME_PARAM).AsString()
+        with rvt_transaction(doc, __title__):
+            if 'FR' in element_name:
+                doc.Delete(i.Id)
 
 
