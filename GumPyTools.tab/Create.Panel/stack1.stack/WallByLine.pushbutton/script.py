@@ -110,6 +110,3 @@ with rvt_transaction(doc, __title__):
              height dbl, offset dbl, flip bool, struc bool
             """
             Wall.Create(doc, el, wall_choice, active_level.Id, ht_val, 0, False, False)
-
-
-

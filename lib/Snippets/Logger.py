@@ -5,15 +5,13 @@
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from pyrevit import forms
-from Snippets._context_manager import rvt_transaction, try_except
+from Snippets._context_manager import try_except
 import os
-import os.path as op
 from datetime import datetime
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
-import xlsxwriter
+
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗

@@ -83,7 +83,7 @@ for door in door_selection:  # type: FamilyInstance
             dr_pull_wl.Set(str(""))
             dr_push_tr_ht.Set(str("2"))
             dr_push_tr.Set(str("PH"))
-            dr_prot_pl_wl_yes.Set(0)
+            dr_prot_pl_wl_yes.Set(1)
             dr_prot_ph_tk_yes.Set(0)
             door_count += 1
         if 'SLID' in door_type_name:
@@ -91,7 +91,7 @@ for door in door_selection:  # type: FamilyInstance
             dr_pull_wl.Set(str(""))
             dr_push_tr_ht.Set(str("2"))
             dr_push_tr.Set(str("TK"))
-            dr_prot_pl_wl_yes.Set(0)
+            dr_prot_pl_wl_yes.Set(1)
             dr_prot_ph_tk_yes.Set(0)
             door_count += 1
         # put a mark on the finished door
