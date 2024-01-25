@@ -243,15 +243,219 @@ with Transaction(doc, __title__) as t:
         room_inv_cat3.Set('SANITARY FITMENT')
         room_inv_cat4.Set('WALL PROTECTION')
         # ------------------------------------------------XXXX-----------------------------------------------------
-
         # ✅ ARCHITECTURAL WORK
         element_collection(bi_archi, 1, selected_room)
+        # bi_archi_item = []
+        # bi_archi_desc = []
+        # bi_archi_name = []
+        # bi_archi_qty = []
+        #
+        # for i in bi_archi:
+        #     if i:
+        #         model_element_id = i.GetTypeId()
+        #         model_type = doc.GetElement(model_element_id)
+        #         archi_item_param = model_type.get_Parameter(BuiltInParameter.WINDOW_TYPE_ID)
+        #         archi_desc_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION)
+        #         archi_obj_name = i.Name
+        #         bi_archi_name.append(archi_obj_name)
+        #
+        #         if archi_item_param is not None:
+        #             archi_item = archi_item_param.AsValueString()
+        #             bi_archi_item.append(archi_item)
+        #
+        #         if archi_desc_param is not None:
+        #             archi_desc = archi_desc_param.AsValueString()
+        #             bi_archi_desc.append(archi_desc)
+        #
+        # # generate quantity of items
+        # cat1_counter = Counter(bi_archi_name)
+        # unique_archi_obj_name = set(bi_archi_name)
+        # for item in unique_archi_obj_name:
+        #     bi_archi_qty.append(cat1_counter[item])
+        #
+        # split_bi_archi_qty = [str(item) for item in bi_archi_qty]
+        #
+        # # convert to set to get the unique items
+        # unique_bi_archi_item = set(bi_archi_item)
+        # unique_bi_archi_desc = set(bi_archi_desc)
+        # # convert to string
+        # bi_archi_item_str = '\n'.join(unique_bi_archi_item)
+        # bi_archi_desc_str = '\n'.join(unique_bi_archi_desc)
+        # bi_archi_qty_str = '\n'.join(split_bi_archi_qty)
+        # # set
+        # room_inv_cat_item1          = selected_room.LookupParameter('Room Inventory Category 1 Items')
+        # room_inv_cat_item_desc1     = selected_room.LookupParameter('Room Inventory Category 1 Item Description')
+        # room_inv_cat_item_qty1      = selected_room.LookupParameter('Room Inventory Category 1 Item Quantities')
+        #
+        # if room_inv_cat_item1 is not None:
+        #     room_inv_cat_item1.Set(bi_archi_item_str)
+        #
+        # if room_inv_cat_item_desc1 is not None:
+        #     room_inv_cat_item_desc1.Set(bi_archi_desc_str)
+        #
+        # if room_inv_cat_item_qty1 and bi_archi_qty is not None:
+        #     room_inv_cat_item_qty1.Set(bi_archi_qty_str)
+        # ------------------------------------------------XXXX-----------------------------------------------------
         # ✅ CABINETRY/BUILT-IN FURNITURE
         element_collection(bi_cab_furn, 2, selected_room)
+        # bi_cab_furn_item = []
+        # bi_cab_furn_desc = []
+        # bi_cab_furn_name = []
+        # bi_cab_furn_qty = []
+        #
+        # for i in bi_cab_furn:
+        #     if i:
+        #         model_element_id = i.GetTypeId()
+        #         model_type = doc.GetElement(model_element_id)
+        #         cab_furn_item_param = model_type.get_Parameter(BuiltInParameter.WINDOW_TYPE_ID)
+        #         cab_furn_desc_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION)
+        #         cab_furn_obj_name = i.Name
+        #         bi_cab_furn_name.append(cab_furn_obj_name)
+        #
+        #         if cab_furn_item_param:
+        #             cab_furn_item = cab_furn_item_param.AsValueString()
+        #             bi_cab_furn_item.append(cab_furn_item)
+        #
+        #         if cab_furn_desc_param is not None:
+        #             cab_furn_desc = cab_furn_desc_param.AsValueString()
+        #             bi_cab_furn_desc.append(cab_furn_desc)
+        #
+        # # generate quantity of items
+        # cat2_counter = Counter(bi_cab_furn_name)
+        # unique_cab_furn_obj_name = set(bi_cab_furn_name)
+        # for item in unique_cab_furn_obj_name:
+        #     bi_cab_furn_qty.append(cat2_counter[item])
+        #
+        # split_bi_cab_furn_qty = [str(item) for item in bi_cab_furn_qty]
+        #
+        # # convert to set to get the unique items
+        # unique_bi_cab_furn_item = set(bi_cab_furn_item)
+        # unique_bi_cab_furn_desc = set(bi_cab_furn_desc)
+        # # convert to string
+        # bi_cab_furn_item_str = '\n'.join(unique_bi_cab_furn_item)
+        # bi_cab_furn_desc_str = '\n'.join(unique_bi_cab_furn_desc)
+        # bi_cab_furn_qty_str = '\n'.join(split_bi_cab_furn_qty)
+        #
+        # # set
+        # room_inv_cat_item2 = selected_room.LookupParameter('Room Inventory Category 2 Items')
+        # room_inv_cat_item_desc2 = selected_room.LookupParameter('Room Inventory Category 2 Item Description')
+        # room_inv_cat_item_qty2 = selected_room.LookupParameter('Room Inventory Category 2 Item Quantities')
+        #
+        # if room_inv_cat_item2 is not None:
+        #     room_inv_cat_item2.Set(bi_cab_furn_item_str)
+        #
+        # if room_inv_cat_item_desc2 is not None:
+        #     room_inv_cat_item_desc2.Set(bi_cab_furn_desc_str)
+        #
+        # if room_inv_cat_item_qty2 and bi_cab_furn_qty is not None:
+        #     room_inv_cat_item_qty2.Set(bi_cab_furn_qty_str)
+        # ------------------------------------------------XXXX-----------------------------------------------------
         # ✅ SANITARY FITMENT
-        element_collection(bi_san_fit, 3, selected_room)
+        bi_san_fit_item = []
+        bi_san_fit_desc = []
+        bi_san_fit_name = []
+        bi_san_fit_qty = []
+
+        for i in bi_san_fit:
+            if i:
+                model_element_id = i.GetTypeId()
+                model_type = doc.GetElement(model_element_id)
+                san_fit_item_param = model_type.get_Parameter(BuiltInParameter.WINDOW_TYPE_ID)
+                san_fit_desc_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION)
+                san_fit_obj_name = i.Name
+                bi_san_fit_name.append(san_fit_obj_name)
+
+                if san_fit_item_param is not None:
+                    san_fit_item = san_fit_item_param.AsValueString()
+                    bi_san_fit_item.append(san_fit_item)
+
+                if san_fit_desc_param is not None:
+                    san_fit_desc = san_fit_desc_param.AsValueString()
+                    bi_san_fit_desc.append(san_fit_desc)
+
+        # generate quantity of items
+        cat3_counter = Counter(bi_san_fit_name)
+        unique_san_fit_obj_name = set(bi_san_fit_name)
+        for item in unique_san_fit_obj_name:
+            bi_san_fit_qty.append(cat3_counter[item])
+
+        split_bi_san_fit_qty = [str(item) for item in bi_san_fit_qty]
+
+        # convert to set to get the unique items
+        filtered_san_fit_item = [item for item in bi_san_fit_item if item is not None]
+        unique_bi_san_fit_item = set(filtered_san_fit_item)
+        filtered_san_fit_desc = [item for item in bi_san_fit_desc if item is not None]
+        unique_bi_san_fit_desc = set(filtered_san_fit_desc)
+        # convert to string
+        bi_san_fit_item_str = '\n'.join(unique_bi_san_fit_item)
+        bi_san_fit_desc_str = '\n'.join(unique_bi_san_fit_desc)
+        bi_san_fit_qty_str = '\n'.join(split_bi_san_fit_qty)
+        # set
+        room_inv_cat_item3 = selected_room.LookupParameter('Room Inventory Category 3 Items')
+        room_inv_cat_item_desc3 = selected_room.LookupParameter('Room Inventory Category 3 Item Description')
+        room_inv_cat_item_qty3 = selected_room.LookupParameter('Room Inventory Category 3 Item Quantities')
+
+        if room_inv_cat_item3 is not None:
+            room_inv_cat_item3.Set(bi_san_fit_item_str)
+
+        if room_inv_cat_item_desc3 is not None:
+            room_inv_cat_item_desc3.Set(bi_san_fit_desc_str)
+
+        if room_inv_cat_item_qty3 and bi_san_fit_qty is not None:
+            room_inv_cat_item_qty3.Set(bi_san_fit_qty_str)
+
+        # ------------------------------------------------XXXX-----------------------------------------------------
         # ✅ WALL PROTECTION
-        element_collection(bi_wall_prot, 4, selected_room)
+        bi_wall_prot_item = []
+        bi_wall_prot_desc = []
+        bi_wall_prot_name = []
+        bi_wall_prot_qty = []
+
+        for i in bi_wall_prot:
+            if i:
+                model_element_id = i.GetTypeId()
+                model_type = doc.GetElement(model_element_id)
+                wall_prot_item_param = model_type.get_Parameter(BuiltInParameter.WINDOW_TYPE_ID)
+                wall_prot_desc_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION)
+                wall_prot_obj_name = i.Name
+                bi_wall_prot_name.append(wall_prot_obj_name)
+
+                if wall_prot_item_param:
+                    wall_prot_item = wall_prot_item_param.AsValueString()
+                    bi_wall_prot_item.append(wall_prot_item)
+
+                if wall_prot_desc_param:
+                    wall_prot_desc = wall_prot_desc_param.AsValueString()
+                    bi_wall_prot_desc.append(wall_prot_desc)
+
+        # generate quantity of items
+        cat4_counter = Counter(bi_wall_prot_name)
+        unique_wall_prot_obj_name = set(bi_wall_prot_name)
+        for item in unique_wall_prot_obj_name:
+            bi_wall_prot_qty.append(cat4_counter[item])
+
+        split_bi_wall_prot_qty = [str(item) for item in bi_wall_prot_qty]
+
+        # convert to set to get the unique items
+        unique_bi_wall_prot_item = set(bi_wall_prot_item)
+        unique_bi_wall_prot_desc = set(bi_wall_prot_desc)
+        # convert to string
+        bi_wall_prot_item_str = '\n'.join(unique_bi_wall_prot_item)
+        bi_wall_prot_desc_str = '\n'.join(unique_bi_wall_prot_desc)
+        bi_wall_prot_qty_str = '\n'.join(split_bi_wall_prot_qty)
+        # set
+        room_inv_cat_item4 = selected_room.LookupParameter('Room Inventory Category 4 Items')
+        room_inv_cat_item_desc4 = selected_room.LookupParameter('Room Inventory Category 4 Item Description')
+        room_inv_cat_item_qty4 = selected_room.LookupParameter('Room Inventory Category 4 Item Quantities')
+
+        if room_inv_cat_item4:
+            room_inv_cat_item4.Set(bi_wall_prot_item_str)
+
+        if room_inv_cat_item_desc4:
+            room_inv_cat_item_desc4.Set(bi_wall_prot_desc_str)
+
+        if room_inv_cat_item_qty4 and bi_wall_prot_qty:
+            room_inv_cat_item_qty4.Set(bi_wall_prot_qty_str)
 
         # ---------------------------------------------xxx----------------------------------------------------
         room_name = selected_room.LookupParameter('Name')
@@ -264,3 +468,6 @@ with Transaction(doc, __title__) as t:
         print('=' * 50)
 
     t.Commit()
+
+
+
