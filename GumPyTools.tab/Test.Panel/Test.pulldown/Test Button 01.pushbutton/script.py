@@ -2,8 +2,7 @@
 
 __title__ = 'Test Button 01'
 __doc__ = """
-This script will collect elements.
-__________________________________
+
 Author: Joven Mark Gumana
 """
 
@@ -13,41 +12,31 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
-from pyrevit import forms
-from Snippets._context_manager import rvt_transaction, try_except
-import os
-import os.path as op
-from datetime import datetime
+from Snippets import _x_selection
+from Snippets.element_collection import element_collection
+from pyrevit import forms, revit, script
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from Autodesk.Revit.DB.Architecture import Room
+import pyrevit
+from collections import Counter
+import sys
 import clr
 clr.AddReference("System")
-from System.Collections.Generic import List
 
 
-# ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
-doc      = __revit__.ActiveUIDocument.Document  # type: Document
-uidoc    = __revit__.ActiveUIDocument   # type: UIDocument
+
+
+doc      = __revit__.ActiveUIDocument.Document
+uidoc    = __revit__.ActiveUIDocument
 app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
+selection = uidoc.Selection     # type: Selection
 
-all_door_tags = FilteredElementCollector(doc, active_view.Id)\
-    .OfCategory(BuiltInCategory.OST_DoorTags)\
-    .WhereElementIsNotElementType()\
-    .ToElements()
 
-for i in all_door_tags:  # type: IndependentTag
-    tagged = i.GetTaggedLocalElements()
-    for el in tagged:
-        el_type = el.GetTypeId()
-        door_el = doc.GetElement(el_type)
-
-        element_name = door_el.get_Parameter(BuiltInParameter.SYMBOL_FAMILY_NAME_PARAM).AsString()
-        with rvt_transaction(doc, __title__):
-            if 'FR' in element_name:
-                doc.Delete(i.Id)
 
 

@@ -28,8 +28,8 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 from Snippets import _x_selection
-from element_collection import element_collection
-from pyrevit import forms, revit
+from Snippets.element_collection import element_collection
+from pyrevit import forms, revit, script
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Autodesk.Revit.DB.Architecture import Room
 import pyrevit
@@ -67,7 +67,7 @@ if not selected_rooms:
 with Transaction(doc, __title__) as t:
     t.Start()
 
-    output = pyrevit.output.get_output()
+    output = script.get_output()
     output.center()
     output.resize(300, 600)
     output.print_md('### NUMBER OF SELECTED ITEMS   : {}'.format(len(selected_rooms)))
@@ -93,9 +93,8 @@ with Transaction(doc, __title__) as t:
         elements = []   # elements with category
 
         for element in collector:
-            if element.Category:
-                if element.Category.Name:
-                    elements.append(element)
+            if element.Category and element.Category.Name:
+                elements.append(element)
 
         by_user_lst = []  # family instance '(BY USER)'
         built_in_lst = []
@@ -158,7 +157,7 @@ with Transaction(doc, __title__) as t:
                 if model_type_cat_param is None:
                     print("Element {} has no description for 'Loose Items' in {} - {}.".format(item.Id,
                                                                                                sel_room_name,
-                                                                                               sel_room_name))
+                                                                                               sel_room_number))
                 model_type_item_param = model_type.get_Parameter(BuiltInParameter.WINDOW_TYPE_ID).AsValueString()  # type mark
                 model_type_desc_param = model_type.get_Parameter(BuiltInParameter.ALL_MODEL_DESCRIPTION).AsValueString()  # type description
 
@@ -194,13 +193,13 @@ with Transaction(doc, __title__) as t:
         # 🟥 SET TO ROOM PARAMETER
         # ======================================
         if selected_room:
-            if room_user_cat is not None:
+            if room_user_cat:
                 room_user_cat.Set(by_user_cat_str)
-            if room_user_item is not None:
+            if room_user_item:
                 room_user_item.Set(by_user_item_str)
-            if by_user_desc_str and room_user_desc is not None:
+            if by_user_desc_str and room_user_desc:
                 room_user_desc.Set(by_user_desc_str)
-            if by_user_qty_str and room_user_qty is not None:
+            if by_user_qty_str and room_user_qty:
                 room_user_qty.Set(by_user_qty_str)
 
         # ╔╗ ╦ ╦╦╦ ╔╦╗  ╦╔╗╔
@@ -221,7 +220,7 @@ with Transaction(doc, __title__) as t:
             if built_in_cat is None:
                 print("Element {} has no description for 'Built-in Items' in {} - {}.".format(item.Id,
                                                                                               sel_room_name,
-                                                                                              sel_room_name))
+                                                                                              sel_room_number))
             elif built_in_cat == 'ARCHITECTURAL WORK':
                 bi_archi.append(item)
             elif built_in_cat == 'SANITARY FITMENT':
@@ -243,15 +242,11 @@ with Transaction(doc, __title__) as t:
         room_inv_cat3.Set('SANITARY FITMENT')
         room_inv_cat4.Set('WALL PROTECTION')
         # ------------------------------------------------XXXX-----------------------------------------------------
+        # 🟢 MAIN EXECUTION OF BUILT-IN
+        all_elements = [bi_archi, bi_cab_furn, bi_san_fit, bi_wall_prot]
 
-        # ✅ ARCHITECTURAL WORK
-        element_collection(bi_archi, 1, selected_room)
-        # ✅ CABINETRY/BUILT-IN FURNITURE
-        element_collection(bi_cab_furn, 2, selected_room)
-        # ✅ SANITARY FITMENT
-        element_collection(bi_san_fit, 3, selected_room)
-        # ✅ WALL PROTECTION
-        element_collection(bi_wall_prot, 4, selected_room)
+        for index, item in enumerate(all_elements, start=1):
+            element_collection(item, index, selected_room)
 
         # ---------------------------------------------xxx----------------------------------------------------
         room_name = selected_room.LookupParameter('Name')
