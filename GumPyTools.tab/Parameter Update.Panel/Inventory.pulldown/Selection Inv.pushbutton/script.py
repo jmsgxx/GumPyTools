@@ -229,33 +229,36 @@ with Transaction(doc, __title__) as t:
                 bi_wall_prot.append(item)
             elif built_in_cat == 'CABINETRY/BUILT-IN FURNITURE' or built_in_cat == 'CABINETRY / BUILT-IN FURNITURE':
                 bi_cab_furn.append(item)
-
-
-        # built-in param
-        room_inv_cat1 = selected_room.LookupParameter('Room Inventory Category 1')
-        room_inv_cat2 = selected_room.LookupParameter('Room Inventory Category 2')
-        room_inv_cat3 = selected_room.LookupParameter('Room Inventory Category 3')
-        room_inv_cat4 = selected_room.LookupParameter('Room Inventory Category 4')
-        # SET ROOM INVENTORY NUMBER
-        room_inv_cat1.Set('ARCHITECTURAL WORK')
-        room_inv_cat2.Set('CABINETRY/BUILT-IN FURNITURE')
-        room_inv_cat3.Set('SANITARY FITMENT')
-        room_inv_cat4.Set('WALL PROTECTION')
         # ------------------------------------------------XXXX-----------------------------------------------------
         # 🟢 MAIN EXECUTION OF BUILT-IN
+
+        cat_lst = ['ARCHITECTURAL WORK',
+                   'CABINETRY/BUILT-IN FURNITURE',
+                   'SANITARY FITMENT',
+                   'WALL PROTECTION']
+
+        for idx, cat in enumerate(cat_lst, start=1):
+            room_inv_cat = selected_room.LookupParameter('Room Inventory Category {}'.format(idx))
+            room_inv_cat.Set(str(cat))
+
         all_elements = [bi_archi, bi_cab_furn, bi_san_fit, bi_wall_prot]
 
         for index, item in enumerate(all_elements, start=1):
             element_collection(item, index, selected_room)
 
         # ---------------------------------------------xxx----------------------------------------------------
-        room_name = selected_room.LookupParameter('Name')
+        room_name_param = selected_room.LookupParameter('Name')
+        room_name = room_name_param.AsValueString()
 
         print('=' * 50)
-        print('ROOM NAME : {}'.format(room_name.AsValueString().upper()))
+        if not room_name and room_name_param:
+            print("{}. Room has no room name.".format(str(index).zfill(3)))
+        else:
+            print('{}. ROOM NAME : {}'.format(str(index).zfill(3), room_name.upper()))
         print('ROOM NUMBER : {}'.format(selected_room.Number))
         print("Total Built-In Furniture: {}".format(len(built_in_lst)))
         print("Total Loose Furniture: {}".format(len(by_user_lst)))
+        print("Element ID: {}".format(selected_room.Id))
         print('=' * 50)
 
     t.Commit()
