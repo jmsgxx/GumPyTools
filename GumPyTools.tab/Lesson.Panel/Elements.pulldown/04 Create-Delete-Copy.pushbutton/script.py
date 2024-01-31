@@ -186,12 +186,12 @@ with Transaction(doc, __title__) as t:
 	Document document,
 	ElementId titleBlockTypeId
     """
-    # tblock_id = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks) \
-    #                                          .WhereElementIsElementType().FirstElementId()
+    tblock_id = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks) \
+                                             .WhereElementIsElementType().FirstElementId()
     
-    # new_sheet = ViewSheet.Create(doc, tblock_id)
-    # new_sheet.SheetNumber   = "Random Number"
-    # new_sheet.Name          = "Random Name"
+    new_sheet = ViewSheet.Create(doc, tblock_id)
+    new_sheet.SheetNumber   = "Random Number"
+    new_sheet.Name          = "Random Name"
 
     # =================================================================================================================
     # ╦  ╦╦╔═╗╦ ╦╔═╗
