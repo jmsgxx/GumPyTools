@@ -14,6 +14,9 @@ Author: Joven Mark Gumana
 from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button, TextBox)
 from Snippets._context_manager import rvt_transaction
 from Autodesk.Revit.DB import *
+from Snippets._x_selection import get_multiple_elements
+from pyrevit import forms
+
 import clr
 clr.AddReference("System")
 
@@ -32,51 +35,32 @@ active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 
 # ==========================================================x============================================
-# 🔴 view family type
-all_vft = FilteredElementCollector(doc).OfClass(ViewFamilyType).ToElements()
-
-vft_types = [i for i in all_vft if i.ViewFamily == ViewFamily.FloorPlan]
-
-view_fam_types = []
-
-for item in vft_types:
-    vf_type_id = item.Id
-    vf_type_element = doc.GetElement(vf_type_id)
-    view_fam_types.append(vf_type_element)
-    # vf_type_name = vf_type_element.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()
-
-vft_dict = {name.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): name.Id for name in view_fam_types}
-
-# --------------------------------------------------------------------------------------------------
-# 🔴 levels
-all_levels = FilteredElementCollector(doc).OfClass(Level).ToElements()
-
-# for level in all_levels:
-#     print(level.Name)
-
-level_dict = {level.Name: level.Id for level in all_levels}
-# --------------------------------------------------------------------------------------------------
-
-components = [Label('View Family Type:'),
-              ComboBox('view_fam', vft_dict),
-              Label('Level:'),
-              ComboBox('level_name', level_dict),
-              Separator(),
-              Button('Create')]
-
-form = FlexForm('Create View Plan', components)
-form.show()
-
-user_input = form.values
-view_family   = user_input['view_fam']
-level_choice = user_input['level_name']
 
 
-for view_plan in range(5):
-    new_v_plan = ViewPlan.Create(doc, view_family, level_choice)
-    new_v_plan.Name = "DOC_FP_FFL_08_50_{}".format(view_plan + 11)
+def count_items(item_list, keyword, level):
+    collected_lst = []
+    for item in item_list:
+        sheet_number = item.SheetNumber
+        sheet_name = item.Name
+        if 'CONTENT PAGE' not in sheet_name and sheet_number.startswith(str(keyword)):
+            collected_lst.append(item)
+
+    return "All sheets in {}: is {}.".format(str(level), len(collected_lst))
 
 
+all_sheets = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Sheets).WhereElementIsNotElementType()\
+    .ToElements()
 
+b2 = count_items(all_sheets, 'DL0001', 'B2')
+b1 = count_items(all_sheets, 'DL0002', 'B1')
+lg = count_items(all_sheets, 'DL0003', 'LG')
+
+print(b2)
+print(b1)
+print(lg)
+
+for count in range(15):
+    items = count_items(all_sheets, "DL10{}".format(str(count).zfill(2)), "L{}".format(count))
+    print(items)
 
 
