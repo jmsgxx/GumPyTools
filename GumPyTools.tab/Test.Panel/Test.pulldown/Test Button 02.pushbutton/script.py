@@ -55,3 +55,6 @@ with rvt_transaction(doc, __title__):
                         view_s_box.Set(scope_bx.Id)
 
 
+"""
+TO SET SCOPE BOX, DO NOT DELETE FOR NOW!
+"""
