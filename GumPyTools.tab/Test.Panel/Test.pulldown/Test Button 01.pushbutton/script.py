@@ -36,38 +36,24 @@ selection = uidoc.Selection     # type: Selection
 
 # ==========================================================x============================================
 
-all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
-all_views = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()
-all_viewports = FilteredElementCollector(doc).OfClass(Viewport).ToElements()
+all_levels = FilteredElementCollector(doc).OfClass(Level).ToElements()
+
+ffl_level = []
+
+for level in all_levels:
+    if level.Name.startswith("N_") and level.Name.endswith("FFL"):
+        ffl_level.append(level)
 
 
+# level_list = ["B2", "B1", "LG", "L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9",
+#               "L11", "L12", "L13", "L14", "L15", "L16"]
 with rvt_transaction(doc, __title__):
-    with try_except():
-        for sheet in all_sheets:    # type: ViewSheet
-            sheet_number = sheet.SheetNumber
-            sheet_name = sheet.Name
-            for view in all_views:
-                view_name = view.Name
-
-                # Extract the last two digits from the sheet number and view name
-                sheet_num = sheet_number[-2:]
-                view_num = view_name[-2:]
-
-                if "CONTENT PAGE" in sheet_name:
-                    continue
-                elif "LOWER GROUND DETAIL" in sheet_name and "LG" in view_name and sheet_num == view_num:
-                    # vp_ids = sheet.GetAllViewports()
-                    # for id in vp_ids:
-                    #     vp_el = doc.GetElement(id)
-                    #     sheet.DeleteViewport(vp_el)
-                    # print("{} : {}".format(sheet_name, view_name))
-                    sht_outline = sheet.Outline
-                    x = sht_outline.Max.U - sht_outline.Min.U
-                    y = sht_outline.Max.V - sht_outline.Min.U
-
-                    origin_pt = XYZ(x/2, y/1.8, 0)
-                    Viewport.Create(doc, sheet.Id, view.Id, origin_pt)
-
-
+    for i in range(17):
+        for l in ffl_level:
+            l_name = l.Name
+            l_split = l_name.split("_")
+            if l_split[1] == str(i).zfill(2):
+                new_view = ViewPlan.Create(doc, ElementId(362112), l.Id)
+                new_view.Name = "SS_DOC_L{}_200".format(i)
 
 

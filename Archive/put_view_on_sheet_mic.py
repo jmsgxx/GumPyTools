@@ -37,33 +37,36 @@ active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 # ======================================================================================================
 with rvt_transaction(doc, __title__):
-    all_views = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).WhereElementIsNotElementType().ToElements()
+    all_views = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements()
     all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
+    view_plans = []
 
-    for index, sheet in enumerate(all_sheets, start=1):    # type: ViewSheet
-        sheet_name = sheet.get_Parameter(BuiltInParameter.SHEET_NAME).AsString()
-        sheet_number = sheet.get_Parameter(BuiltInParameter.SHEET_NUMBER).AsString()
-        for view in all_views:  # type: View
-            view_name = Element.Name.GetValue(view)
-            if view_name.startswith("DOC_FP_FFL_15_50"):
-                v_num = view_name.split("_")[-1]
-                if "LEVEL 15 DETAIL" in sheet_name
+    for view in all_views:  # type: View
+        if view.ViewType == ViewType.FloorPlan:
+            view_name = view.Name
+            if view_name.startswith("MIC"):
+                view_plans.append(view)
 
-    # sht_outline = sheet.Outline
-    # x = sht_outline.Max.U - sht_outline.Min.U
-    # y = sht_outline.Max.V - sht_outline.Min.V
-    #
-    # origin_pt = XYZ(x / 2.2, y / 2, 0)
-    # Viewport.Create(doc, sheet.Id, view.Id, origin_pt)
+    mic_sheets = []
 
+    for sheet in all_sheets:    # type: ViewSheet
+        sheet_name = sheet.Name
+        sheet_number = sheet.SheetNumber
+        if sheet_number.startswith("AB-300"):
+            mic_sheets.append(sheet)
 
+    sheet_view_dict = {}
 
+    for v in view_plans:
+        for s in mic_sheets:
+            s_number = s.SheetNumber
+            s_name = s.Name
+            v_name = v.Name
+            if s_number.split("-")[4] == v_name.split("_")[1]:
+                sht_outline = s.Outline
+                x = sht_outline.Max.U - sht_outline.Min.U
+                y = sht_outline.Max.V - sht_outline.Min.V
 
-    # selected_sheets = get_multiple_elements()
-    # selected_sheets.sort(key=lambda s: s.get_Parameter(BuiltInParameter.SHEET_NUMBER).AsString())
-    #
-    # for index, sheet in enumerate(selected_sheets, start=1):
-    #     sheet_name = sheet.get_Parameter(BuiltInParameter.SHEET_NAME)
-    #     sheet_name.Set("BASEMENT 2 DETAIL LAYOUT PLAN (SHEET {} OF {})".format(index, len(selected_sheets)))
-
+                origin_pt = XYZ(x/2.2, y/2, 0)
+                Viewport.Create(doc, s.Id, v.Id, origin_pt)

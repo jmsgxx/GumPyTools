@@ -76,8 +76,6 @@ try:
                   ComboBox('level_name', level_dict),
                   Label('View Name'),
                   TextBox('main_name'),
-                  Label('Desired Number of Views'),
-                  TextBox('run_num', default='1'),
                   Separator(),
                   Button('Create')]
 
@@ -88,7 +86,6 @@ try:
     view_family   = user_input['view_family_type']
     level_choice = user_input['level_name']
     v_name = user_input['main_name']
-    num_add = user_input['run_num']
 except Exception as e:
     forms.alert("Key error '{}'. Because no input.".format(str(e)), exitscript=True)
 # --------------------------------------------------------------------------------------------------
@@ -96,9 +93,7 @@ except Exception as e:
 
 with rvt_transaction(doc, __title__):
     with try_except():
-        for i in range(int(num_add)):
-            new_v_plan = ViewPlan.Create(doc, view_family, level_choice)
-            new_v_plan.Name = "{}_{}".format(v_name, str(i + 1).zfill(2))
-
+        new_v_plan = ViewPlan.Create(doc, view_family, level_choice)
+        new_v_plan.Name = "{}".format(v_name)
 
 forms.alert("Views created!", exitscript=False, warn_icon=False)

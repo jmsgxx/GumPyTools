@@ -53,12 +53,45 @@ b2 = count_items(all_sheets, 'DL0001', 'B2')
 b1 = count_items(all_sheets, 'DL0002', 'B1')
 lg = count_items(all_sheets, 'DL0003', 'LG')
 
-print(b2)
-print(b1)
-print(lg)
+# print("SHEETS FOR DETAIL LAYOUT ONLY")
+# print("-" * 50)
+# print(b2)
+# print(b1)
+# print(lg)
+#
+# for count in range(15):
+#     items = count_items(all_sheets, "DL10{}".format(str(count).zfill(2)), "L{}".format(count))
+#     print(items)
 
-for count in range(15):
-    items = count_items(all_sheets, "DL10{}".format(str(count).zfill(2)), "L{}".format(count))
-    print(items)
+dlp = 0
+mic = 0
+ocp = 0
+ss = 0
+lp = 0
+
+count = 0
+for sheet in all_sheets:    # type: ViewSheet
+    sort_cat = sheet.LookupParameter("Sorting category").AsString()
+    if sort_cat == "DETAIL LAYOUT PLAN":
+        dlp += 1
+    elif sort_cat == "MIC":
+        mic += 1
+    elif sort_cat == "OVERALL CEILING PLAN":
+        ocp += 1
+    elif sort_cat == "SUNKEN SLAB":
+        ss += 1
+    elif sort_cat == "LAYOUT PLAN":
+        lp += 1
+
+print(" Total 'DETAIL LAYOUT PLAN': {}".format(dlp))
+print("Total 'LAYOUT PLAN': {}".format(lp))
+print(" Total 'MIC': {}".format(mic))
+print(" Total 'OVERALL CEILING PLAN': {}".format(ocp))
+print(" Total 'SUNKEN SLAB': {}".format(ss))
+print("=" * 50)
+print("Total Sheets: {}".format(dlp + mic + ocp + ss + lp))
+
+
+
 
 
