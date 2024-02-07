@@ -46,16 +46,19 @@ with rvt_transaction(doc, __title__):
         sheet_number = sheet.get_Parameter(BuiltInParameter.SHEET_NUMBER).AsString()
         for view in all_views:  # type: View
             view_name = Element.Name.GetValue(view)
-            if view_name.startswith("DOC_FP_FFL_15_50"):
-                v_num = view_name.split("_")[-1]
-                if "LEVEL 15 DETAIL" in sheet_name
+            if view_name.startswith("SS_DOC_L16"):
+                v_num = view_name.split("_")[2][-2:]
+                s_num = sheet_number[-2:]
 
-    # sht_outline = sheet.Outline
-    # x = sht_outline.Max.U - sht_outline.Min.U
-    # y = sht_outline.Max.V - sht_outline.Min.V
-    #
-    # origin_pt = XYZ(x / 2.2, y / 2, 0)
-    # Viewport.Create(doc, sheet.Id, view.Id, origin_pt)
+                if "SUNKEN SLAB" in sheet_name and v_num == s_num:
+                    # print(v_num, s_num)
+                    sht_outline = sheet.Outline
+                    x = sht_outline.Max.U - sht_outline.Min.U
+                    y = sht_outline.Max.V - sht_outline.Min.V
+
+                    origin_pt = XYZ(x / 2.2, y / 2, 0)
+                    Viewport.Create(doc, sheet.Id, view.Id, origin_pt)
+
 
 
 
