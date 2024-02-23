@@ -61,7 +61,7 @@ if not line_selection:
         line_selection = [doc.GetElement(dr) for dr in line_list]
 
         if not line_selection:
-            forms.alert("No doors selected. Exiting command.", exitscript=True, warn_icon=False)
+            forms.alert("No line selected. Exiting command.", exitscript=True, warn_icon=False)
 
 # =====================================================================================================
 # 2️⃣ UI
@@ -95,7 +95,7 @@ except KeyError as e:
 # =====================================================================================================
 # 3️⃣ Create wall
 with rvt_transaction(doc, __title__):
-    with try_except():
+    try:
         line_list = []
         for line in line_selection:     # type: ModelLine
             curve       = line.GeometryCurve
@@ -109,4 +109,12 @@ with rvt_transaction(doc, __title__):
             args: Document, list of curves, ElementID Wall, ElementID Level,
              height dbl, offset dbl, flip bool, struc bool
             """
-            Wall.Create(doc, el, wall_choice, active_level.Id, ht_val, 0, False, False)
+            create_wall = Wall.Create(doc, el, wall_choice, active_level.Id, ht_val, 0, False, False)
+
+    except Exception as e:
+        forms.alert(str(e))
+
+    else:
+        if create_wall:
+            for line in line_selection:
+                doc.Delete(line.Id)

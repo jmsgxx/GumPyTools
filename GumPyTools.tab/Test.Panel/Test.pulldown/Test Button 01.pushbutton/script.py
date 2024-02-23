@@ -11,10 +11,11 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║ 
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button, TextBox)
+from Autodesk.Revit.UI import Selection
+from Autodesk.Revit.UI.Selection import ObjectType
 from Snippets._context_manager import rvt_transaction, try_except
 from Autodesk.Revit.DB import *
-from Snippets._x_selection import get_multiple_elements
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
 from pyrevit import forms, script
 
 import clr
@@ -35,25 +36,32 @@ active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 
 # ==========================================================x============================================
+selected_elem = get_multiple_elements()
 
-all_levels = FilteredElementCollector(doc).OfClass(Level).ToElements()
-
-ffl_level = []
-
-for level in all_levels:
-    if level.Name.startswith("N_") and level.Name.endswith("FFL"):
-        ffl_level.append(level)
+# filter_type = ISelectionFilter_Classes([FamilyInstance])
+# fam_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
+# selected_elem = [doc.GetElement(el) for el in fam_list]
 
 
-# level_list = ["B2", "B1", "LG", "L0", "L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9",
-#               "L11", "L12", "L13", "L14", "L15", "L16"]
-with rvt_transaction(doc, __title__):
-    for i in range(17):
-        for l in ffl_level:
-            l_name = l.Name
-            l_split = l_name.split("_")
-            if l_split[1] == str(i).zfill(2):
-                new_view = ViewPlan.Create(doc, ElementId(362112), l.Id)
-                new_view.Name = "SS_DOC_L{}_200".format(i)
+
+def get_host_link(el):
+    host_rvt = el.Host
+    if isinstance(host_rvt, RevitLinkInstance):
+        link_doc = host_rvt.GetLinkDocument()
+        host_elem_id = el.HostFace.ElementId
+        host_elem = link_doc.GetElement(host_elem_id)
+        return host_elem
+    else:
+        return host_rvt
+
+
+lst_host = []
+
+for elem in selected_elem:
+    host = get_host_link(elem)
+    lst_host.append(host)
+
+for i in lst_host:
+    print(i)
 
 
