@@ -1,67 +1,131 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 01'
+__title__ = 'WallByLine - Level'
 __doc__ = """
+This script will create walls by selecting
+line.
 
+HOW TO:
+1. Create lines to be converted as a wall.
+2. Select those lines or click the command then
+select lines and press finish.
+3. Specify wall type from pull down menu.
+4. Specify height in millimeters.
+5. Hot create button.
+
+NOTE: This will create an unconnected height of walls.
+
+TODO: Create an interface for connected levels.
+__________________________________
+v1. 24 Jan 2024
 Author: Joven Mark Gumana
 """
 
-
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
-# ║║║║╠═╝║ ║╠╦╝ ║ 
+# ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Autodesk.Revit.UI import Selection
-from Autodesk.Revit.UI.Selection import ObjectType
-from Snippets._context_manager import rvt_transaction, try_except
 from Autodesk.Revit.DB import *
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, TextBox, Separator, Button, CheckBox)
+from Snippets._convert import convert_internal_units
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
-from pyrevit import forms, script
-
+from Snippets._context_manager import rvt_transaction, try_except
+from pyrevit import forms
 import clr
 clr.AddReference("System")
+from System.Collections.Generic import List
 
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
-#  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝  variables
+#  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
 # ======================================================================================================
-
-doc      = __revit__.ActiveUIDocument.Document
+doc      = __revit__.ActiveUIDocument.Document  # type: Document
 uidoc    = __revit__.ActiveUIDocument
+selection = uidoc.Selection     # type: Selection
 app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-selection = uidoc.Selection     # type: Selection
+current_view    = [active_view.Id]
 
-# ==========================================================x============================================
-selected_elem = get_multiple_elements()
+# =====================================================================================================
+# 1️⃣ select wall
+line_selection = get_multiple_elements()
 
-# filter_type = ISelectionFilter_Classes([FamilyInstance])
-# fam_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
-# selected_elem = [doc.GetElement(el) for el in fam_list]
+if not line_selection:
+    with try_except():
+        filter_type = ISelectionFilter_Classes([ModelLine])
+        line_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
+        line_selection = [doc.GetElement(dr) for dr in line_list]
 
+        if not line_selection:
+            forms.alert("No line selected. Exiting command.", exitscript=True, warn_icon=False)
 
+# =====================================================================================================
+# 2️⃣ UI
+all_level = FilteredElementCollector(doc).OfClass(Level).ToElements()
+level_dict = {level.get_Parameter(BuiltInParameter.DATUM_TEXT).AsString(): level.Id for level in all_level}
 
-def get_host_link(el):
-    host_rvt = el.Host
-    if isinstance(host_rvt, RevitLinkInstance):
-        link_doc = host_rvt.GetLinkDocument()
-        host_elem_id = el.HostFace.ElementId
-        host_elem = link_doc.GetElement(host_elem_id)
-        return host_elem
+wall_types      = FilteredElementCollector(doc).OfClass(WallType).ToElements()
+wall_type_dict  = {wall.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): wall.Id for wall in wall_types}
+
+wall_choice = None
+ht_val = None
+top_level = None
+
+try:
+    components = [Label('Select Wall Type:'),
+                  ComboBox('wall_type_var', wall_type_dict),
+                  Label('Top Level:'),
+                  ComboBox('level_top', level_dict),
+                  Separator(),
+                  Button('Create')]
+
+    form = FlexForm('Create Wall', components)
+    form.show()
+    user_inputs = form.values
+
+    wall_choice     = user_inputs['wall_type_var']
+    # ht_choice       = user_inputs['ht_value']
+    # ht_val          = convert_internal_units(int(ht_choice), True, 'mm')
+    top_level       = user_inputs['level_top']
+
+except KeyError as e:
+    forms.alert('No input selected.',
+                exitscript=True,
+                warn_icon=True)
+
+# =====================================================================================================
+# 3️⃣ Create wall
+with rvt_transaction(doc, __title__):
+    try:
+        line_list = []
+        for line in line_selection:
+            curve       = line.GeometryCurve
+            start_pt    = curve.GetEndPoint(0)
+            end_pt      = curve.GetEndPoint(1)
+            l_curve     = Line.CreateBound(start_pt, end_pt)
+            line_list.append(l_curve)
+
+        """
+        document, iList of curve, wall type id, level id, bool struc
+        """
+        create_wall = Wall.Create(doc, line_list, wall_choice, active_level.Id, False)
+
+    except Exception as e:
+        forms.alert(str(e))
+
     else:
-        return host_rvt
+        top_constraint = create_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
+        top_constraint.Set(top_level.Id)
+
+        if create_wall:
+            for line in line_selection:
+                doc.Delete(line.Id)
 
 
-lst_host = []
-
-for elem in selected_elem:
-    host = get_host_link(elem)
-    lst_host.append(host)
-
-for i in lst_host:
-    print(i)
-
-
+'''
+could not construct a proper face with the input curves to create a wall correctly
+'''
