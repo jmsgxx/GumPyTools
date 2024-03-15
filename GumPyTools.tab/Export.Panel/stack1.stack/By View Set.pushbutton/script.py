@@ -11,7 +11,7 @@ the PDFExportOptions command.
 
 This script will print the specified
 view set. It is advisable to use
-the command "View Set API".
+the command "View Set Create".
 
 HOW TO:
 - Run the command.
@@ -98,7 +98,7 @@ with Transaction(doc, __title__) as t:
         my_print_setting = None
         print_collector = FilteredElementCollector(doc).OfClass(PrintSetting)
         print_collector_name = sorted(item.Name for item in print_collector)
-        chosen_print_setting = forms.SelectFromList.show(print_collector_name, button_name='Select Setting')
+        chosen_print_setting = forms.SelectFromList.show(print_collector_name, button_name='Select Setting', title='Select Setting')
         if not chosen_print_setting:
             sys.exit()
         else:

@@ -11,6 +11,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Autodesk.Revit.DB.Architecture import *
 from Snippets._x_selection import get_multiple_elements
 import xlrd
 from Autodesk.Revit.DB import *
@@ -36,9 +37,25 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 # ======================================================================================================
-all_family = FilteredElementCollector(doc).OfClass(Family).ToElements()
 
-for el in all_family:   # type: Family
-    cat = el.FamilyCategory.Name
-    fam = el.Name
-    print('Family: {}: Category: {}'.format(fam, cat))
+
+def get_param_value(param):
+    """Get a value from a Parameter based on its StorageType."""
+    value = None
+    if param.StorageType == StorageType.Double:
+        value = param.AsDouble()
+    elif param.StorageType == StorageType.ElementId:
+        value = param.AsElementId()
+    elif param.StorageType == StorageType.Integer:
+        value = param.AsInteger()
+    elif param.StorageType == StorageType.String:
+        value = param.AsString()
+    return value
+# ======================================================================================================
+
+
+all_categories = doc.Settings.Categories
+
+for i in all_categories:
+    built_in_category = i.Category.Id
+    print("Element: {}, BuiltInCategory: {}".format(i.Name, built_in_category))
