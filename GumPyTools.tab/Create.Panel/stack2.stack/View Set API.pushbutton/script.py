@@ -20,6 +20,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.Logger import _logger
 from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button, TextBox)
 from Autodesk.Revit.DB import *
 from pyrevit import forms, revit
@@ -106,6 +107,9 @@ with rvt_transaction(doc, __title__):
         forms.alert("Total number of sheets in set '{}'".format(current_view_set.Size),
                     exitscript=False,
                     warn_icon=False)
+
+script_name = __title__
+_logger(script_name)
 
 
 

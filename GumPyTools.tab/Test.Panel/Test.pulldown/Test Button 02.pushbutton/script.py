@@ -38,24 +38,47 @@ active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 # ======================================================================================================
 
+selected_sheets = get_multiple_elements()
 
-def get_param_value(param):
-    """Get a value from a Parameter based on its StorageType."""
-    value = None
-    if param.StorageType == StorageType.Double:
-        value = param.AsDouble()
-    elif param.StorageType == StorageType.ElementId:
-        value = param.AsElementId()
-    elif param.StorageType == StorageType.Integer:
-        value = param.AsInteger()
-    elif param.StorageType == StorageType.String:
-        value = param.AsString()
-    return value
-# ======================================================================================================
+t_block_id = ElementId(BuiltInCategory.OST_TitleBlocks)
+
+for sheet in selected_sheets:
+    tblock_id = FilteredElementCollector(doc, sheet.Id).OfCategoryId(t_block_id).ToElementIds()
+    for tblock in tblock_id:    # type: FamilyInstance
+        tblock_el = doc.GetElement(tblock)
+        tblock_id = tblock_el.GetTypeId()
+        tblock_type = doc.GetElement(tblock_id)     # type: FamilySymbol
+        tblock_fam_name = tblock_type.Family        # family
+
+        print(tblock_fam_name.Name)      # family name
+
+        tp_name = tblock_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()        # type name
+        print(tp_name)
 
 
-all_categories = doc.Settings.Categories
 
-for i in all_categories:
-    built_in_category = i.Category.Id
-    print("Element: {}, BuiltInCategory: {}".format(i.Name, built_in_category))
+
+"""
+all_t_blocks = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
+
+# Initialize an empty dictionary
+t_blocks_dict = {}
+
+for t_block in all_t_blocks:
+    # Get the family name, type name, and element id
+    family_name = t_block.Family.Name
+    type_name = t_block.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()
+    element_id = t_block.Id
+
+    # Check if the family name is already in the dictionary
+    if family_name not in t_blocks_dict:
+        # If not, add a new dictionary for this family
+        t_blocks_dict[family_name] = {}
+
+    # Add the type name and element id to the family's dictionary
+    t_blocks_dict[family_name][type_name] = element_id
+
+# Now t_blocks_dict is a nested dictionary with the required format
+
+"""
+

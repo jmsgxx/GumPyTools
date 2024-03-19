@@ -31,6 +31,7 @@ on view set.
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.Logger import _logger
 from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button)
 from Autodesk.Revit.DB import *
 from pyrevit import forms
@@ -59,7 +60,12 @@ current_time = current_datetime.strftime('%H.%M.%S')
 time_stamp = "_{}-{}".format(current_date, current_time)
 
 # 🟡 DIRECTORY TO SAVE THE FILE
-directory = r"C:\Users\gary_mak\Desktop\PDF"
+# directory = r"C:\Users\gary_mak\Desktop\PDF"
+desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
+directory = os.path.join(desktop, '_PDF_Export')
+
+if not os.path.exists(directory):
+    os.makedirs(directory)
 
 # 🟢 MAIN CODE
 with Transaction(doc, __title__) as t:
@@ -143,7 +149,9 @@ with Transaction(doc, __title__) as t:
     try:
         if doc.Export(directory, sheets_id, options):
             # SHOW NOTIFICATION THAT PRINT IS FINISHED
-            forms.alert('Print finish.You can find the file on "Desktop/PDF" folder.', exitscript=False)
+            forms.alert('Print finish.\n'
+                        'You can find the file/s on Desktop/_PDF_Export',
+                        exitscript=False)
 
     # HANDLE ERROR JUST IN CASE
     except Exception as e:
@@ -151,4 +159,7 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 
+
+script_name = __title__
+_logger(script_name)
 

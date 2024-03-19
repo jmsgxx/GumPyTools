@@ -52,7 +52,6 @@ current_date = current_datetime.strftime('%H.%M.%S')
 time_stamp = "_{}-{}".format(current_time, current_date)
 
 # 🟡 DIRECTORY TO SAVE THE FILE
-# directory = r"C:\Users\gary_mak\Desktop\PDF"
 desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 directory = os.path.join(desktop, '_PDF_Export')
 

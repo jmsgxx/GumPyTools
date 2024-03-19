@@ -19,6 +19,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.Logger import _logger
 from Autodesk.Revit.DB import *
 from pyrevit import forms
 import clr
@@ -60,3 +61,5 @@ with Transaction(doc, __title__) as t:
     forms.alert('View Sets Deleted\n{}'.format("\n".join(deleted_view_set_names)), exitscript=False)
 
 
+script_name = __title__
+_logger(script_name)

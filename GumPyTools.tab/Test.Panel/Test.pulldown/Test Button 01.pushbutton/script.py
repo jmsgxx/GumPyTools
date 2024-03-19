@@ -1,24 +1,8 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'WallByLine - Level'
+__title__ = 'Test_01'
 __doc__ = """
-This script will create walls by selecting
-line.
 
-HOW TO:
-1. Create lines to be converted as a wall.
-2. Select those lines or click the command then
-select lines and press finish.
-3. Specify wall type from pull down menu.
-4. Specify height in millimeters.
-5. Hot create button.
-
-NOTE: This will create an unconnected height of walls.
-
-TODO: Create an interface for connected levels.
-__________________________________
-v1. 24 Jan 2024
-Author: Joven Mark Gumana
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -32,6 +16,7 @@ from Snippets._convert import convert_internal_units
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
 from Snippets._context_manager import rvt_transaction, try_except
 from pyrevit import forms
+from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button)
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -51,81 +36,27 @@ active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
 # =====================================================================================================
-# 1️⃣ select wall
-line_selection = get_multiple_elements()
 
-if not line_selection:
-    with try_except():
-        filter_type = ISelectionFilter_Classes([ModelLine])
-        line_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
-        line_selection = [doc.GetElement(dr) for dr in line_list]
+all_t_blocks = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
 
-        if not line_selection:
-            forms.alert("No line selected. Exiting command.", exitscript=True, warn_icon=False)
+selected_sheets = get_multiple_elements()
 
-# =====================================================================================================
-# 2️⃣ UI
-all_level = FilteredElementCollector(doc).OfClass(Level).ToElements()
-level_dict = {level.get_Parameter(BuiltInParameter.DATUM_TEXT).AsString(): level.Id for level in all_level}
+t_block_dict = {t_block.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): t_block.get_Parameter(BuiltInParameter.ELEM_TYPE_PARAM) for t_block in all_t_blocks}
 
-wall_types      = FilteredElementCollector(doc).OfClass(WallType).ToElements()
-wall_type_dict  = {wall.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): wall.Id for wall in wall_types}
+components = [Label('Select Title Block:'),
+              ComboBox('title_block', t_block_dict),
+              Separator(),
+              Button('Select')]
 
-wall_choice = None
-ht_val = None
-top_level = None
+form = FlexForm('Title Blocks', components)
+form.show()
+user_inputs = form.values
 
-try:
-    components = [Label('Select Wall Type:'),
-                  ComboBox('wall_type_var', wall_type_dict),
-                  Label('Top Level:'),
-                  ComboBox('level_top', level_dict),
-                  Separator(),
-                  Button('Create')]
+t_block_choice     = user_inputs['title_block']
 
-    form = FlexForm('Create Wall', components)
-    form.show()
-    user_inputs = form.values
-
-    wall_choice     = user_inputs['wall_type_var']
-    # ht_choice       = user_inputs['ht_value']
-    # ht_val          = convert_internal_units(int(ht_choice), True, 'mm')
-    top_level       = user_inputs['level_top']
-
-except KeyError as e:
-    forms.alert('No input selected.',
-                exitscript=True,
-                warn_icon=True)
-
-# =====================================================================================================
-# 3️⃣ Create wall
 with rvt_transaction(doc, __title__):
-    try:
-        line_list = []
-        for line in line_selection:
-            curve       = line.GeometryCurve
-            start_pt    = curve.GetEndPoint(0)
-            end_pt      = curve.GetEndPoint(1)
-            l_curve     = Line.CreateBound(start_pt, end_pt)
-            line_list.append(l_curve)
+    for sheet in selected_sheets:
+        existing_tblock = FilteredElementCollector(doc, sheet.Id).OfClass(FamilyInstance).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
+        if existing_tblock:
+            existing_tblock.Symbol = t_block_choice
 
-        """
-        document, iList of curve, wall type id, level id, bool struc
-        """
-        create_wall = Wall.Create(doc, line_list, wall_choice, active_level.Id, False)
-
-    except Exception as e:
-        forms.alert(str(e))
-
-    else:
-        top_constraint = create_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
-        top_constraint.Set(top_level.Id)
-
-        if create_wall:
-            for line in line_selection:
-                doc.Delete(line.Id)
-
-
-'''
-could not construct a proper face with the input curves to create a wall correctly
-'''

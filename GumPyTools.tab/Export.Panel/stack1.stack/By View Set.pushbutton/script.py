@@ -96,7 +96,7 @@ with Transaction(doc, __title__) as t:
 
         # 🟡 CHOOSE PRINT SETTING
         my_print_setting = None
-        print_collector = FilteredElementCollector(doc).OfClass(PrintSetting)
+        print_collector = FilteredElementCollector(doc).OfClass(PrintSetting).ToElements()
         print_collector_name = sorted(item.Name for item in print_collector)
         chosen_print_setting = forms.SelectFromList.show(print_collector_name, button_name='Select Setting', title='Select Setting')
         if not chosen_print_setting:
