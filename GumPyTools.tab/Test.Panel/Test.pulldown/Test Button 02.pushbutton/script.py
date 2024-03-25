@@ -11,74 +11,70 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Autodesk.Revit.DB.Architecture import *
-from Snippets._x_selection import get_multiple_elements
-import xlrd
-from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction, try_except
-from pyrevit import forms, revit
-from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Autodesk.Revit.DB.Architecture import Room
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from Snippets._x_selection import DoorCustomFilter, get_multiple_elements, ISelectionFilter_Classes
+from Snippets._context_manager import rvt_transaction, try_except
+from Autodesk.Revit.DB import *
 import pyrevit
-from collections import Counter
+from pyrevit import forms
 import sys
 import clr
 clr.AddReference("System")
+from System.Collections.Generic import List
+
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝ variables
 # ======================================================================================================
-doc      = __revit__.ActiveUIDocument.Document
+doc      = __revit__.ActiveUIDocument.Document  # type: Document
 uidoc    = __revit__.ActiveUIDocument
+selection = uidoc.Selection     # type: Selection
 app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-selection = uidoc.Selection     # type: Selection
-# ======================================================================================================
+current_view    = [active_view.Id]
 
-selected_sheets = get_multiple_elements()
+# =====================================================================================================
+wall_type = FilteredElementCollector(doc).OfClass(WallType).FirstElement()
 
-t_block_id = ElementId(BuiltInCategory.OST_TitleBlocks)
+line_selection = get_multiple_elements()
 
-for sheet in selected_sheets:
-    tblock_id = FilteredElementCollector(doc, sheet.Id).OfCategoryId(t_block_id).ToElementIds()
-    for tblock in tblock_id:    # type: FamilyInstance
-        tblock_el = doc.GetElement(tblock)
-        tblock_id = tblock_el.GetTypeId()
-        tblock_type = doc.GetElement(tblock_id)     # type: FamilySymbol
-        tblock_fam_name = tblock_type.Family        # family
+if not line_selection:
+    with try_except():
+        filter_type = ISelectionFilter_Classes([ModelLine])
+        line_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
+        line_selection = [doc.GetElement(dr) for dr in line_list]
 
-        print(tblock_fam_name.Name)      # family name
+        if not line_selection:
+            forms.alert("No doors selected. Exiting command.", exitscript=True, warn_icon=False)
 
-        tp_name = tblock_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()        # type name
-        print(tp_name)
+wall_id = ElementId(45419)
 
+with rvt_transaction(doc, __title__):
+    with try_except():
+        line_list = []
+        created_walls = []
 
+        for line in line_selection:     # type: ModelLine
+            curve = line.GeometryCurve
+            start_pt = curve.GetEndPoint(0)
+            end_pt = curve.GetEndPoint(1)
+            l_curve = Line.CreateBound(start_pt, end_pt)
+            line_list.append(l_curve)
 
+        for el in line_list:
+            """
+            args: Document, list of curves, ElementID Wall, ElementID Level,
+             height dbl, offset dbl, flip bool, struc bool
+            """
+            created_wall = Wall.Create(doc, el, wall_id, active_level.Id, 10, 0, False, False)
+            created_walls.append(created_wall)
 
-"""
-all_t_blocks = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
+        for wall in created_walls:
+            top_cons = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
+            top_cons.Set(ElementId(694))
 
-# Initialize an empty dictionary
-t_blocks_dict = {}
-
-for t_block in all_t_blocks:
-    # Get the family name, type name, and element id
-    family_name = t_block.Family.Name
-    type_name = t_block.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()
-    element_id = t_block.Id
-
-    # Check if the family name is already in the dictionary
-    if family_name not in t_blocks_dict:
-        # If not, add a new dictionary for this family
-        t_blocks_dict[family_name] = {}
-
-    # Add the type name and element id to the family's dictionary
-    t_blocks_dict[family_name][type_name] = element_id
-
-# Now t_blocks_dict is a nested dictionary with the required format
-
-"""
 
