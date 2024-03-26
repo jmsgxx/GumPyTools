@@ -72,7 +72,7 @@ wall_choice = None
 ht_val = None
 
 try:
-    components = [Label('Pick Style:'),
+    components = [Label('Select Wall:'),
                   ComboBox('wall_type_var', wall_type_dict),
                   Label('Wall Height:'),
                   TextBox('ht_value'),

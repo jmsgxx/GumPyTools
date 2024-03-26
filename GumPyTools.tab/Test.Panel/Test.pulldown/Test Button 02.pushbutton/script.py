@@ -11,6 +11,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from rpw.ui.forms import FlexForm, Label, ComboBox,TextBox, Separator, Button, CheckBox
 from Autodesk.Revit.DB.Architecture import Room
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Snippets._x_selection import DoorCustomFilter, get_multiple_elements, ISelectionFilter_Classes
@@ -53,6 +54,35 @@ if not line_selection:
 
 wall_id = ElementId(45419)
 
+all_level = FilteredElementCollector(doc).OfClass(Level).ToElements()
+level_dict = {level.get_Parameter(BuiltInParameter.DATUM_TEXT).AsString(): level.Id for level in all_level}
+
+wall_types = FilteredElementCollector(doc).OfClass(WallType).ToElements()
+wall_type_dict = {wall.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): wall.Id for wall in wall_types}
+# =====================================================================================================
+
+wall_choice = None
+top_level = None
+
+try:
+    components = [Label('Select Wall'),
+                  ComboBox('wall_type_var', wall_type_dict),
+                  Label('Top Level'),
+                  ComboBox('level_top', level_dict),
+                  Separator(),
+                  Button('Create')]
+
+    form = FlexForm('Create Wall', components)
+    form.show()
+    user_inputs = form.values
+
+    wall_choice = user_inputs['wall_type_var']
+    top_level = user_inputs['level_top']
+
+except KeyError as e:
+    forms.alert('No input selected', exitscript=True, warn_icon=True)
+# =====================================================================================================
+
 with rvt_transaction(doc, __title__):
     with try_except():
         line_list = []
@@ -70,11 +100,11 @@ with rvt_transaction(doc, __title__):
             args: Document, list of curves, ElementID Wall, ElementID Level,
              height dbl, offset dbl, flip bool, struc bool
             """
-            created_wall = Wall.Create(doc, el, wall_id, active_level.Id, 10, 0, False, False)
+            created_wall = Wall.Create(doc, el, wall_choice, active_level.Id, 10, 0, False, False)
             created_walls.append(created_wall)
 
         for wall in created_walls:
             top_cons = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
-            top_cons.Set(ElementId(694))
+            top_cons.Set(top_level)
 
 
