@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test_01'
+__title__ = 'Test Button 01'
 __doc__ = """
 
 """
