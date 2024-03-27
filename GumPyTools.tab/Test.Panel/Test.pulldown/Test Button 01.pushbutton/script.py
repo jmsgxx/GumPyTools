@@ -39,9 +39,12 @@ current_view    = [active_view.Id]
 
 all_t_blocks = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
 
+
+# get tblock type first
+
 selected_sheets = get_multiple_elements()
 
-t_block_dict = {t_block.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): t_block.get_Parameter(BuiltInParameter.ELEM_TYPE_PARAM) for t_block in all_t_blocks}
+t_block_dict = {t_block.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): t_block for t_block in all_t_blocks}
 
 components = [Label('Select Title Block:'),
               ComboBox('title_block', t_block_dict),
