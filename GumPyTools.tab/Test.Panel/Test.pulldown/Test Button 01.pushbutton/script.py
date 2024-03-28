@@ -11,7 +11,6 @@ __doc__ = """
 # ===================================================================================================
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, TextBox, Separator, Button, CheckBox)
 from Snippets._convert import convert_internal_units
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
 from Snippets._context_manager import rvt_transaction, try_except
