@@ -10,12 +10,12 @@ __doc__ = """
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from Autodesk.Revit.DB import *
+from Snippets import _x_selection
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Snippets._convert import convert_internal_units
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
 from Snippets._context_manager import rvt_transaction, try_except
 from pyrevit import forms
-from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button)
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -36,29 +36,23 @@ current_view    = [active_view.Id]
 
 # =====================================================================================================
 
-all_t_blocks = FilteredElementCollector(doc).OfClass(FamilySymbol).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
+filter_type = _x_selection.CurtainPanelFilter()
+selected_element = selection.PickObjects(ObjectType.Element, filter_type, 'Select Panels')
 
+if not selected_element:
+    selected_element = selection.PickObjects(ObjectType.Element, filter_type, 'Select Panels')
+    if not selected_element:
+        forms.alert('Select curtain panels.', exitscript=True, warn_icon=True)
 
-# get tblock type first
+for el in selected_element:
+    selected_panels = doc.GetElement(el)
 
-selected_sheets = get_multiple_elements()
+    cp_ht = selected_panels.get_Parameter(BuiltInParameter.CURTAIN_WALL_PANELS_HEIGHT).AsDouble()
+    cp_ht_mm = convert_internal_units(cp_ht, False, 'mm')
 
-t_block_dict = {t_block.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString(): t_block for t_block in all_t_blocks}
+    panel_ht_param = selected_panels.LookupParameter('Panel Height')
 
-components = [Label('Select Title Block:'),
-              ComboBox('title_block', t_block_dict),
-              Separator(),
-              Button('Select')]
+    with rvt_transaction(doc, __title__):
+        panel_ht_param.Set(cp_ht)
 
-form = FlexForm('Title Blocks', components)
-form.show()
-user_inputs = form.values
-
-t_block_choice     = user_inputs['title_block']
-
-with rvt_transaction(doc, __title__):
-    for sheet in selected_sheets:
-        existing_tblock = FilteredElementCollector(doc, sheet.Id).OfClass(FamilyInstance).OfCategory(BuiltInCategory.OST_TitleBlocks).ToElements()
-        if existing_tblock:
-            existing_tblock.Symbol = t_block_choice
 

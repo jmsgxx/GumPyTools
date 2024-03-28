@@ -2,7 +2,7 @@
 
 __title__ = 'Delete Sheets'
 __doc__ = """
-***ENSURE SHEETS ARE 100% UNUSABLE***
+***ENSURE THE SHEETS ARE 100% UNUSABLE***
 
 Ensure that the sheets are already redundant and will
 not be used in the future.

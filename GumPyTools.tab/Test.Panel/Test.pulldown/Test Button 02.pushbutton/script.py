@@ -11,6 +11,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets import _x_selection
 from rpw.ui.forms import FlexForm, Label, ComboBox,TextBox, Separator, Button, CheckBox
 from Autodesk.Revit.DB.Architecture import Room
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
@@ -39,5 +40,11 @@ active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
 
+filter_type = _x_selection.CurtainPanelFilter()
+selected_element = selection.PickObjects(ObjectType.Element, filter_type, 'Select Panels')
 
+if not selected_element:
+    selected_element = selection.PickObjects(ObjectType.Element, filter_type, 'Select Panels')
+    if not selected_element:
+        forms.alert('Select curtain panels.', exitscript=True, warn_icon=True)
 

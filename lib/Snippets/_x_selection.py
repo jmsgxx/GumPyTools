@@ -81,3 +81,14 @@ class DoorCustomFilter(ISelectionFilter):
     def AllowElement(self, elem):
         if elem.Category.Id == ElementId(BuiltInCategory.OST_Doors):
             return True
+
+
+class CurtainPanelFilter(ISelectionFilter):
+    def __init__(self):
+        """
+        ISelection Curtain Panels
+        """
+
+    def AllowElement(self, elem):
+        if elem.Category.Id == ElementId(BuiltInCategory.OST_CurtainWallPanels):
+            return True
