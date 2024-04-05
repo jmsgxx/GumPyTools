@@ -38,56 +38,20 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
-# =====================================================================================================
+all_columns = UnwrapElement(IN[0])
 
-all_tblocks = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_TitleBlocks)\
-    .WhereElementIsNotElementType()\
-    .ToElements()
+total_columns = len(all_columns)
 
-tb_type = {}
-
-for t in all_tblocks:
-    tb_type_id = t.GetTypeId()
-    tb_type_el = doc.GetElement(tb_type_id)     # type: FamilySymbol
-
-    fam_type = tb_type_el.FamilyName
-    fam_ins = t.Name
-
-    fam_key = ('{}: {}'.format(fam_type, fam_ins))
-
-    if fam_key not in tb_type:
-        tb_type[fam_key] = tb_type_el
+for col in all_columns:
+    yes_exec = col.LookupParameter('Execution')
+    per_param = col.LookupParameter('Percentage Per Element')
+    if yes_exec == 1:
+        col_per = total_columns / 5800
+        per_param.Set(col_per)
+    else:
+        per_param.Set(0)
 
 
-# =====================================================================================================
-# UI
-try:
-    components = [Label('Select Title Block:'),
-                  ComboBox('title_block', tb_type),
-                  Separator(),
-                  Button('Select')]
 
-    form = FlexForm('Title Blocks', components)
-    form.show()
-    user_inputs = form.values
-
-    t_block_choice     = user_inputs['title_block']
-
-except KeyError:
-    forms.alert('No input. Exiting script', exitscript=True)
-# =====================================================================================================
-# execute
-
-selected_sheets = get_multiple_elements()
-
-for sheet in selected_sheets:
-    existing_tblock = FilteredElementCollector(doc, sheet.Id).OfClass(FamilyInstance)\
-        .OfCategory(BuiltInCategory.OST_TitleBlocks)\
-        .ToElements()
-
-
-    with rvt_transaction(doc, __title__):
-        for block in existing_tblock:
-            block.Symbol = t_block_choice
 
 
