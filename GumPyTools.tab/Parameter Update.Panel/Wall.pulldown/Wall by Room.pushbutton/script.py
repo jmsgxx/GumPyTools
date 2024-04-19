@@ -81,8 +81,12 @@ with Transaction(doc, __title__) as t:
             for sub_face in spatial_sub_face_list:
                 host_id     = sub_face.SpatialBoundaryElement.HostElementId
                 wall        = doc.GetElement(host_id)
-                if "FIN" in wall.Name:
-                    wall_list.append(wall)
+                try:
+                    if "FIN" in wall.Name:
+                        wall_list.append(wall)
+                except:
+                    pass
+
 
         # room parameter
         room_data_set_param = selected_room.LookupParameter('Room Wall Data Set 1')

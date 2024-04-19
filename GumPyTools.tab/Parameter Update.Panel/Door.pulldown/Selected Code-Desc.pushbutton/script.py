@@ -222,7 +222,7 @@ with Transaction(doc, __title__) as t:
     for value in door_feat_lst:
         if value is not None:
             if value == '-' or value == '--':
-                new_value is None
+                new_value = ''
             else:
                 new_value = ', '.join(change_value(value, dict(door_feature_dict)))
         else:

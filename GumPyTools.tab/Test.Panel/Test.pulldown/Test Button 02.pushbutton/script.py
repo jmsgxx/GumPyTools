@@ -40,48 +40,23 @@ current_view    = [active_view.Id]
 
 # =====================================================================================================
 
-selected_rooms = get_multiple_elements()
-if not selected_rooms:
-    try:
-        filter_type = ISelectionFilter_Classes([Room])
-        room_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Rooms")
-        selected_rooms = [doc.GetElement(el) for el in room_list]
-        if not selected_rooms:
-            forms.alert("No selected rooms. Exiting command", exitscript=True)
-    except Exception as e:
-        forms.alert("{} Exiting Command.".format(str(e)), exitscript=True)
+all_casework = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Casework).WhereElementIsNotElementType().\
+    ToElements()
 
-# =====================================================================================================
+ips_basin = []
 
-for room in selected_rooms:
-    room_geometry = room.ClosedShell
+for case in all_casework:
+    if case.Location:
+        case_id = case.GetTypeId()
+        case_el = doc.GetElement(case_id)
 
-    bounding_box = room_geometry.GetBoundingBox()
-    bb_min = bounding_box.Min
-    bb_max = bounding_box.Max
+        case_type_name = case_el.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()
 
-    room_outline = Outline(bb_min, bb_max)
+        if case_type_name == "IPS_Basin":
+            ips_basin.append(case_el)
 
-    bb_filter = BoundingBoxIntersectsFilter(room_outline)
+print(len(ips_basin))
 
-    collector = FilteredElementCollector(doc, active_view.Id).WherePasses(bb_filter).ToElements()
-
-    door_list = [element for element in collector if element.Category.Name == 'Doors']
-
-    for door in door_list:
-        door_id = door.GetTypeId()
-        door_el = doc.GetElement(door_id)
-        door_width = door_el.get_Parameter(BuiltInParameter.FAMILY_WIDTH_PARAM).AsDouble()
-        door_height = door_el.get_Parameter(BuiltInParameter.GENERIC_HEIGHT).AsDouble()
-
-        width_mm = convert_internal_units(door_width, False, 'mm')
-        height_mm = convert_internal_units(door_height, False, 'mm')
-
-        print(width_mm)
-        print(height_mm)
-
-        door_area = door_width * door_height
-        # print(door_area)
 
 
 

@@ -89,7 +89,7 @@ except KeyError as e:
 # =====================================================================================================
 
 with rvt_transaction(doc, __title__):
-    with try_except():
+    try:
         line_list = []
         created_walls = []
 
@@ -111,5 +111,13 @@ with rvt_transaction(doc, __title__):
         for wall in created_walls:
             top_cons = wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
             top_cons.Set(top_level)
+
+    except Exception as e:
+        forms.alert(str(e))
+
+    else:
+        if created_wall:
+            for line in line_selection:
+                doc.Delete(line.Id)
 
 
