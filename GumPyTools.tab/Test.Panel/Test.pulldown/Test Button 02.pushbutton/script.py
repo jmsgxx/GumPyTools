@@ -11,52 +11,69 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets._convert import convert_internal_units
-from Autodesk.Revit.DB.Architecture import Room
-from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Snippets._x_selection import ISelectionFilter_Classes, get_multiple_elements
-from Snippets._context_manager import rvt_transaction, try_except
+from Snippets._x_selection import get_multiple_elements
+import xlrd
 from Autodesk.Revit.DB import *
+from Snippets._context_manager import rvt_transaction, try_except
+from pyrevit import forms, revit
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
+from Autodesk.Revit.DB.Architecture import Room
 import pyrevit
-from pyrevit import forms
+from collections import Counter
 import sys
 import clr
 clr.AddReference("System")
-from System.Collections.Generic import List
-
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
-#  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝# variables
+#  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝ variables
 # ======================================================================================================
-doc      = __revit__.ActiveUIDocument.Document  # type: Document
+doc      = __revit__.ActiveUIDocument.Document
 uidoc    = __revit__.ActiveUIDocument
-selection = uidoc.Selection     # type: Selection
 app      = __revit__.Application
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
-current_view    = [active_view.Id]
+selection = uidoc.Selection     # type: Selection
+# ======================================================================================================
+with rvt_transaction(doc, __title__):
+    all_views = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).ToElements()
+    all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
-# =====================================================================================================
+    view_plans = []
 
-all_casework = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Casework).WhereElementIsNotElementType().\
-    ToElements()
+    for view in all_views:  # type: View
+        if view.ViewType == ViewType.FloorPlan:
+            view_name = view.Name
+            parts = view_name.split("_")
+            # if view_name.startswith("DOC_FP_FFL_01M_50"):
+            if view_name == "MIC_L1M_200":
+                view_plans.append(view)
 
-ips_basin = []
+    mic_sheets = []
 
-for case in all_casework:
-    if case.Location:
-        case_id = case.GetTypeId()
-        case_el = doc.GetElement(case_id)
+    for sheet in all_sheets:    # type: ViewSheet
+        sheet_name = sheet.Name
+        sheet_number = sheet.SheetNumber
+        # if sheet_number == 'DL1001M-00':
+        #     continue
+        # elif sheet_number.startswith("DL1001M"):
+        if sheet_number == "AB-3004MI-MWP2-MC-L1M-001":
+            mic_sheets.append(sheet)
 
-        case_type_name = case_el.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()
+    # view_plans.pop(0)
 
-        if case_type_name == "IPS_Basin":
-            ips_basin.append(case_el)
+    for s, v in zip(mic_sheets, view_plans):
+        s_number = s.SheetNumber
+        s_name = s.Name
+        v_name = v.Name
+        # print("{} - {}".format(s_number, v_name))
 
-print(len(ips_basin))
+        # if s_number.split("-")[1] == v_name.split("_")[5]:
+        if s_number == "AB-3004MI-MWP2-MC-L1M-001" and v_name == "MIC_L1M_200":
+            sht_outline = s.Outline
+            x = sht_outline.Max.U - sht_outline.Min.U
+            y = sht_outline.Max.V - sht_outline.Min.V
 
-
-
-
+            origin_pt = XYZ(x/2.2, y/2, 0)
+            Viewport.Create(doc, s.Id, v.Id, origin_pt)
