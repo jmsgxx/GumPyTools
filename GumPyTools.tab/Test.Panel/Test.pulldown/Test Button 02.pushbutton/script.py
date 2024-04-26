@@ -11,10 +11,9 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets._x_selection import get_multiple_elements
-import xlrd
+
 from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction, try_except
+from Snippets._context_manager import rvt_transaction
 from pyrevit import forms, revit
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Autodesk.Revit.DB.Architecture import Room

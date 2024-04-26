@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Duplicate View'
+__title__ = 'Duplicate View/s'
 __doc__ = """
-Will duplicate views as dependent.
-- Input desired duplicate option
-- Input number of desired copies
-- Input previous number to follow (if any)
+Will duplicate a singe view or multiple views as dependent,
+stand alone or with detailing.
+
+1. Select a single view or multiple views.
+2. Run the command.
+3. Input desired duplicate option
+4. Input number of desired copies
+5. Input previous number to follow (if any)
 -------------------------------------
 v1. 02 Feb 2024
 v2. 26 Feb 2024 - Additional Duplicate Option
