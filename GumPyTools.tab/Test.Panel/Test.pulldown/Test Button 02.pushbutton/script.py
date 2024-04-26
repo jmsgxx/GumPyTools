@@ -43,14 +43,14 @@ with rvt_transaction(doc, __title__):
     view_plans = []
 
     for view in all_views:  # type: View
-        if view.ViewType == ViewType.FloorPlan:
+        if view.ViewType == ViewType.CeilingPlan:
             view_name = view.Name
             parts = view_name.split("_")
             # if view_name.startswith("DOC_FP_FFL_01M_50"):
-            if view_name == "MIC_L1M_200":
+            if view_name == "RCP_L1M_200":
                 view_plans.append(view)
 
-    mic_sheets = []
+    collected_sheets = []
 
     for sheet in all_sheets:    # type: ViewSheet
         sheet_name = sheet.Name
@@ -58,22 +58,25 @@ with rvt_transaction(doc, __title__):
         # if sheet_number == 'DL1001M-00':
         #     continue
         # elif sheet_number.startswith("DL1001M"):
-        if sheet_number == "AB-3004MI-MWP2-MC-L1M-001":
-            mic_sheets.append(sheet)
+        if sheet_number == "CF101M":
+            collected_sheets.append(sheet)
 
     # view_plans.pop(0)
 
-    for s, v in zip(mic_sheets, view_plans):
+    for s, v in zip(collected_sheets, view_plans):
         s_number = s.SheetNumber
         s_name = s.Name
         v_name = v.Name
         # print("{} - {}".format(s_number, v_name))
 
         # if s_number.split("-")[1] == v_name.split("_")[5]:
-        if s_number == "AB-3004MI-MWP2-MC-L1M-001" and v_name == "MIC_L1M_200":
-            sht_outline = s.Outline
-            x = sht_outline.Max.U - sht_outline.Min.U
-            y = sht_outline.Max.V - sht_outline.Min.V
+        try:
+            if s_number == "CF101M" and v_name == "RCP_L1M_200":
+                sht_outline = s.Outline
+                x = sht_outline.Max.U - sht_outline.Min.U
+                y = sht_outline.Max.V - sht_outline.Min.V
 
-            origin_pt = XYZ(x/2.2, y/2, 0)
-            Viewport.Create(doc, s.Id, v.Id, origin_pt)
+                origin_pt = XYZ(x/2.2, y/2, 0)
+                Viewport.Create(doc, s.Id, v.Id, origin_pt)
+        except Exception as e:
+            forms.alert(str(e))
