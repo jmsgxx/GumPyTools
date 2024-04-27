@@ -38,6 +38,14 @@ chosen_view_str = ''
 chosen_sht_str = ''
 
 
+def create_viewport(sheet_ref,view_ref):
+    sht_outline = sheet_ref.Outline
+    x = sht_outline.Max.U - sht_outline.Min.U
+    y = sht_outline.Max.V - sht_outline.Min.V
+    origin_pt = XYZ(x / 2.2, y / 2, 0)
+    Viewport.Create(doc, sheet_ref.Id, view_ref.Id, origin_pt)
+
+
 def starts_with(vw_name, chosen_str):
     return vw_name.startswith(str(chosen_str))
 
@@ -114,7 +122,6 @@ for v in selected_views:
     elif view_method_option == ends_with(v.Name, view_search_str):
         view_plans.append(v)
 
-
 sheet_views = []
 
 for s in all_sheets:     # type: ViewSheet
@@ -127,7 +134,6 @@ for s in all_sheets:     # type: ViewSheet
     elif sheet_method_option == ends_with(s.SheetNumber, sheet_search_str):
         sheet_views.append(s)
 
-
 with rvt_transaction(doc, __title__):
     try:
         for s in sheet_views:
@@ -136,16 +142,14 @@ with rvt_transaction(doc, __title__):
                 v_name = v.Name
                 # write a method here for condition, currently it only works with starts with because of slicing
                 if s_number[-2:] == v_name[-2:]:
-                    sht_outline = s.Outline
-                    x = sht_outline.Max.U - sht_outline.Min.U
-                    y = sht_outline.Max.V - sht_outline.Min.V
-                    origin_pt = XYZ(x / 2.2, y / 2, 0)
-                    Viewport.Create(doc, s.Id, v.Id, origin_pt)
+                    create_viewport(s, v)
+                elif s_number == sheet_search_str or v_name == view_search_str:
+                    create_viewport(s, v)
 
     except Exception as e:
         forms.alert(str(e))
 
 forms.alert("Views Created!", warn_icon=False)
 
-# TODO write a method here for condition, currently it only works with starts with because of slicing
-
+# TODO it's working but troubleshoot the use of equals and contain, i feel like if you already selected the views,
+# todo you don't need to add a condition, just directly put the selected views on the sheet
