@@ -280,8 +280,11 @@ else:
             print("Element ID: {}".format(selected_room.Id))
             print('=' * 50)
 
-        t.Commit()
+        commit_ = t.Commit()
 
-forms.alert('Parameters are updated!', warn_icon=False, exitscript=False)
+        if commit_:
+            forms.alert('Parameters are updated!', warn_icon=False, exitscript=False)
+        else:
+            forms.alert("Failed!")
 
 
