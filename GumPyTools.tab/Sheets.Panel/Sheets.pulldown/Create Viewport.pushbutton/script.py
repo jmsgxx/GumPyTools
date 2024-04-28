@@ -2,9 +2,26 @@
 
 __title__ = 'Create Viewport'
 __doc__ = """
-Put views on sheet.
+This script will put views on sheets.
+
+***PLEASE READ***
+1. FOR MULTIPLE SHEETS
+- it will take the last 2 characters of View Name
+and Sheet Number and see if it matches together to 
+create a viewport.
+2. FOR SINGLE SHEET
+- input exactly the full View Name and full Sheet Number
+
+HOW TO USE:
+- Select sheet/sheets from project browser
+- Input the necessary keywords and press create
+- Print statement will pop up if successful
+
+CONTACT THE AUTHOR FOR ANY PROBLEM AND ERROR SO 
+WE CAN SOLVE IT.
 __________________________________
 Author: Joven Mark Gumana
+v1. 28 APR 2024
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -32,6 +49,7 @@ active_view = doc.ActiveView
 active_level = doc.ActiveView.GenLevel
 
 # ======================================================================================================
+# 🟩 function
 
 
 def create_viewport(sheet_ref, view_ref):
@@ -49,24 +67,23 @@ def out_result(sht_num, sht_nam, vw_nam):
     print("\t---{}".format(vw_nam))
 
 
+# ======================================================================================================
 output = script.get_output()
 selected_views = get_multiple_elements()
 all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
 chosen_view_str = ''
 chosen_sht_str = ''
-
 # ======================================================================================================
+
 # 🐣 UI
 view_search_str = None
 sheet_search_str = None
 
 try:
     components = [Label('View Name Keyword'),
-                  # ComboBox('view_option_method', view_opt_dict),
                   TextBox('view_input_str', text="text"),
                   Label('Sheet Number Keyword'),
-                  # ComboBox('sheet_option_method', sheet_opt_dict),
                   TextBox('sheet_input_str', text="text"),
                   Separator(),
                   Button('Create')]
@@ -75,22 +92,14 @@ try:
     form.show()
 
     user_input              = form.values
-    # view_method_option      = user_input['view_option_method']
     view_search_str         = user_input['view_input_str']
-    # sheet_method_option     = user_input['sheet_option_method']
     sheet_search_str        = user_input['sheet_input_str']
 
 except Exception as e:
     forms.alert("{}.No Input.".format(e), exitscript=True)
 # ======================================================================================================
 
-view_plans = []
-
-
-for v in selected_views:
-    if view_search_str in v.Name:
-        view_plans.append(v)
-
+#  🟨 main script
 
 sheet_views = []
 
@@ -100,11 +109,12 @@ for s in all_sheets:     # type: ViewSheet
 
 
 with rvt_transaction(doc, __title__):
-    try:
+    with try_except():
+
         counter = 0
 
         for s in sheet_views:
-            for v in view_plans:
+            for v in selected_views:
                 output.center()
                 output.resize(500, 700)
                 s_number = s.SheetNumber
@@ -125,7 +135,5 @@ with rvt_transaction(doc, __title__):
         if counter == 0:
             forms.alert("No sheets created. Exiting script.", exitscript=True, warn_icon=False)
 
-    except Exception as e:
-        forms.alert(str(e), exitscript=True, warn_icon=False)
 
 
