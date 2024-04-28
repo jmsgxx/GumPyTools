@@ -16,6 +16,7 @@ from pyrevit import forms
 from Snippets._x_selection import get_multiple_elements
 from Snippets._context_manager import try_except, rvt_transaction
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, TextBox, Separator, Button, CheckBox)
+from pyrevit import script
 
 import clr
 
@@ -31,86 +32,60 @@ active_view = doc.ActiveView
 active_level = doc.ActiveView.GenLevel
 
 # ======================================================================================================
+
+
+def create_viewport(sheet_ref, view_ref):
+    with try_except():
+        sht_outline = sheet_ref.Outline
+        x = sht_outline.Max.U - sht_outline.Min.U
+        y = sht_outline.Max.V - sht_outline.Min.V
+        origin_pt = XYZ(x / 2.2, y / 2, 0)
+        Viewport.Create(doc, sheet_ref.Id, view_ref.Id, origin_pt)
+        return True
+
+
+def out_result(sht_num, sht_nam, vw_nam):
+    print("{} - {}".format(sht_num, sht_nam))
+    print("\t---{}".format(vw_nam))
+
+
+output = script.get_output()
 selected_views = get_multiple_elements()
 all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
 chosen_view_str = ''
 chosen_sht_str = ''
 
-
-def create_viewport(sheet_ref, view_ref):
-    sht_outline = sheet_ref.Outline
-    x = sht_outline.Max.U - sht_outline.Min.U
-    y = sht_outline.Max.V - sht_outline.Min.V
-    origin_pt = XYZ(x / 2.2, y / 2, 0)
-    Viewport.Create(doc, sheet_ref.Id, view_ref.Id, origin_pt)
-
-
-def starts_with(vw_name, chosen_str):
-    return vw_name.startswith(str(chosen_str))
-
-
-def contains(vw_name, chosen_str):
-    return str(chosen_str) in vw_name
-
-
-def equals(vw_name, chosen_str):
-    return str(chosen_str) == vw_name
-
-
-def ends_with(vw_name, chosen_str):
-    return vw_name.endswith(str(chosen_str))
-
-
-option_methods = {
-    'Starts With': starts_with,
-    'Contains': contains,
-    'Equals': equals,
-    'Ends With': ends_with
-}
-
-# view
-view_opt_dict = {}
-
-for view in selected_views:
-    view_name = view.Name
-    for option, method in option_methods.items():
-        result = method(view_name, chosen_view_str)
-        view_opt_dict[option] = result
-
-# sheet
-sheet_opt_dict = {}
-
-for sheet in all_sheets:
-    sheet_name = sheet.Name
-    for option, method in option_methods.items():
-        result = method(sheet_name, chosen_sht_str)
-        sheet_opt_dict[option] = result
 # ======================================================================================================
 # 🐣 UI
+view_search_str = None
+sheet_search_str = None
 
-components = [Label('Search Method for View Name'),
-              ComboBox('view_option_method', view_opt_dict),
-              Label('Input Words to Search'),
-              TextBox('view_input_str', text="text"),
-              Label('Search Method for Sheet Number'),
-              ComboBox('sheet_option_method', sheet_opt_dict),
-              TextBox('sheet_input_str', text="text"),
-              Separator(),
-              Button('Create')]
+try:
+    components = [Label('View Name Keyword'),
+                  # ComboBox('view_option_method', view_opt_dict),
+                  TextBox('view_input_str', text="text"),
+                  Label('Sheet Number Keyword'),
+                  # ComboBox('sheet_option_method', sheet_opt_dict),
+                  TextBox('sheet_input_str', text="text"),
+                  Separator(),
+                  Button('Create')]
 
-form = FlexForm('Put Views on sheets', components)
-form.show()
+    form = FlexForm('Put Views on sheets', components)
+    form.show()
 
-user_input              = form.values
-view_method_option      = user_input['view_option_method']
-view_search_str         = user_input['view_input_str']
-sheet_method_option     = user_input['sheet_option_method']
-sheet_search_str        = user_input['sheet_input_str']
+    user_input              = form.values
+    # view_method_option      = user_input['view_option_method']
+    view_search_str         = user_input['view_input_str']
+    # sheet_method_option     = user_input['sheet_option_method']
+    sheet_search_str        = user_input['sheet_input_str']
 
+except Exception as e:
+    forms.alert("{}.No Input.".format(e), exitscript=True)
 # ======================================================================================================
 
 view_plans = []
+
 
 for v in selected_views:
     if view_search_str in v.Name:
@@ -125,22 +100,32 @@ for s in all_sheets:     # type: ViewSheet
 
 
 with rvt_transaction(doc, __title__):
-    # try:
-    for s in sheet_views:
-        for v in view_plans:
-            s_number = s.SheetNumber
-            v_name = v.Name
-            # print("{}:{}".format(s_number, v_name))
+    try:
+        counter = 0
 
-            if s_number[-2:] == v_name[-2:]:
+        for s in sheet_views:
+            for v in view_plans:
+                output.center()
+                output.resize(500, 700)
+                s_number = s.SheetNumber
+                s_name = s.Name
+                v_name = v.Name
                 # print("{}:{}".format(s_number, v_name))
-                create_viewport(s, v)
-            elif v_name == view_search_str and s_number == sheet_search_str:
-                create_viewport(s, v)
 
-    # except Exception as e:
-    #     forms.alert(str(e))
+                if s_number[-2:] == v_name[-2:]:
+                    # print("{}:{}".format(s_number, v_name))
+                    if create_viewport(s, v):
+                        out_result(s_number, s_name, v_name)
+                        counter += 1
+                elif v_name == view_search_str and s_number == sheet_search_str:
+                    if create_viewport(s, v):
+                        out_result(s_number, s_name, v_name)
+                        counter += 1
 
-forms.alert("Views Created!", warn_icon=False)
+        if counter == 0:
+            forms.alert("No sheets created. Exiting script.", exitscript=True, warn_icon=False)
 
-# todo conditions is irrelevant now, fixed the UI will only work either string in name, or exactly equal
+    except Exception as e:
+        forms.alert(str(e), exitscript=True, warn_icon=False)
+
+
