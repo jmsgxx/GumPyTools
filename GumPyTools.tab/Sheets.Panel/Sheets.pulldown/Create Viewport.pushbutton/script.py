@@ -38,7 +38,7 @@ chosen_view_str = ''
 chosen_sht_str = ''
 
 
-def create_viewport(sheet_ref,view_ref):
+def create_viewport(sheet_ref, view_ref):
     sht_outline = sheet_ref.Outline
     x = sht_outline.Max.U - sht_outline.Min.U
     y = sht_outline.Max.V - sht_outline.Min.V
@@ -113,43 +113,34 @@ sheet_search_str        = user_input['sheet_input_str']
 view_plans = []
 
 for v in selected_views:
-    if view_method_option == starts_with(v.Name, view_search_str):
+    if view_search_str in v.Name:
         view_plans.append(v)
-    elif view_method_option == contains(v.Name, view_search_str):
-        view_plans.append(v)
-    elif view_method_option == equals(v.Name, view_search_str):
-        view_plans.append(v)
-    elif view_method_option == ends_with(v.Name, view_search_str):
-        view_plans.append(v)
+
 
 sheet_views = []
 
 for s in all_sheets:     # type: ViewSheet
-    if view_method_option == starts_with(s.SheetNumber, sheet_search_str):
+    if sheet_search_str in s.SheetNumber:
         sheet_views.append(s)
-    elif sheet_method_option == contains(s.SheetNumber, sheet_search_str):
-        sheet_views.append(s)
-    elif sheet_method_option == equals(s.SheetNumber, sheet_search_str):
-        sheet_views.append(s)
-    elif sheet_method_option == ends_with(s.SheetNumber, sheet_search_str):
-        sheet_views.append(s)
+
 
 with rvt_transaction(doc, __title__):
-    try:
-        for s in sheet_views:
-            for v in view_plans:
-                s_number = s.SheetNumber
-                v_name = v.Name
-                # write a method here for condition, currently it only works with starts with because of slicing
-                if s_number[-2:] == v_name[-2:]:
-                    create_viewport(s, v)
-                elif s_number == sheet_search_str or v_name == view_search_str:
-                    create_viewport(s, v)
+    # try:
+    for s in sheet_views:
+        for v in view_plans:
+            s_number = s.SheetNumber
+            v_name = v.Name
+            # print("{}:{}".format(s_number, v_name))
 
-    except Exception as e:
-        forms.alert(str(e))
+            if s_number[-2:] == v_name[-2:]:
+                # print("{}:{}".format(s_number, v_name))
+                create_viewport(s, v)
+            elif v_name == view_search_str and s_number == sheet_search_str:
+                create_viewport(s, v)
+
+    # except Exception as e:
+    #     forms.alert(str(e))
 
 forms.alert("Views Created!", warn_icon=False)
 
-# TODO it's working but troubleshoot the use of equals and contain, i feel like if you already selected the views,
-# todo you don't need to add a condition, just directly put the selected views on the sheet
+# todo conditions is irrelevant now, fixed the UI will only work either string in name, or exactly equal
