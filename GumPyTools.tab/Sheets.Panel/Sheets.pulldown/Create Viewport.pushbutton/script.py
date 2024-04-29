@@ -7,8 +7,9 @@ This script will put views on sheets.
 ***PLEASE READ***
 1. FOR MULTIPLE SHEETS
 - it will take the last 2 characters of View Name
-and Sheet Number and see if it matches together to 
+and Sheet Number and see if it matches to 
 create a viewport.
+
 2. FOR SINGLE SHEET
 - input exactly the full View Name and full Sheet Number
 
@@ -63,22 +64,22 @@ def create_viewport(sheet_ref, view_ref):
 
 
 def out_result(sht_num, sht_nam, vw_nam):
-    print("{} - {}".format(sht_num, sht_nam))
+    print("{}_{}".format(sht_num, sht_nam))
     print("\t---{}".format(vw_nam))
 
 
 # ======================================================================================================
-output = script.get_output()
-selected_views = get_multiple_elements()
-all_sheets = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
+output          = script.get_output()
+selected_views  = get_multiple_elements()
+all_sheets      = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
 chosen_view_str = ''
 chosen_sht_str = ''
 # ======================================================================================================
 
 # 🐣 UI
-view_search_str = None
-sheet_search_str = None
+view_search_str     = None
+sheet_search_str    = None
 
 try:
     components = [Label('View Name Keyword'),
@@ -127,6 +128,7 @@ with rvt_transaction(doc, __title__):
                     if create_viewport(s, v):
                         out_result(s_number, s_name, v_name)
                         counter += 1
+
                 elif v_name == view_search_str and s_number == sheet_search_str:
                     if create_viewport(s, v):
                         out_result(s_number, s_name, v_name)
@@ -134,6 +136,8 @@ with rvt_transaction(doc, __title__):
 
         if counter == 0:
             forms.alert("No sheets created. Exiting script.", exitscript=True, warn_icon=False)
+
+
 
 
 
