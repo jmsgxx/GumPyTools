@@ -2,10 +2,41 @@
 
 __title__ = 'Set ScopeBox'
 __doc__ = """
-script test
+Wills set a scope box to selected views with
+a given scope box name. Best use in multiple views.
+
+The script will take special sequence that connects
+the view name with the scope box name. For example:
+
+View Names:
+DOC_FP_FFL_01M_01
+DOC_FP_FFL_01M_02
+DOC_FP_FFL_01M_03
+
+Scope box Names:
+L01ML2-01
+L01ML2-02
+L01ML2-03
+
+**last 2 characters are running numbers
+
+script will compare the last 2 characters, if they match,
+it will set the scope box.
+
+HOW TO:
+1. Select the views.
+2. Input the identifying sequence of the scope box.
+-  Per example above, it will be: LO1ML2
+3. Hit create.
+Print statement will show if successful.
+
+***IF YOU FOUND ANY ERROR PLEASE CONTACT THE 
+AUTHOR SO WE CAN DEBUG ASAP***
 __________________________________
 Author: Joven Mark Gumana
+v1. 30 APR 2024
 """
+
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║ 

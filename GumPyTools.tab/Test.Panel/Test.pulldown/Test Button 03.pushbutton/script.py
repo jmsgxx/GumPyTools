@@ -11,10 +11,10 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║ 
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets._x_selection import get_multiple_elements
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
 import xlrd
 from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction
+from Snippets._context_manager import rvt_transaction, try_except
 from pyrevit import forms, revit
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Autodesk.Revit.DB.Architecture import Room
@@ -23,6 +23,7 @@ from collections import Counter
 import sys
 import clr
 clr.AddReference("System")
+from System.Collections.Generic import List
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -36,23 +37,36 @@ active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 selection = uidoc.Selection     # type: Selection
 # ======================================================================================================
+wall_type = FilteredElementCollector(doc).OfClass(WallType).FirstElement()
 
-all_scope_bx = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_VolumeOfInterest).ToElements()
-all_views = FilteredElementCollector(doc).OfClass(ViewPlan).ToElements()
+line_selection = get_multiple_elements()
+
+
+if not line_selection:
+    with try_except():
+        filter_type = CurvesFilter()
+        line_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
+        line_selection = [doc.GetElement(dr) for dr in line_list]
+
+        if not line_selection:
+            forms.alert("No doors selected. Exiting command.", exitscript=True, warn_icon=False)
+
+wall_id = ElementId(310174)
 
 with rvt_transaction(doc, __title__):
-    for view in all_views:
-        view_p_name = Element.Name.GetValue(view)
-        if 'DOC_FP_FFL_08M_50' in view_p_name:
-            for scope_bx in all_scope_bx:
-                scope_bx_name = scope_bx.Name
-                if scope_bx_name.startswith("L7L8_DL"):
-                    if view_p_name[-3:] == scope_bx_name[-3:]:
-                        view_s_box = view.get_Parameter(BuiltInParameter.VIEWER_VOLUME_OF_INTEREST_CROP)
-                        view_s_box.Set(scope_bx.Id)
+    with try_except():
+        line_list = []
+        for line in line_selection:     # type: ModelLine
+            curve = line.GeometryCurve
+            start_pt = curve.GetEndPoint(0)
+            end_pt = curve.GetEndPoint(1)
 
+            lines = List[Curve]()
+            lines.Add(Line.CreateBound(start_pt, end_pt))
 
-"""
-TO SET SCOPE BOX, DO NOT DELETE FOR NOW!
-"""
-
+        for el in line_list:
+            """
+            args: Document, list of curves, ElementID Wall, ElementID Level,
+             height dbl, offset dbl, flip bool, struc bool
+            """
+            Wall.Create(doc, lines, wall_id, active_level.Id, False)

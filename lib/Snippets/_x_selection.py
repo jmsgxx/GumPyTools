@@ -92,3 +92,15 @@ class CurtainPanelFilter(ISelectionFilter):
     def AllowElement(self, elem):
         if elem.Category.Id == ElementId(BuiltInCategory.OST_CurtainWallPanels):
             return True
+
+
+class CurvesFilter(ISelectionFilter):
+    def __init__(self):
+        """
+        ISelection Curtain Panels. Will select both model line and detail lines.
+        """
+
+    def AllowElement(self, elem):
+        if elem.Category.Id == ElementId(BuiltInCategory.OST_Lines):
+            return True
+

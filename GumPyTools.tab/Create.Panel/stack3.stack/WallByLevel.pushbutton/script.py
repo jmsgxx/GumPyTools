@@ -21,7 +21,7 @@ Author: Joven Mark Gumana
 # ===================================================================================================
 from rpw.ui.forms import FlexForm, Label, ComboBox, Separator, Button
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
 from Snippets._context_manager import rvt_transaction, try_except
 from Autodesk.Revit.DB import *
 from pyrevit import forms
@@ -50,7 +50,8 @@ line_selection = get_multiple_elements()
 
 if not line_selection:
     with try_except():
-        filter_type = ISelectionFilter_Classes([ModelLine])
+        # filter_type = ISelectionFilter_Classes([ModelLine])
+        filter_type = CurvesFilter()
         line_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Lines")
         line_selection = [doc.GetElement(dr) for dr in line_list]
 

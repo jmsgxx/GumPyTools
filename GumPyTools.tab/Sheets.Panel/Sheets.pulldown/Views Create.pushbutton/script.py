@@ -12,6 +12,8 @@ v2. 26 Apr 2024 - optimized ViewFamilyType
 Author: Joven Mark Gumana
 """
 
+import sys
+
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║ 
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
@@ -75,7 +77,7 @@ try:
     v_name = user_input['main_name']
 
 except Exception as e:
-    forms.alert("Key error '{}'. Because no input.".format(str(e)), exitscript=True)
+    sys.exit()
 # --------------------------------------------------------------------------------------------------
 # ✅ MAIN
 
