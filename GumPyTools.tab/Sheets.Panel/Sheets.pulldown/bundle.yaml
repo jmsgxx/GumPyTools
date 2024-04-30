@@ -1,6 +1,7 @@
 layout:
     - Views Create
     - Duplicate View
+    - Set ScopeBox
     - ------
     - Sheet Count
     - Sheets Export
