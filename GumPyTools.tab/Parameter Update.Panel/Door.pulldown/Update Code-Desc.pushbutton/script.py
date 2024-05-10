@@ -92,14 +92,14 @@ def get_list(param_code):
 
 def set_by_index(filtered_list, lookup_desc, param_dict):
     for index, value in filtered_list:
-        if value is not None:
+        if value:
             try:
                 value = float(value)
             except ValueError:
                 # If value is not a number, strip white spaces
                 value = value.strip()
             door_desc = all_doors[index].LookupParameter(lookup_desc)
-            if door_desc is not None:
+            if door_desc:
                 if value in (key.strip() if isinstance(key, str) else key for key in param_dict):
                     door_desc.Set(param_dict[value])
 

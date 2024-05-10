@@ -42,6 +42,7 @@ wall_type = FilteredElementCollector(doc).OfClass(WallType).FirstElement()
 line_selection = get_multiple_elements()
 
 
+
 if not line_selection:
     with try_except():
         filter_type = CurvesFilter()
@@ -49,9 +50,9 @@ if not line_selection:
         line_selection = [doc.GetElement(dr) for dr in line_list]
 
         if not line_selection:
-            forms.alert("No doors selected. Exiting command.", exitscript=True, warn_icon=False)
+            forms.alert("error", exitscript=True, warn_icon=False)
 
-wall_id = ElementId(310174)
+wall_id = ElementId(1341927)
 
 with rvt_transaction(doc, __title__):
     with try_except():
