@@ -77,59 +77,59 @@ selection = uidoc.Selection     # type: Selection
 #
 #     t.Commit()
 
-# By Clockwork
-
-
-def WallOrientation(wall):
-	loc = wall.Location
-	not_flipped = False
-	if hasattr(loc, "Curve"):
-		l_curve = loc.Curve
-		if hasattr(wall, "Flipped"):
-			not_flipped = wall.Flipped
-		if str(type(l_curve)) == "Autodesk.Revit.DB.Line":
-			if not_flipped:
-				return wall.Orientation.ToVector().Reverse()
-			else:
-				return wall.Orientation.ToVector()
-		else:
-			direction = (l_curve.GetEndPoint(1) - l_curve.GetEndPoint(0)).Normalize()
-			if not_flipped:
-				return XYZ.BasisZ.CrossProduct(direction).ToVector().Reverse()
-			else:
-				return XYZ.BasisZ.CrossProduct(direction).ToVector()
-	else:
-		return None
-
-
-elem_width = []
-elem_func = []
-
-# By Clockwork
-for item in items:
-	doc = item.Document
-
+if version < 2021:
+	UIunit = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
+else:
 	UIunit = doc.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId()
 
-	try:
-		counter = 0
-		layer_width, layer_func = [], []
-		comp_struc = item.WallType.GetCompoundStructure()
-		num = comp_struc.LayerCount
-		while counter < num:
-			layer_width.append(UnitUtils.ConvertFromInternalUnits((comp_struc.GetLayerWidth(counter)), UIunit))
-			layer_func.append(comp_struc.GetLayerFunction(counter))
-			counter += 1
-	except:
+
+def tolist(obj1):
+	if hasattr(obj1, "__iter__"):
+		return obj1
+	else:
+		return [obj1]
+
+
+elements = tolist(UnwrapElement(IN[0]))
+new_fam_type_names = tolist(IN[1])
+functions = tolist(IN[2])
+materials = tolist(UnwrapElement(IN[3]))
+widths = tolist(IN[4])
+new_fam_types = []
+
+for elem, new_fam_type_name in zip(elements, new_fam_type_names):
+	if isinstance(elem, ElementType):
+		fam_type = elem
+	elif isinstance(elem, Wall):
+		fam_type = elem.WallType
+	else:
 		pass
-	elem_width.append(layer_width)
-	elem_func.append(layer_func)
+	try:
+		new_fam_type = fam_type.Duplicate(new_fam_type_name)
+		layers = []
+		for material, width, function in zip(materials, widths, functions):
+			if isinstance(function, MaterialFunctionAssignment):
+				layerFunction = function
+			else:
+				layerFunction = System.Enum.Parse(MaterialFunctionAssignment, function)
+			layers.append(
+				CompoundStructureLayer((UnitUtils.ConvertToInternalUnits(width, UIunit)), layerFunction, material.Id))
+		compound = CompoundStructure.CreateSimpleCompoundStructure(layers)
+		if fam_type.ToString() != 'Autodesk.Revit.DB.WallType':
+			compound.EndCap = EndCapCondition.NoEndCap
+		else:
+			pass
+		new_fam_type.SetCompoundStructure(compound) 	# can stop in here
+		new_fam_types.append(new_fam_type)
 
-increments = [[sum(data[:i+1]) for i in range(len(data))] for data in elem_width]
+	except:
+		fec = FilteredElementCollector(doc).OfClass(fam_type.GetType())
+		type_dict = dict([(Element.Name.__get__(i), i) for i in fec])
+		n1 = unicode(new_fam_type_name)
+		if n1 in type_dict:
+			new_fam_types.append(type_dict[n1])
 
-direction = [WallOrientation(x) for x in items]
-
-wall.GetLocation().Translate(direction, (math.fsum(element_width) / 2 - (increments - (element_width / 2)))
-
-
-# TODO: fix this shit this last part doesn't work, integrate with the deconstructed wall elements
+if isinstance(IN[0], list):
+	OUT = new_fam_types
+else:
+	OUT = new_fam_types[0]
