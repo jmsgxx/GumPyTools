@@ -96,6 +96,7 @@ with rvt_transaction(doc, __title__):
     except Exception as e:
         print(e)
 
+    # retain the original properties of unsplit wall
     else:
         for new_wall in new_walls:
             for ex_wall in selected_walls:

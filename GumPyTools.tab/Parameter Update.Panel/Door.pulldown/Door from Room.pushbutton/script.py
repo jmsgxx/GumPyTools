@@ -69,7 +69,7 @@ selected_room = doc.GetElement(selected_element)
 forms.alert("Select door and press finish", title="Door Selection", warn_icon=False, exitscript=False, ok=True)
 # ===========================================================================================================
 # 🔵 DOOR
-
+door_elements = None
 try:
     door_filter = _x_selection.ISelectionFilterCatName(['Doors'])
     door_elements = selection.PickObjects(ObjectType.Element, door_filter, 'Select Doors')
@@ -141,7 +141,8 @@ with Transaction(doc, __title__) as t:
         # Append door parameters to lists
         room_door_marks_list.append(door_mark)
         room_door_clear_heights_list.append(door_height)
-        room_door_remarks_list.append(door_remarks)
+        if door_remarks:
+            room_door_remarks_list.append(door_remarks)
 
     # Convert lists to strings
     room_door_marks_str                 = '\n\n'.join(room_door_marks_list)
