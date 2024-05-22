@@ -2,134 +2,149 @@
 
 __title__ = 'Test Button 02'
 __doc__ = """
-script test
+test script
 __________________________________
 Author: Joven Mark Gumana
+v1. 21 May 2024
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-import math
+from Snippets._x_selection import ISelectionFilter_Classes
 from Snippets._x_selection import get_multiple_elements
 from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction
+from Snippets._context_manager import rvt_transaction, try_except
 from pyrevit import forms, revit
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Autodesk.Revit.DB.Architecture import Room
 import pyrevit
-from collections import Counter
 import sys
-import xlrd
 import clr
+
 clr.AddReference("System")
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
 #  ╚╝ ╩ ╩╩╚═╩╩ ╩╚═╝╩═╝╚═╝╚═╝ variables
 # ======================================================================================================
-doc      = __revit__.ActiveUIDocument.Document
-uidoc    = __revit__.ActiveUIDocument
-app      = __revit__.Application
+doc = __revit__.ActiveUIDocument.Document
+uidoc = __revit__.ActiveUIDocument
+app = __revit__.Application
 
-active_view     = doc.ActiveView
-active_level    = doc.ActiveView.GenLevel
-selection = uidoc.Selection     # type: Selection
+active_view = doc.ActiveView
+active_level = doc.ActiveView.GenLevel
+selection = uidoc.Selection  # type: Selection
 # ======================================================================================================
+# 🔴 checking the wall type names
+all_wall_type = FilteredElementCollector(doc).OfClass(WallType).WhereElementIsElementType().ToElements()
 
-#
-# all_elements = FilteredElementCollector(doc).WhereElementIsNotElementType().ToElements()
-#
-#
-# directory = forms.pick_excel_file(False, 'Select File')
-# wb = xlrd.open_workbook(directory)
-#
-# sheet = wb.sheet_by_index(0)
-#
-# data_dict = {}
-#
-# for rw in range(1, sheet.nrows):
-#     key = sheet.cell_value(rw, 0)
-#     value = sheet.row_values(rw)[1:]
-#     data_dict[key] = value
-#
-# with Transaction(doc, __title__) as t:
-#     t.Start()
-#
-#     for k, v in data_dict.items():
-#         print("{}:{}".format(k, v))
-#         # this is just a print statement to show you that the value is a list
-#         for item in v:     # this is to loop through the list in values
-#             if item == '':      # if item is None type, it will skip
-#                 continue
-#
-#             for element in all_elements:
-#                 if element:
-#                     if element.Id == ElementId(int(k)):
-#                         ifc_guid = element.LookupParameter("IfcGUID")
-#                         ifc_guid.Set(v[0])
-#                         fab_type = element.LookupParameter("Fabrikationsnummer/Type")
-#                         fab_type.Set(v[1])
-#                         """
-#                         write the rest of the parameter here and see what you will get
-#                         """
-#
-#     t.Commit()
+# ======================================================================================================
+# 1️⃣ wall selection
+selected_walls = get_multiple_elements()
 
-if version < 2021:
-	UIunit = doc.GetUnits().GetFormatOptions(UnitType.UT_Length).DisplayUnits
-else:
-	UIunit = doc.GetUnits().GetFormatOptions(SpecTypeId.Length).GetUnitTypeId()
+if not selected_walls:
+    with try_except():
+        filter_type = ISelectionFilter_Classes([Wall])
+        wall_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Wall")
+        selected_walls = [doc.GetElement(wall) for wall in wall_list]
+
+    if not selected_walls:
+        forms.alert('No wall selected', exitscript=True)
+
+# ======================================================================================================
+with rvt_transaction(doc, __title__):
+    new_walls = []
+    try:
+        for wall in selected_walls:
+
+            wall_loc = wall.Location
+            wall_curve = wall_loc.Curve
+
+            wall_type = wall.WallType
+            wall_type_name = wall_type.FamilyName
+            wall_comp = wall_type.GetCompoundStructure()
+            wall_layers = list(wall_comp.GetLayers())
+
+            total_thickness = sum(layer.Width for layer in wall_layers)
+            counter_thickness = 0
+
+            for layer in wall_layers:
+                new_layers = []
+                wall_mat            = doc.GetElement(layer.MaterialId)
+                wall_func           = layer.Function
+                wall_width          = layer.Width
+                wall_mat_id         = layer.MaterialId
+
+                new_layers.append(CompoundStructureLayer(wall_width, wall_func, wall_mat_id))
+                new_wall_type       = wall_type.Duplicate(str(wall_func) + wall_mat.Name)
+                new_wall_type.Name  = wall_mat.Name
+
+                compound = CompoundStructure.CreateSimpleCompoundStructure(new_layers)
+                new_wall_type.SetCompoundStructure(compound)
+                # offset for wall origin
+                offset = ((total_thickness - (2 * counter_thickness)) - wall_width) / 2
+                if not wall.Flipped:
+                    offset = -offset
+                #  Creates a new curve that is an offset of the existing curve.
+                offset_curve = wall_curve.CreateOffset(offset, XYZ.BasisZ)
+                wall_create = Wall.Create(doc, offset_curve, new_wall_type.Id, active_level.Id, 10, 0, False, False)
+                # accumulated thickness
+                counter_thickness += wall_width
+                new_walls.append(wall_create)
+
+    except Exception as e:
+        print(e)
+
+    else:
+        for new_wall in new_walls:
+            for ex_wall in selected_walls:
+
+                base_off        = ex_wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).AsDouble()
+                top_cons        = ex_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE).AsElementId()
+                top_off         = ex_wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET).AsDouble()
+                unconnected_ht  = ex_wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble()
+
+                base_off_param          = new_wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET)
+                top_cons_param          = new_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
+                top_off_param           = new_wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET)
+                unconnected_ht_param    = new_wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)
+
+                if base_off:
+                    base_off_param.Set(base_off)
+
+                if top_cons == ElementId.InvalidElementId:
+                    unconnected_ht_param.Set(unconnected_ht)
+                else:
+                    top_cons_param.Set(top_cons)
+                    top_off_param.Set(top_off)
+
+    finally:
+        if wall_create:
+            for i in selected_walls:
+                doc.Delete(i.Id)
+        else:
+            sys.exit()
+
+# TODO: fix the duplication wall type names
 
 
-def tolist(obj1):
-	if hasattr(obj1, "__iter__"):
-		return obj1
-	else:
-		return [obj1]
 
 
-elements = tolist(UnwrapElement(IN[0]))
-new_fam_type_names = tolist(IN[1])
-functions = tolist(IN[2])
-materials = tolist(UnwrapElement(IN[3]))
-widths = tolist(IN[4])
-new_fam_types = []
 
-for elem, new_fam_type_name in zip(elements, new_fam_type_names):
-	if isinstance(elem, ElementType):
-		fam_type = elem
-	elif isinstance(elem, Wall):
-		fam_type = elem.WallType
-	else:
-		pass
-	try:
-		new_fam_type = fam_type.Duplicate(new_fam_type_name)
-		layers = []
-		for material, width, function in zip(materials, widths, functions):
-			if isinstance(function, MaterialFunctionAssignment):
-				layerFunction = function
-			else:
-				layerFunction = System.Enum.Parse(MaterialFunctionAssignment, function)
-			layers.append(
-				CompoundStructureLayer((UnitUtils.ConvertToInternalUnits(width, UIunit)), layerFunction, material.Id))
-		compound = CompoundStructure.CreateSimpleCompoundStructure(layers)
-		if fam_type.ToString() != 'Autodesk.Revit.DB.WallType':
-			compound.EndCap = EndCapCondition.NoEndCap
-		else:
-			pass
-		new_fam_type.SetCompoundStructure(compound) 	# can stop in here
-		new_fam_types.append(new_fam_type)
 
-	except:
-		fec = FilteredElementCollector(doc).OfClass(fam_type.GetType())
-		type_dict = dict([(Element.Name.__get__(i), i) for i in fec])
-		n1 = unicode(new_fam_type_name)
-		if n1 in type_dict:
-			new_fam_types.append(type_dict[n1])
 
-if isinstance(IN[0], list):
-	OUT = new_fam_types
-else:
-	OUT = new_fam_types[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
