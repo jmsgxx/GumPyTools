@@ -1,11 +1,23 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 02'
+__title__ = 'Split Wall'
 __doc__ = """
-test script
+This script will separate the walls e.g Finish, Structure, Core
+Will create walls based on the locations of the original walls and
+inherits its properties, Base Offset, Top Constraint, Top Offset.
+
+HOW TO:
+- Either select the wall/s first or run the command first before
+selecting, both will work
+
+DISCLAIMER: It will create duplicate wall types so assign the wall
+to proper wall types before splitting then purge the duplicate.
+
+***FOR ANY PROBLEM PLEASE CONTACT THE AUTHOR***
 __________________________________
 Author: Joven Mark Gumana
 v1. 21 May 2024
+v2. 23 May 2024 - documented
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗

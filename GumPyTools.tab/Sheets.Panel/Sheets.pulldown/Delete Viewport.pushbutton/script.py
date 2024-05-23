@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 03'
+__title__ = 'Delete Viewport'
 __doc__ = """
-script test
+Will delete all the viewports on sheet/s.
+
+HOW TO:
+- Select sheets and run the command
 __________________________________
 Author: Joven Mark Gumana
+v1. 23 May 2024
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -12,16 +16,10 @@ Author: Joven Mark Gumana
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 import math
-from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
-import xlrd
+from Snippets._x_selection import get_multiple_elements
 from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction, try_except
-from pyrevit import forms, revit
-from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Autodesk.Revit.DB.Architecture import Room
-import pyrevit
-from collections import Counter
-import sys
+from Snippets._context_manager import rvt_transaction
+from Autodesk.Revit.UI.Selection import Selection
 import clr
 
 clr.AddReference("System")
