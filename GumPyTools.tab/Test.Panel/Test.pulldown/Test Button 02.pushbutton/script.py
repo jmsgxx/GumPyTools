@@ -68,7 +68,7 @@ with rvt_transaction(doc, __title__):
 
             total_thickness = sum(layer.Width for layer in wall_layers)
             counter_thickness = 0
-
+            # 2️⃣ separating the layers of the wall
             for layer in wall_layers:
                 new_layers = []
                 wall_mat            = doc.GetElement(layer.MaterialId)
@@ -76,27 +76,34 @@ with rvt_transaction(doc, __title__):
                 wall_width          = layer.Width
                 wall_mat_id         = layer.MaterialId
 
+                # 3️⃣ creating new wall type
                 new_layers.append(CompoundStructureLayer(wall_width, wall_func, wall_mat_id))
                 new_wall_type       = wall_type.Duplicate(str(wall_func) + wall_mat.Name)
                 new_wall_type.Name  = wall_mat.Name
 
                 compound = CompoundStructure.CreateSimpleCompoundStructure(new_layers)
                 new_wall_type.SetCompoundStructure(compound)
-                # offset for wall origin
+
+
+                # 4️⃣ figuring the center of layers for new walls
                 offset = ((total_thickness - (2 * counter_thickness)) - wall_width) / 2
                 if not wall.Flipped:
                     offset = -offset
                 #  Creates a new curve that is an offset of the existing curve.
                 offset_curve = wall_curve.CreateOffset(offset, XYZ.BasisZ)
+
+                # 5️⃣ crate wall
                 wall_create = Wall.Create(doc, offset_curve, new_wall_type.Id, active_level.Id, 10, 0, False, False)
+                
                 # accumulated thickness
                 counter_thickness += wall_width
+                # collect the new walls
                 new_walls.append(wall_create)
 
     except Exception as e:
         print(e)
 
-    # retain the original properties of unsplit wall
+    # retain the original properties of un split wall
     else:
         for new_wall in new_walls:
             for ex_wall in selected_walls:
@@ -120,6 +127,7 @@ with rvt_transaction(doc, __title__):
                     top_cons_param.Set(top_cons)
                     top_off_param.Set(top_off)
 
+    # delete the original walls
     finally:
         if wall_create:
             for i in selected_walls:
