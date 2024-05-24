@@ -145,8 +145,6 @@ with rvt_transaction(doc, __title__):
         if wall_create:
             for i in selected_walls:
                 doc.Delete(i.Id)
-        else:
-            sys.exit()
 
 # TODO: fix the duplication wall type names
 

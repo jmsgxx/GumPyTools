@@ -42,8 +42,12 @@ selection = uidoc.Selection  # type: Selection
 selected_sheets = get_multiple_elements()
 
 with rvt_transaction(doc, __title__):
+
     for sheet in selected_sheets:
         viewport_id = sheet.GetAllViewports()
         for vp in viewport_id:
-            doc.Delete(vp)
+            del_vp = doc.Delete(vp)
 
+    # if del_vp:
+    #     for s in selected_sheets:
+    #         selection.SetElementIds(List[ElementId](s))

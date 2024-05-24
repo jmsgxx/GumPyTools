@@ -14,7 +14,7 @@ create a viewport.
 - input exactly the full View Name and full Sheet Number
 
 HOW TO USE:
-- Select sheet/sheets from project browser
+- Select views to put on sheet
 - Input the necessary keywords and press create
 - Print statement will pop up if successful
 
@@ -73,8 +73,8 @@ output          = script.get_output()
 selected_views  = get_multiple_elements()
 all_sheets      = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 
-chosen_view_str = ''
-chosen_sht_str = ''
+# chosen_view_str = ''
+# chosen_sht_str = ''
 # ======================================================================================================
 
 # 🐣 UI
