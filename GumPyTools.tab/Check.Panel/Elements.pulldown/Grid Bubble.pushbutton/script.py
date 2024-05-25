@@ -1,11 +1,20 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 02'
+__title__ = 'Grid Bubble'
 __doc__ = """
-test script
+This script will toggle the visibility of Grid Bubble.
+
+HOW TO:
+
+1. You can either select the elements first and hit
+the command or;
+2. Click the command, select the elements then click
+'Finish' on the the upper left corner.
+
+This will work for single or multiple grids.
 __________________________________
 Author: Joven Mark Gumana
-v1. 21 May 2024
+v1. 25 May 2024
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -16,7 +25,7 @@ from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button,
 from Snippets._x_selection import ISelectionFilter_Classes
 from Snippets._x_selection import get_multiple_elements
 from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction, try_except
+from Snippets._context_manager import try_except
 from pyrevit import forms, revit
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 import pyrevit
@@ -78,7 +87,7 @@ end_pos = None
 user_input = None
 
 try:
-    components = [Label('Bubble Position'),
+    components = [Separator(),
                   CheckBox('start_bub', 'Start'),
                   CheckBox('end_bub', 'End'),
                   CheckBox('both_pos', 'Show/Hide Both Ends'),
