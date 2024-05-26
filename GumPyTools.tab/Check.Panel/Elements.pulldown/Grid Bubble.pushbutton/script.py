@@ -15,6 +15,7 @@ This will work for single or multiple grids.
 __________________________________
 Author: Joven Mark Gumana
 v1. 25 May 2024
+v2. 26 May 2024 - minimize button
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -87,19 +88,21 @@ end_pos = None
 user_input = None
 
 try:
-    components = [Separator(),
+    components = [Label("Show/Hide Bubble"),
+                  Separator(),
                   CheckBox('start_bub', 'Start'),
                   CheckBox('end_bub', 'End'),
-                  CheckBox('both_pos', 'Show/Hide Both Ends'),
+                  Separator(),
+                  Label("If Bubble is on '✅ Start/End = Off'"),
                   Separator(),
                   Button('Select')]
-    form = FlexForm("Grid Bubble View Toggle.v1", components)
+
+    form = FlexForm("Grid Bubble View Toggle.v2", components)
     form.show()
 
     user_input = form.values
     start_pos   = user_input['start_bub']
     end_pos     = user_input['end_bub']
-    both_pos    = user_input['both_pos']
 
 except KeyError:
     forms.alert('No input provide, please try again!', exitscript=True)
@@ -110,15 +113,8 @@ for grid in selected_grids:     # type: Grid
     bubble_start_vis    = grid.IsBubbleVisibleInView(DatumEnds.End0, active_view)
     bubble_end_vis      = grid.IsBubbleVisibleInView(DatumEnds.End1, active_view)
     # -----------------------------------------------------------------------------
-    # ⚠️ catch the user error, avoid multiple selection
-    if start_pos and end_pos and both_pos:
-        forms.alert('Please choose only one option.', exitscript=True)
-
-    elif start_pos and end_pos:
-        forms.alert('Please choose only one option.', exitscript=True)
-    # -----------------------------------------------------------------------------
     with revit.Transaction(__title__):
-        if both_pos:
+        if start_pos and end_pos:
             if bubble_start_vis and bubble_end_vis:
                 start_bub_hide(grid)
                 end_bub_hide(grid)
@@ -127,9 +123,13 @@ for grid in selected_grids:     # type: Grid
                 end_bub_show(grid)
 
         elif start_pos:
-            start_bub_show(grid)
-            end_bub_hide(grid)
+            if bubble_start_vis:
+                start_bub_hide(grid)
+            else:
+                start_bub_show(grid)
 
         elif end_pos:
-            end_bub_show(grid)
-            start_bub_hide(grid)
+            if bubble_end_vis:
+                end_bub_hide(grid)
+            else:
+                end_bub_show(grid)
