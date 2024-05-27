@@ -145,26 +145,17 @@ with Transaction(doc, __title__) as t:
 
     # -----------------------------------------------------------------------------
     # 🔴 if multiple views
-    if apply_view == 0:     # for single view, exit command
-        t.Commit()
-        if active_view.ViewType == ViewType.Section or active_view.ViewType  == ViewType.Elevation:
-            forms.alert("Section and Elevation is not supported for propagate views.", exitscript=False, warn_icon=False)
-            t.Commit()
-            sys.exit()
-
-    # 🟡 currently it doesn't work for multiple sec/elev views, skip
-    if active_view.ViewType == ViewType.Section or active_view.ViewType == ViewType.Elevation:
-        forms.alert("Section and Elevation is not supported for propagate views.", exitscript=False, warn_icon=False)
+    if apply_view == 0:     # for single view
         t.Commit()
 
     else:       # for multiple views
-        plan_view = List[ViewType]([ViewType.FloorPlan,
-                                    ViewType.CeilingPlan,
-                                    ViewType.AreaPlan,
-                                    ViewType.Elevation,
-                                    ViewType.Section])
+        change_view = List[ViewType]([ViewType.FloorPlan,
+                                     ViewType.CeilingPlan,
+                                     ViewType.AreaPlan,
+                                     ViewType.Elevation,
+                                     ViewType.Section])
         v_type = None
-        if active_view.ViewType in [view for view in plan_view]:
+        if active_view.ViewType in [view for view in change_view]:
             v_type = active_view.ViewType
 
         selected_views = forms.select_views(filterfunc=lambda v: v.ViewType == v_type and v.Id != active_view.Id)
