@@ -17,10 +17,14 @@ the bubble and vice versa.
 - Do a trial end error to know which is start and end.
 
 This will work for single or multiple datums and levels.
+
+For plan views, propagate extents will work for multiple
+views, not for Elevation/Section.
 __________________________________
 Author: Joven Mark Gumana
 v1. 25 May 2024
 v2. 26 May 2024 - minimize button and added Level
+v3. 27 May 2024 - propagate ext multi views
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -39,6 +43,7 @@ import sys
 import clr
 
 clr.AddReference("System")
+from System.Collections.Generic import List, HashSet
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -78,25 +83,27 @@ selected_datum = get_multiple_elements()
 if not selected_datum:
     with try_except():
         filter_type = ISelectionFilter_Classes([Grid, Level])
-        datum_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Wall")
+        datum_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Datum")
         selected_datum = [doc.GetElement(gr) for gr in datum_list]
 
     if not selected_datum:
-        forms.alert('No wall selected', exitscript=True)
+        forms.alert('No datum selected', exitscript=True)
 
 
 # ======================================================================================================
 # 2️⃣ ui
-both_pos = None
 start_pos = None
 end_pos = None
-user_input = None
+apply_view = None
 
 try:
     components = [Label("Show/Hide Bubble"),
                   Separator(),
                   CheckBox('start_bub', 'Start'),
                   CheckBox('end_bub', 'End'),
+                  Separator(),
+                  Label('Apply to multiple views'),
+                  ComboBox('view_apply', {"Yes": 1, "No": 0}),
                   Separator(),
                   Label("NOTE: ✅ Start and ✅ End = On/Off both sides"),
                   Separator(),
@@ -108,17 +115,18 @@ try:
     user_input = form.values
     start_pos   = user_input['start_bub']
     end_pos     = user_input['end_bub']
+    apply_view  = user_input['view_apply']
 
 except KeyError:
     forms.alert('No input provided, please try again!', exitscript=True)
 # ======================================================================================================
 # 3️⃣ main command
-
-for datum in selected_datum:     # type: Grid
-    bubble_start_vis    = datum.IsBubbleVisibleInView(DatumEnds.End0, active_view)
-    bubble_end_vis      = datum.IsBubbleVisibleInView(DatumEnds.End1, active_view)
-    # -----------------------------------------------------------------------------
-    with revit.Transaction(__title__):
+with Transaction(doc, __title__) as t:
+    t.Start()
+    for datum in selected_datum:     # type: Grid
+        bubble_start_vis    = datum.IsBubbleVisibleInView(DatumEnds.End0, active_view)
+        bubble_end_vis      = datum.IsBubbleVisibleInView(DatumEnds.End1, active_view)
+        # -----------------------------------------------------------------------------
         if start_pos and end_pos:
             if bubble_start_vis and bubble_end_vis:
                 start_bub_hide(datum)
@@ -134,3 +142,43 @@ for datum in selected_datum:     # type: Grid
         elif end_pos:
             end_bub_show(datum)
             start_bub_hide(datum)
+
+    # -----------------------------------------------------------------------------
+    # 🔴 if multiple views
+    if apply_view == 0:     # for single view, exit command
+        t.Commit()
+        if active_view.ViewType == ViewType.Section or active_view.ViewType  == ViewType.Elevation:
+            forms.alert("Section and Elevation is not supported for propagate views.", exitscript=False, warn_icon=False)
+            t.Commit()
+            sys.exit()
+
+    # 🟡 currently it doesn't work for multiple sec/elev views, skip
+    if active_view.ViewType == ViewType.Section or active_view.ViewType == ViewType.Elevation:
+        forms.alert("Section and Elevation is not supported for propagate views.", exitscript=False, warn_icon=False)
+        t.Commit()
+
+    else:       # for multiple views
+        plan_view = List[ViewType]([ViewType.FloorPlan,
+                                    ViewType.CeilingPlan,
+                                    ViewType.AreaPlan,
+                                    ViewType.Elevation,
+                                    ViewType.Section])
+        v_type = None
+        if active_view.ViewType in [view for view in plan_view]:
+            v_type = active_view.ViewType
+
+        selected_views = forms.select_views(filterfunc=lambda v: v.ViewType == v_type and v.Id != active_view.Id)
+
+        if selected_views:
+            for view in selected_views:
+                for datum in selected_datum:
+                    if not datum.CanBeVisibleInView(view):
+                        datum.Maximize3DExtents()
+
+            i_set_view = HashSet[ElementId]()
+            for view in selected_views:
+                i_set_view.Add(view.Id)
+
+        for datum in selected_datum:
+            datum.PropagateToViews(active_view, i_set_view)
+        t.Commit()
