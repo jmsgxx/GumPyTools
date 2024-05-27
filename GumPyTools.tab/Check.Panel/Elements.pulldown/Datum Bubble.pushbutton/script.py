@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Grid Bubble'
+__title__ = 'Datum Bubble'
 __doc__ = """
-This script will toggle the visibility of Grid Bubble.
+This script will toggle the visibility of datum and Level Bubble.
 
 HOW TO:
 
@@ -11,11 +11,16 @@ the command or;
 2. Click the command, select the elements then click
 'Finish' on the the upper left corner.
 
-This will work for single or multiple grids.
+- If 'Start' is selected, 'End' will turn off and vice versa.
+- If 'Start and 'End' are both selected. It will turn on both
+the bubble and vice versa.
+- Do a trial end error to know which is start and end.
+
+This will work for single or multiple datums and levels.
 __________________________________
 Author: Joven Mark Gumana
 v1. 25 May 2024
-v2. 26 May 2024 - minimize button
+v2. 26 May 2024 - minimize button and added Level
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -68,15 +73,15 @@ def end_bub_hide(element):
 
 # ======================================================================================================
 # 1️⃣ collect the grids
-selected_grids = get_multiple_elements()
+selected_datum = get_multiple_elements()
 
-if not selected_grids:
+if not selected_datum:
     with try_except():
-        filter_type = ISelectionFilter_Classes([Grid])
-        grid_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Wall")
-        selected_grids = [doc.GetElement(gr) for gr in grid_list]
+        filter_type = ISelectionFilter_Classes([Grid, Level])
+        datum_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Wall")
+        selected_datum = [doc.GetElement(gr) for gr in datum_list]
 
-    if not selected_grids:
+    if not selected_datum:
         forms.alert('No wall selected', exitscript=True)
 
 
@@ -93,11 +98,11 @@ try:
                   CheckBox('start_bub', 'Start'),
                   CheckBox('end_bub', 'End'),
                   Separator(),
-                  Label("If Bubble is on '✅ Start/End = Off'"),
+                  Label("NOTE: ✅ Start and ✅ End = On/Off both sides"),
                   Separator(),
                   Button('Select')]
 
-    form = FlexForm("Grid Bubble View Toggle.v2", components)
+    form = FlexForm("Datum Bubble View Toggle.v2", components)
     form.show()
 
     user_input = form.values
@@ -105,31 +110,27 @@ try:
     end_pos     = user_input['end_bub']
 
 except KeyError:
-    forms.alert('No input provide, please try again!', exitscript=True)
+    forms.alert('No input provided, please try again!', exitscript=True)
 # ======================================================================================================
 # 3️⃣ main command
 
-for grid in selected_grids:     # type: Grid
-    bubble_start_vis    = grid.IsBubbleVisibleInView(DatumEnds.End0, active_view)
-    bubble_end_vis      = grid.IsBubbleVisibleInView(DatumEnds.End1, active_view)
+for datum in selected_datum:     # type: Grid
+    bubble_start_vis    = datum.IsBubbleVisibleInView(DatumEnds.End0, active_view)
+    bubble_end_vis      = datum.IsBubbleVisibleInView(DatumEnds.End1, active_view)
     # -----------------------------------------------------------------------------
     with revit.Transaction(__title__):
         if start_pos and end_pos:
             if bubble_start_vis and bubble_end_vis:
-                start_bub_hide(grid)
-                end_bub_hide(grid)
+                start_bub_hide(datum)
+                end_bub_hide(datum)
             else:
-                start_bub_show(grid)
-                end_bub_show(grid)
+                start_bub_show(datum)
+                end_bub_show(datum)
 
         elif start_pos:
-            if bubble_start_vis:
-                start_bub_hide(grid)
-            else:
-                start_bub_show(grid)
+            start_bub_show(datum)
+            end_bub_hide(datum)
 
         elif end_pos:
-            if bubble_end_vis:
-                end_bub_hide(grid)
-            else:
-                end_bub_show(grid)
+            end_bub_show(datum)
+            start_bub_hide(datum)
