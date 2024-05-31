@@ -265,33 +265,33 @@ with Transaction(doc, __title__) as t:
 	ElementId floorTypeId,
 	ElementId levelId
     """
-    # floor_type_id = doc.GetDefaultElementTypeId(ElementTypeGroup.FloorType)
+    floor_type_id = doc.GetDefaultElementTypeId(ElementTypeGroup.FloorType)
 
-    # #GET POINTS
-    # pt_0 = XYZ(150, 0, 0)
-    # pt_1 = XYZ(170, 0, 0)
-    # pt_2 = XYZ(170, 20, 0)
-    # pt_3 = XYZ(150, 20, 0)
+    #GET POINTS
+    pt_0 = XYZ(150, 0, 0)
+    pt_1 = XYZ(170, 0, 0)
+    pt_2 = XYZ(170, 20, 0)
+    pt_3 = XYZ(150, 20, 0)
 	
-    # # CONVERT POINTS INTO LINES
-    # l_0 = Line.CreateBound(pt_0, pt_1)
-    # l_1 = Line.CreateBound(pt_1, pt_2)
-    # l_2 = Line.CreateBound(pt_2, pt_3)
-    # l_3 = Line.CreateBound(pt_3, pt_0)
+    # CONVERT POINTS INTO LINES
+    l_0 = Line.CreateBound(pt_0, pt_1)
+    l_1 = Line.CreateBound(pt_1, pt_2)
+    l_2 = Line.CreateBound(pt_2, pt_3)
+    l_3 = Line.CreateBound(pt_3, pt_0)
 
-    # # GROUP THE LINES AS BOUNDARIES
-    # boundary = CurveLoop()
-    # boundary.Append(l_0)
-    # boundary.Append(l_1)
-    # boundary.Append(l_2)
-    # boundary.Append(l_3)
+    # GROUP THE LINES AS BOUNDARIES
+    boundary = CurveLoop()
+    boundary.Append(l_0)
+    boundary.Append(l_1)
+    boundary.Append(l_2)
+    boundary.Append(l_3)
 
-    #  # LIST OF BOUNDARIES
-    # new_boundary = List[CurveLoop]()
-    # new_boundary.Add(boundary)
+     # LIST OF BOUNDARIES
+    new_boundary = List[CurveLoop]()
+    new_boundary.Add(boundary)
     
 
-    # new_floor = Floor.Create(doc, new_boundary, floor_type_id, active_level.Id)
+    new_floor = Floor.Create(doc, new_boundary, floor_type_id, active_level.Id)
 
     # =================================================================================================================
     # ╔═╗╔═╗╔═╗╦ ╦  ╔═╗╦  ╔═╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗

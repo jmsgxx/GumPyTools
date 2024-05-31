@@ -25,6 +25,7 @@ Author: Joven Mark Gumana
 v1. 25 May 2024
 v2. 26 May 2024 - minimize button and added Level
 v3. 27 May 2024 - propagate ext multi views
+v4. 28 May 2024 - parallel views for sec/elev
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -149,17 +150,26 @@ with Transaction(doc, __title__) as t:
         t.Commit()
 
     else:       # for multiple views
-        change_view = List[ViewType]([ViewType.FloorPlan,
-                                     ViewType.CeilingPlan,
-                                     ViewType.AreaPlan,
-                                     ViewType.Elevation,
-                                     ViewType.Section])
+        plan_view = List[ViewType]([ViewType.FloorPlan,
+                                    ViewType.CeilingPlan,
+                                    ViewType.AreaPlan])
+
+        elev_sec_view = List[ViewType]([ViewType.Elevation,
+                                        ViewType.Section])
+        # -------------------------------------------------------------------------
         v_type = None
-        if active_view.ViewType in [view for view in change_view]:
+        # 🟩 if plans
+        if active_view.ViewType in [view for view in plan_view]:
             v_type = active_view.ViewType
+            selected_views = forms.select_views(filterfunc=lambda v: v.ViewType == v_type and v.Id != active_view.Id)
 
-        selected_views = forms.select_views(filterfunc=lambda v: v.ViewType == v_type and v.Id != active_view.Id)
-
+        # 🟩 if sec/elev
+        elif active_view.ViewType in [view for view in elev_sec_view]:
+            v_type = active_view.ViewType
+            selected_views = forms.select_views(filterfunc=lambda v: v.ViewType == v_type and v.Id != active_view.Id \
+                                                and v.ViewDirection.Negate().
+                                                IsAlmostEqualTo(active_view.ViewDirection))
+        # -------------------------------------------------------------------------
         if selected_views:
             for view in selected_views:
                 for datum in selected_datum:
@@ -169,7 +179,15 @@ with Transaction(doc, __title__) as t:
             i_set_view = HashSet[ElementId]()
             for view in selected_views:
                 i_set_view.Add(view.Id)
+        else:
+            forms.alert("No input. Exiting script.", exitscript=True, warn_icon=False)
+        # -------------------------------------------------------------------------
+        # 🟨 propagate extents
+        try:
+            for datum in selected_datum:
+                datum.PropagateToViews(active_view, i_set_view)
+            t.Commit()
 
-        for datum in selected_datum:
-            datum.PropagateToViews(active_view, i_set_view)
-        t.Commit()
+        except Exception as e:
+            forms.alert('{}.Exiting command.'.format(e), exitscript=True, warn_icon=False)
+
