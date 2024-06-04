@@ -12,7 +12,7 @@ from datetime import datetime
 import os
 
 sender = __eventsender__
-arg = __eventargs__     # type:
+arg = __eventargs__
 doc = revit.doc
 
 if doc.IsFamilyDocument:
@@ -29,9 +29,9 @@ else:
     else:
         fam_path_name = family_path + family_name
     loaded_to = EXEC_PARAMS.event_args.Document.Title
-    time = datetime.now()
-    date = str(time.strftime("%d-%m-%y"))
-    time = str(time.strftime("%H:%M:%S"))
+    cur_time = datetime.now()
+    date = str(cur_time.strftime("%d-%m-%y"))
+    time = str(cur_time.strftime("%H:%M:%S"))
 
     # get pc and user info
     username = os.environ['USERNAME']

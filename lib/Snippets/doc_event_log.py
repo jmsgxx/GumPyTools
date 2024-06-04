@@ -1,0 +1,138 @@
+# -*- coding: utf-8 -*-
+""" custom logger function for Document Events"""
+
+from pyrevit import revit, EXEC_PARAMS
+import sys
+from datetime import datetime
+import os
+from Autodesk.Revit.DB import *
+import csv
+
+sender = __eventsender__
+arg = __eventargs__
+doc = revit.doc
+
+
+def get_params(element, param_name):
+    param = element.get_Parameter(param_name)
+    if param is not None and param.HasValue:
+        # Check the storage type
+        if param.StorageType == StorageType.String:
+            return param.AsString()
+        elif param.StorageType == StorageType.Integer:
+            return param.AsInteger()
+        elif param.StorageType == StorageType.Double:
+            return param.AsDouble()
+        elif param.StorageType == StorageType.ElementId:
+            return param.AsElementId()
+    else:
+        return None
+
+
+def doc_event_logger(custom_path):
+    """ function to log who opens the file """
+    if doc.IsFamilyDocument:
+        sys.exit()
+
+    # ✅ main code
+    else:
+        model = EXEC_PARAMS.event_args.Document.Title
+        time = datetime.now()
+        date = str(time.strftime("%d-%m-%y"))
+        time = str(time.strftime("%H:%M:%S"))
+
+        # get pc and user info
+        username = os.environ['USERNAME']
+        computer_name = os.environ['COMPUTERNAME']
+
+        filepath = custom_path
+
+        try:
+            with open(filepath, 'a') as f:
+                if not os.path.isfile(filepath):
+                    open(filepath, 'w').close()
+                if os.stat(filepath).st_size == 0:
+                    headings = [
+                        'User',
+                        'Computer Number',
+                        'Model Name',
+                        'Date',
+                        'Time'
+                    ]
+                    f.write(','.join(headings) + '\n')
+
+                items = [
+                    username,
+                    computer_name,
+                    model,
+                    date,
+                    time
+                ]
+                lines_to_write = ','.join(items) + '\n'
+                f.write(lines_to_write)
+        except:
+            pass
+
+
+def add_element_log(custom_path):
+    """ added element log """
+    if doc.IsFamilyDocument:
+        sys.exit()
+
+    else:
+        # ✅ main code
+        add_filepath = custom_path
+        username = os.environ['USERNAME']
+        computer_name = os.environ['COMPUTERNAME']
+        cur_time = datetime.now()
+        date = str(cur_time.strftime("%d-%m-%y"))
+        time = str(cur_time.strftime("%H:%M:%S"))
+        model = EXEC_PARAMS.event_args.GetDocument().Title
+        added_element_ids = EXEC_PARAMS.event_args.GetAddedElementIds()  # ICollection of element ids
+        coll_elements = [doc.GetElement(el) for el in added_element_ids]
+        trans_name = list(EXEC_PARAMS.event_args.GetTransactionNames())
+
+        with open(add_filepath, 'a') as f:
+            writer = csv.writer(f)
+            if not os.path.isfile(add_filepath) or os.stat(add_filepath).st_size == 0:
+                headings = [
+                    'Model',
+                    'Element',
+                    'Element Type',
+                    'Family',
+                    'Category',
+                    'Element Id',
+                    'Added by',
+                    'Computer Number',
+                    'Date',
+                    'Time',
+                    'Transaction Name'
+                ]
+                writer.writerow(headings)
+
+            try:
+                for el in coll_elements:
+                    if el:
+                        el_id = el.GetTypeId()
+                        el_type = doc.GetElement(el_id)
+                        el_type = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_FAMILY_NAME)
+                        el_cat = el.get_Parameter(BuiltInParameter.ELEM_CATEGORY_PARAM)
+                        el_fam = el.get_Parameter(BuiltInParameter.ELEM_FAMILY_PARAM)
+
+                        for trans in trans_name:
+                            row_data = [
+                                model,
+                                el.Name,
+                                el_type.AsValueString() if el_type else '',
+                                el_fam.AsValueString() if el_fam else '',
+                                el_cat.AsValueString() if el_cat else '',
+                                el.Id,
+                                username,
+                                computer_name,
+                                date,
+                                time,
+                                trans
+                            ]
+                            writer.writerow(row_data)
+            except Exception as e:
+                pass
