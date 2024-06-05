@@ -1,0 +1,46 @@
+Model,Element,Element Type,Family,Category,Element Id,Modified by,Computer Number,Date,Time,Transaction Name
+Project1,,,,,194749,Joven_MS,CAD_137,05-06-24,11:44:50,Floor
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,05-06-24,11:44:54,Line - Rectangle
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,05-06-24,11:44:54,Line - Rectangle
+Project1,,,,,194749,Joven_MS,CAD_137,05-06-24,11:44:54,Finish sketch
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,05-06-24,11:44:54,Finish sketch
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,05-06-24,11:44:54,Finish sketch
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309868,Joven_MS,CAD_137,05-06-24,11:44:59,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309868,Joven_MS,CAD_137,05-06-24,11:44:59,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309893,Joven_MS,CAD_137,05-06-24,11:44:59,Wall - Line
+Project1,,,,,194749,Joven_MS,CAD_137,05-06-24,11:47:37,Floor
+Project1,Sketch,,,,309940,Joven_MS,CAD_137,05-06-24,11:47:39,Line - Rectangle
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309941,Joven_MS,CAD_137,05-06-24,11:47:39,Line - Rectangle
+Project1,,,,,194749,Joven_MS,CAD_137,05-06-24,11:47:41,Finish sketch
+Project1,Sketch,,,,309940,Joven_MS,CAD_137,05-06-24,11:47:41,Finish sketch
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309941,Joven_MS,CAD_137,05-06-24,11:47:41,Finish sketch
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309988,Joven_MS,CAD_137,05-06-24,12:04:28,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309988,Joven_MS,CAD_137,05-06-24,12:04:28,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310004,Joven_MS,CAD_137,05-06-24,12:04:28,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310004,Joven_MS,CAD_137,05-06-24,12:04:29,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310030,Joven_MS,CAD_137,05-06-24,12:04:29,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309988,Joven_MS,CAD_137,05-06-24,12:04:32,Door
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310004,Joven_MS,CAD_137,05-06-24,12:04:33,Door
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310004,Joven_MS,CAD_137,05-06-24,12:04:35,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310030,Joven_MS,CAD_137,05-06-24,12:04:35,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309988,Joven_MS,CAD_137,05-06-24,12:06:41,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,310004,Joven_MS,CAD_137,05-06-24,12:06:41,Delete Selection
+Project1,1810x2110mm,1810x2110mm,Doors_ExtDbl_Flush,Doors,310083,Joven_MS,CAD_137,05-06-24,12:06:41,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309988,Joven_MS,CAD_137,05-06-24,12:06:42,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309869,Joven_MS,CAD_137,05-06-24,12:08:52,Door
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309881,Joven_MS,CAD_137,05-06-24,12:08:54,Window
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309867,Joven_MS,CAD_137,05-06-24,12:08:55,Window
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309868,Joven_MS,CAD_137,05-06-24,12:08:56,Window
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309881,Joven_MS,CAD_137,05-06-24,12:08:58,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309883,Joven_MS,CAD_137,05-06-24,12:08:58,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309884,Joven_MS,CAD_137,05-06-24,12:08:58,Delete Selection
+Project1,910x910mm,910x910mm,Windows_Sgl_Plain,Windows,309933,Joven_MS,CAD_137,05-06-24,12:08:58,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309867,Joven_MS,CAD_137,05-06-24,12:08:59,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309869,Joven_MS,CAD_137,05-06-24,12:12:08,Delete Selection
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Walls,309881,Joven_MS,CAD_137,05-06-24,12:12:09,Delete Selection
+Project1,,,,,194749,Joven_MS,CAD_137,05-06-24,12:16:13,Floor
+Project1,Sketch,,,,309921,Joven_MS,CAD_137,05-06-24,12:16:16,Line - Rectangle
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309922,Joven_MS,CAD_137,05-06-24,12:16:16,Line - Rectangle
+Project1,,,,,194749,Joven_MS,CAD_137,05-06-24,12:16:17,Finish sketch
+Project1,Sketch,,,,309921,Joven_MS,CAD_137,05-06-24,12:16:17,Finish sketch
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309922,Joven_MS,CAD_137,05-06-24,12:16:17,Finish sketch

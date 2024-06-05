@@ -1,15 +1,26 @@
 Model,Element,Element Type,Family,Category,Element Id,Added by,Computer Number,Date,Time,Transaction Name
-Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309835,Joven_MS,CAD_137,04-06-24,15:34:52,Wall - Rectangle
-Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309836,Joven_MS,CAD_137,04-06-24,15:34:52,Wall - Rectangle
-Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309837,Joven_MS,CAD_137,04-06-24,15:34:52,Wall - Rectangle
-Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309838,Joven_MS,CAD_137,04-06-24,15:34:52,Wall - Rectangle
-Project1,1810x2110mm,Doors_ExtDbl_Flush,Doors_ExtDbl_Flush,Doors,309850,Joven_MS,CAD_137,04-06-24,15:34:57,Door
-Project1,1810x2110mm,Doors_ExtDbl_Flush,Doors_ExtDbl_Flush,Doors,309917,Joven_MS,CAD_137,04-06-24,15:34:58,Door
-Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,309959,Joven_MS,CAD_137,04-06-24,15:35:01,Window
-Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,309980,Joven_MS,CAD_137,04-06-24,15:35:02,Window
-Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,310005,Joven_MS,CAD_137,04-06-24,15:35:03,Window
-Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,310043,Joven_MS,CAD_137,04-06-24,15:35:05,Window
-Project1,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,310131,Joven_MS,CAD_137,04-06-24,15:35:18,Finish sketch
-Project1,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,310132,Joven_MS,CAD_137,04-06-24,15:35:18,Finish sketch
-Project1,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,310133,Joven_MS,CAD_137,04-06-24,15:35:18,Finish sketch
-Project1,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,310134,Joven_MS,CAD_137,04-06-24,15:35:18,Finish sketch
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309868,Joven_MS,CAD_137,05-06-24,11:44:57,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309893,Joven_MS,CAD_137,05-06-24,11:44:59,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309924,Joven_MS,CAD_137,05-06-24,11:44:59,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309988,Joven_MS,CAD_137,05-06-24,12:04:26,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,310004,Joven_MS,CAD_137,05-06-24,12:04:28,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,310030,Joven_MS,CAD_137,05-06-24,12:04:28,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,310050,Joven_MS,CAD_137,05-06-24,12:04:29,Wall - Line
+Project1,1810x2110mm,Doors_ExtDbl_Flush,Doors_ExtDbl_Flush,Doors,310064,Joven_MS,CAD_137,05-06-24,12:04:32,Door
+Project1,1810x2110mm,Doors_ExtDbl_Flush,Doors_ExtDbl_Flush,Doors,310083,Joven_MS,CAD_137,05-06-24,12:04:33,Door
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309867,Joven_MS,CAD_137,05-06-24,12:08:48,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309868,Joven_MS,CAD_137,05-06-24,12:08:48,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309869,Joven_MS,CAD_137,05-06-24,12:08:48,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309870,Joven_MS,CAD_137,05-06-24,12:08:48,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309881,Joven_MS,CAD_137,05-06-24,12:08:49,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309882,Joven_MS,CAD_137,05-06-24,12:08:49,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309883,Joven_MS,CAD_137,05-06-24,12:08:49,Wall - Rectangle
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309884,Joven_MS,CAD_137,05-06-24,12:08:49,Wall - Rectangle
+Project1,1810x2110mm,Doors_ExtDbl_Flush,Doors_ExtDbl_Flush,Doors,309900,Joven_MS,CAD_137,05-06-24,12:08:52,Door
+Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,309933,Joven_MS,CAD_137,05-06-24,12:08:54,Window
+Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,309954,Joven_MS,CAD_137,05-06-24,12:08:55,Window
+Project1,910x910mm,Windows_Sgl_Plain,Windows_Sgl_Plain,Windows,309986,Joven_MS,CAD_137,05-06-24,12:08:56,Window
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309848,Joven_MS,CAD_137,05-06-24,12:15:45,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309890,Joven_MS,CAD_137,05-06-24,12:16:03,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,309973,Joven_MS,CAD_137,05-06-24,12:16:42,Wall - Line
+Project1,Wall-Ext_102Bwk-75Ins-100LBlk-12P,Basic Wall,Basic Wall,Walls,310027,Joven_MS,CAD_137,05-06-24,12:16:54,Wall - Line

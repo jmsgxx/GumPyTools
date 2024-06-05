@@ -7,6 +7,9 @@ from datetime import datetime
 import os
 from Autodesk.Revit.DB import *
 import csv
+import clr
+clr.AddReference("System")
+from System.Collections.Generic import List
 
 sender = __eventsender__
 arg = __eventargs__
@@ -134,5 +137,118 @@ def add_element_log(custom_path):
                                 trans
                             ]
                             writer.writerow(row_data)
+            except:
+                pass
+
+
+def mod_element_log(custom_path):
+    """ modified element log """
+    if doc.IsFamilyDocument:
+        sys.exit()
+
+    else:
+        # ✅ main code
+        add_filepath = custom_path
+        username = os.environ['USERNAME']
+        computer_name = os.environ['COMPUTERNAME']
+        cur_time = datetime.now()
+        date = str(cur_time.strftime("%d-%m-%y"))
+        time = str(cur_time.strftime("%H:%M:%S"))
+        model = EXEC_PARAMS.event_args.GetDocument().Title
+
+        mod_element_ids = EXEC_PARAMS.event_args.GetModifiedElementIds()
+        element_collection = [doc.GetElement(el) for el in mod_element_ids]
+
+        trans_name = list(EXEC_PARAMS.event_args.GetTransactionNames())
+
+        with open(add_filepath, 'a') as f:
+            writer = csv.writer(f)
+            if not os.path.isfile(add_filepath) or os.stat(add_filepath).st_size == 0:
+                headings = [
+                    'Model',
+                    'Element',
+                    'Element Type',
+                    'Family',
+                    'Category',
+                    'Element Id',
+                    'Modified by',
+                    'Computer Number',
+                    'Date',
+                    'Time',
+                    'Transaction Name'
+                ]
+                writer.writerow(headings)
+            try:
+                for el in element_collection:
+                    el_type = doc.GetElement(el.GetTypeId())
+
+                    el_type_name = el_type.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsValueString() if el_type else ''
+                    el_cat_name = el.get_Parameter(BuiltInParameter.ELEM_CATEGORY_PARAM).AsValueString() if el else ''
+                    el_fam_name = el.get_Parameter(BuiltInParameter.ELEM_FAMILY_PARAM).AsValueString() if el else ''
+
+                    for trans in trans_name:
+                        row_data = [
+                            model,
+                            el.Name if el else '',
+                            el_type_name,
+                            el_fam_name,
+                            el_cat_name,
+                            el.Id,
+                            username,
+                            computer_name,
+                            date,
+                            time,
+                            trans
+                        ]
+                        writer.writerow(row_data)
             except Exception as e:
                 pass
+
+
+def del_element_log(custom_path):
+    """ will only return element id, you won't retrieve the element """
+    if doc.IsFamilyDocument:
+        sys.exit()
+
+    else:
+        # ✅ main code
+        add_filepath = custom_path
+        username = os.environ['USERNAME']
+        computer_name = os.environ['COMPUTERNAME']
+        cur_time = datetime.now()
+        date = str(cur_time.strftime("%d-%m-%y"))
+        time = str(cur_time.strftime("%H:%M:%S"))
+        model = EXEC_PARAMS.event_args.GetDocument().Title
+
+        del_element_ids     = list(EXEC_PARAMS.event_args.GetDeletedElementIds())
+        trans_name          = list(EXEC_PARAMS.event_args.GetTransactionNames())
+
+        with open(add_filepath, 'a') as f:
+            writer = csv.writer(f)
+            if not os.path.isfile(add_filepath) or os.stat(add_filepath).st_size == 0:
+                headings = [
+                    'Model',
+                    'Element Id',
+                    'Deleted by',
+                    'Computer Number',
+                    'Date',
+                    'Time',
+                    'Transaction Name'
+                ]
+                writer.writerow(headings)
+            try:
+                for el_id in del_element_ids:
+                    for trans in trans_name:
+                        row_data = [
+                            model,
+                            el_id,
+                            username,
+                            computer_name,
+                            date,
+                            time,
+                            trans
+                        ]
+                        writer.writerow(row_data)
+            except Exception as e:
+                pass
+
