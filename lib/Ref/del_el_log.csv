@@ -1,4 +1,14 @@
-Model,Element Id,Deleted by,Computer Number,Date,Time,Transaction Name
-Project1,309900,Joven_MS,CAD_137,05-06-24,12:12:08,Delete Selection
-Project1,309933,Joven_MS,CAD_137,05-06-24,12:12:09,Delete Selection
-Project1,310027,Joven_MS,CAD_137,05-06-24,12:17:25,Delete Selection
+Model,Element Id,Element Name,Deleted by,Computer Number,Date,Time,Transaction Name
+Project1,309837,,Joven_MS,CAD_137,05-06-24,14:42:20,Delete Selection
+Project1,309835,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309836,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309838,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309849,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309850,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309851,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309854,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309855,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309856,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,309857,,Joven_MS,CAD_137,05-06-24,14:43:31,Delete Selection
+Project1,310033,,Joven_MS,CAD_137,05-06-24,14:43:44,Delete Selection
+Project1,310079,,Joven_MS,CAD_137,05-06-24,14:45:51,Delete Selection

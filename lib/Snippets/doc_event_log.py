@@ -91,7 +91,7 @@ def add_element_log(custom_path):
         date = str(cur_time.strftime("%d-%m-%y"))
         time = str(cur_time.strftime("%H:%M:%S"))
         model = EXEC_PARAMS.event_args.GetDocument().Title
-        added_element_ids = EXEC_PARAMS.event_args.GetAddedElementIds()  # ICollection of element ids
+        added_element_ids = EXEC_PARAMS.event_args.GetAddedElementIds()
         coll_elements = [doc.GetElement(el) for el in added_element_ids]
         trans_name = list(EXEC_PARAMS.event_args.GetTransactionNames())
 
@@ -221,6 +221,9 @@ def del_element_log(custom_path):
         model = EXEC_PARAMS.event_args.GetDocument().Title
 
         del_element_ids     = list(EXEC_PARAMS.event_args.GetDeletedElementIds())
+        mod_element_ids     = list(EXEC_PARAMS.event_args.GetModifiedElementIds())
+        added_element_ids   = list(EXEC_PARAMS.event_args.GetAddedElementIds())
+
         trans_name          = list(EXEC_PARAMS.event_args.GetTransactionNames())
 
         with open(add_filepath, 'a') as f:
@@ -229,6 +232,7 @@ def del_element_log(custom_path):
                 headings = [
                     'Model',
                     'Element Id',
+                    'Element Name',
                     'Deleted by',
                     'Computer Number',
                     'Date',
@@ -236,19 +240,23 @@ def del_element_log(custom_path):
                     'Transaction Name'
                 ]
                 writer.writerow(headings)
-            try:
-                for el_id in del_element_ids:
-                    for trans in trans_name:
-                        row_data = [
-                            model,
-                            el_id,
-                            username,
-                            computer_name,
-                            date,
-                            time,
-                            trans
-                        ]
-                        writer.writerow(row_data)
-            except Exception as e:
-                pass
+
+            for del_id in del_element_ids:
+                del_name = None
+                if del_id in mod_element_ids or del_id in added_element_ids:
+                    del_element = doc.GetElement(del_id)
+                    del_name = del_element.Name
+                for trans in trans_name:
+                    row_data = [
+                        model,
+                        del_id,
+                        del_name,
+                        username,
+                        computer_name,
+                        date,
+                        time,
+                        trans
+                    ]
+                    writer.writerow(row_data)
+
 
