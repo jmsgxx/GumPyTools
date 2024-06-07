@@ -34,8 +34,11 @@ def get_params(element, param_name):
 
 def doc_event_logger(custom_path):
     """ function to log who opens the file """
-    if doc.IsFamilyDocument:
-        sys.exit()
+    try:
+        if doc.IsFamilyDocument:
+            sys.exit()
+    except:
+        pass
 
     # ✅ main code
     else:
