@@ -41,13 +41,13 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-# TODO: select spline
 
+# 🟡 select spline
 filter_type = ISelectionFilter_Classes([ModelNurbSpline, DetailNurbSpline])
 spl = selection.PickObject(ObjectType.Element, filter_type, "Select Spline")
 selected_spline = doc.GetElement(spl).GeometryCurve
 
-# TODO: select walls
+# 🟡 select walls
 selected_walls = get_multiple_elements()
 
 if not selected_walls:
@@ -59,42 +59,31 @@ if not selected_walls:
     if not selected_walls:
         forms.alert('No wall selected', exitscript=True)
 
-points = []
-results = clr.Reference[IntersectionResultArray]()
-param_wall = []
-
-param_wall_pairs = []
+# -----------------------------------------------------------------------------------
+# 1️⃣ get the intersection of spline and walls, put in tuple
+intersect_pts = []
 
 for wall in selected_walls:
     wall_curve = wall.Location.Curve
+    results = clr.Reference[IntersectionResultArray]()
     intersection_line = wall_curve.Intersect(selected_spline, results)
     if intersection_line == SetComparisonResult.Overlap:
         for result in results.Value:
-            pt = result.XYZPoint
-            points.append(pt)
-            # -----------------------------------------------
-            # how to get the parameter properly
-            intersection_result = wall_curve.Project(pt)
-            param = intersection_result.Parameter
-            total_length = wall_curve.Length
-            normalized_param = int(param) / total_length
-            point_on_wall = wall_curve.Evaluate(normalized_param, True)
-            param_wall_pairs.append((point_on_wall, wall))
-            print(type(param))
-            print('Param:{}'.format(param))
-            print('Total Length:{}'.format(total_length))
-            print('Normalized Param:{}'.format(normalized_param))
-            print('Point on wall:{}'.format(point_on_wall))
+            intersect_pts.append((result.XYZPoint, wall))
 
-# param_wall_pairs.sort(key=lambda x: x[0])
-#
-# # -------------------------------------------------------------------
-#
-# with rvt_transaction(doc, __title__):
-#     for i, (_, wall) in enumerate(param_wall_pairs, start=1):
-#         wall_param = wall.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
-#         wall_param.Set('Wall-{}'.format(i))
+# 2️⃣ get the parameter by Project. will return a geometry, .Parameter is the position of point on the spline
+pt_at_spline = []
+for el in intersect_pts:
+    projected_pt = selected_spline.Project(el[0])
+    param_val = projected_pt.Parameter      # position of point in spline
+    pt_at_spline.append((param_val, el[1]))     # el[1] is wall element
 
-# TODO: check the intersection
-# TODO: get the intersection point
-# TODO: sor the intersection point and set
+print(pt_at_spline)
+
+pt_at_spline.sort(key=lambda x: x[0])
+
+# 3️⃣ set the parameter
+with rvt_transaction(doc, "Renumber Walls"):
+    for i, (_, wall) in enumerate(pt_at_spline, start=1):
+        wall_param = wall.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
+        wall_param.Set('WL-{}'.format(str(i).zfill(3)))
