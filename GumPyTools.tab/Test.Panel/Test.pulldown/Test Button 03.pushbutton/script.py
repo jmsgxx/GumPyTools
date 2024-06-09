@@ -60,30 +60,29 @@ if not selected_walls:
         forms.alert('No wall selected', exitscript=True)
 
 # -----------------------------------------------------------------------------------
-# 1️⃣ get the intersection of spline and walls, put in tuple
-intersect_pts = []
+# 1️⃣ get the intersection of spline and walls
+pt_at_spline = []
+wall_list = []
 
 for wall in selected_walls:
     wall_curve = wall.Location.Curve
     results = clr.Reference[IntersectionResultArray]()
     intersection_line = wall_curve.Intersect(selected_spline, results)
     if intersection_line == SetComparisonResult.Overlap:
+        # 2️⃣ get the intersection point
         for result in results.Value:
-            intersect_pts.append((result.XYZPoint, wall))
+            result_point = result.XYZPoint
+            projected_pt = selected_spline.Project(result_point)    # create pt on intersection
+            param_val = projected_pt.Parameter      # position of point on spline from 0 t0 1
+            pt_at_spline.append(param_val)
+            wall_list.append(wall)
 
-# 2️⃣ get the parameter by Project. will return a geometry, .Parameter is the position of point on the spline
-pt_at_spline = []
-for el in intersect_pts:
-    projected_pt = selected_spline.Project(el[0])
-    param_val = projected_pt.Parameter      # position of point in spline
-    pt_at_spline.append((param_val, el[1]))     # el[1] is wall element
-
-print(pt_at_spline)
-
-pt_at_spline.sort(key=lambda x: x[0])
+combined_list = list(zip(pt_at_spline, wall_list))     # combine for sorting
+combined_list.sort(key=lambda x: x[0])
+print(combined_list)
 
 # 3️⃣ set the parameter
 with rvt_transaction(doc, "Renumber Walls"):
-    for i, (_, wall) in enumerate(pt_at_spline, start=1):
+    for i, (_, wall) in enumerate(combined_list, start=1):
         wall_param = wall.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
         wall_param.Set('WL-{}'.format(str(i).zfill(3)))
