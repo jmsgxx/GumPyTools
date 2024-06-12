@@ -535,3 +535,105 @@ NDH_SKA_ARC_CLP_000_M3,Model Lines,,,Lines,1467169,Joven_MS,CAD_137,07-06-24,16:
 NDH_SKA_ARC_CLP_000_M3,System Data,,,,86962,Joven_MS,CAD_137,07-06-24,16:41:18,Delete Selection
 NDH_SKA_ARC_CLP_000_M3,System Data,,,,102525,Joven_MS,CAD_137,07-06-24,16:41:18,Delete Selection
 NDH_SKA_ARC_CLP_000_M3,,,,,1016412,Joven_MS,CAD_137,07-06-24,16:41:18,Delete Selection
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381701,Joven_MS,CAD_137,11-06-24,11:03:28,Temporary Hide/Isolate
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381701,Joven_MS,CAD_137,11-06-24,11:07:45,Reset Hide/Isolate
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381699,Joven_MS,CAD_137,11-06-24,14:17:42,Move
+NDH_SKA_ARC_CLP_000_M3,Section Box,,,Section Boxes,381700,Joven_MS,CAD_137,11-06-24,14:17:42,Move
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381701,Joven_MS,CAD_137,11-06-24,14:17:42,Move
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381699,Joven_MS,CAD_137,11-06-24,14:21:01,Move
+NDH_SKA_ARC_CLP_000_M3,Section Box,,,Section Boxes,381700,Joven_MS,CAD_137,11-06-24,14:21:01,Move
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381701,Joven_MS,CAD_137,11-06-24,14:21:01,Move
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381699,Joven_MS,CAD_137,11-06-24,15:01:19,Move
+NDH_SKA_ARC_CLP_000_M3,Section Box,,,Section Boxes,381700,Joven_MS,CAD_137,11-06-24,15:01:19,Move
+NDH_SKA_ARC_CLP_000_M3,{3D - ska137},3D View,3D View,Views,381701,Joven_MS,CAD_137,11-06-24,15:01:19,Move
+Project1,,,,,194749,Joven_MS,CAD_137,12-06-24,15:28:55,Floor
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,15:28:59,Line - Rectangle
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,15:28:59,Line - Rectangle
+Project1,,,,,194749,Joven_MS,CAD_137,12-06-24,15:29:00,Finish sketch
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,15:29:00,Finish sketch
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,15:29:00,Finish sketch
+Project1,Family1,Family1,Family1,Generic Models,310875,Joven_MS,CAD_137,12-06-24,17:09:03,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:09:06,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:09:08,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:35:47,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:35:48,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:37:09,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:37:11,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:39:36,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:39:38,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:40:16,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:41:20,Drag
+Project1,Level 0,,,,309833,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Sketch,,,,309834,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor-Grnd-Susp_65Scr-80Ins-100Blk-75PC,Floor,Floors,309835,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:41:21,Drag

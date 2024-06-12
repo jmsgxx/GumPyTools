@@ -82,8 +82,11 @@ def doc_event_logger(custom_path):
 
 def add_element_log(custom_path):
     """ added element log """
-    if doc.IsFamilyDocument:
-        sys.exit()
+    try:
+        if doc.IsFamilyDocument:
+            sys.exit()
+    except:
+        pass
 
     else:
         # ✅ main code
@@ -146,8 +149,11 @@ def add_element_log(custom_path):
 
 def mod_element_log(custom_path):
     """ modified element log """
-    if doc.IsFamilyDocument:
-        sys.exit()
+    try:
+        if doc.IsFamilyDocument:
+            sys.exit()
+    except:
+        pass
 
     else:
         # ✅ main code
