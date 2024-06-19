@@ -637,3 +637,202 @@ Project1,Model Lines,,,Lines: <Sketch>,309838,Joven_MS,CAD_137,12-06-24,17:41:21
 Project1,Model Lines,,,Lines: <Sketch>,309839,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
 Project1,Model Lines,,,Lines: <Sketch>,309840,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
 Project1,Model Lines,,,Lines: <Sketch>,309841,Joven_MS,CAD_137,12-06-24,17:41:21,Drag
+Project1,Family1,Family1,Family1,Generic Models,310765,Joven_MS,CAD_137,19-06-24,11:00:09,Drag
+Project1,Model Lines,,,Lines,310816,Joven_MS,CAD_137,19-06-24,11:00:51,Lines
+Project1,Model Lines,,,Lines,310816,Joven_MS,CAD_137,19-06-24,11:00:53,Lines
+Project1,Model Lines,,,Lines,310816,Joven_MS,CAD_137,19-06-24,11:00:53,Lines
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:10,Solid &Extrusion
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:15,Line - Line
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:18,Mirror Copy
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:21,Line - Line
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:23,Delete Selection
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:28,Line - Line
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:35,Modify element attributes
+Family1,Dash dot dot,,,,17,Joven_MS,CAD_137,19-06-24,11:35:35,Finish sketch
+Project1,triangle,triangle,triangle,Generic Models,310706,Joven_MS,CAD_137,19-06-24,11:36:24,Drag
+Project1,Family1,,,,309893,Joven_MS,CAD_137,19-06-24,11:38:49,Rename Family
+Project1,Family1,,,,310673,Joven_MS,CAD_137,19-06-24,11:38:49,Rename Family
+Project1,Legend Component - Family1 (3D),,,Legend Components,310674,Joven_MS,CAD_137,19-06-24,11:38:49,Rename Family
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:02:21,Rotate
+Project1,Model Lines,,,Lines,309875,Joven_MS,CAD_137,19-06-24,12:02:30,Lines
+Project1,Arrow - 2.5mm Arial,Arrow - 2.5mm Arial,Radial Dimension Style,Dimensions,309889,Joven_MS,CAD_137,19-06-24,12:02:30,Lines
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:02:34,Move
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:02:41,Rotate
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:02:48,Move
+Project1,Model Lines,,,Lines,309875,Joven_MS,CAD_137,19-06-24,12:02:51,Delete Selection
+Project1,Arrow - 2.5mm Arial,Arrow - 2.5mm Arial,Radial Dimension Style,Dimensions,309889,Joven_MS,CAD_137,19-06-24,12:02:51,Delete Selection
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:02:58,Array Group
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:03:17,Array
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:09:31,Array
+Project1,Model Lines,,,Lines,309875,Joven_MS,CAD_137,19-06-24,12:09:34,Delete Selection
+Project1,Arrow - 2.5mm Arial,Arrow - 2.5mm Arial,Radial Dimension Style,Dimensions,309889,Joven_MS,CAD_137,19-06-24,12:09:34,Delete Selection
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:09:34,Move
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:09:35,Rotate
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:09:35,Move
+Project1,Model Lines,,,Lines,309875,Joven_MS,CAD_137,19-06-24,12:09:35,Lines
+Project1,Arrow - 2.5mm Arial,Arrow - 2.5mm Arial,Radial Dimension Style,Dimensions,309889,Joven_MS,CAD_137,19-06-24,12:09:35,Lines
+Project1,Family1,Family1,Family1,Generic Models,310797,Joven_MS,CAD_137,19-06-24,12:09:36,Rotate
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LG - RADIOLOGY_jmg,FFL,Floor Plan,Views,31070777,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LG - RADIOLOGY_jmg,FFL,Floor Plan,Views,31070779,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Title w Line,Title w Line,Viewport,Viewports,31070780,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Plan Region,,,Plan Region,31070785,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Plan Region,,,Plan Region,31070835,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,DEPARTMENT HATCH,Filled region,Detail Items,31070856,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2.0,2.0,Accessible_Urinal_Clear_Space_1500mmx1500mm,Detail Items,31071212,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2.0,2.0,Accessible_Urinal_Clear_Space_1500mmx1500mm,Detail Items,31071213,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,DEPARTMENT HATCH,Filled region,Detail Items,31071238,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3.5N_Black-BLP,3.5N_Black-BLP,Text,Text Notes,31071334,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3.5N_Black-BLP,3.5N_Black-BLP,Text,Text Notes,31071335,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,DEPARTMENT HATCH,Filled region,Detail Items,31071370,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,DEPARTMENT HATCH,Filled region,Detail Items,31071556,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,DEPARTMENT HATCH,Filled region,Detail Items,31071633,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071651,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071652,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071653,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071654,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071655,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071656,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31071660,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,Dotted Hatch,Filled region,Detail Items,31071743,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial,1.5mm Arial,Text,Text Notes,31071851,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071981,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071982,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071983,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071984,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071985,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071986,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071987,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071988,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071989,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31071990,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072022,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072023,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072024,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072025,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072026,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072027,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072028,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072029,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072036,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072090,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072093,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Filled Region,DEPARTMENT HATCH,Filled region,Detail Items,31072163,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072276,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072384,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072389,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072390,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm Arial Narrow Opaque,1.5mm Arial Narrow Opaque,Text,Text Notes,31072392,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072398,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072400,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072402,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072404,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072406,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072408,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072410,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072412,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072414,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072416,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072418,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072420,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072422,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072423,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072425,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072426,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072428,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072446,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072447,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072449,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072450,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072451,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072452,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072528,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072669,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072671,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072673,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072686,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072687,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072689,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072691,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072693,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072695,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072697,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072699,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072701,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072703,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072705,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072707,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072709,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072710,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072712,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072714,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072716,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072718,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072754,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072756,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072757,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072758,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072760,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072776,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,1.5mm,AN_TAG_MULT_TMARK,Multi-Category Tags,31072778,Joven_MS,CAD_137,19-06-24,16:35:32,Modify element attributes
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LG - RADIOLOGY_jmg,FFL,Floor Plan,Views,31070777,Joven_MS,CAD_137,19-06-24,16:36:15,Shaded with Edges
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LG - RADIOLOGY_jmg,FFL,Floor Plan,Views,31070777,Joven_MS,CAD_137,19-06-24,16:36:19,Hidden Line
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233352,Joven_MS,CAD_137,19-06-24,16:41:53,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LG - RADIOLOGY_jmg,FFL,Floor Plan,Views,31070777,Joven_MS,CAD_137,19-06-24,16:42:18,Shaded with Edges
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32233411,Joven_MS,CAD_137,19-06-24,16:46:20,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32233412,Joven_MS,CAD_137,19-06-24,16:46:20,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32233411,Joven_MS,CAD_137,19-06-24,16:46:24,Drag
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32233412,Joven_MS,CAD_137,19-06-24,16:46:24,Drag
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32233411,Joven_MS,CAD_137,19-06-24,16:46:31,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32233412,Joven_MS,CAD_137,19-06-24,16:46:31,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32233648,Joven_MS,CAD_137,19-06-24,16:46:59,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32233649,Joven_MS,CAD_137,19-06-24,16:46:59,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233352,Joven_MS,CAD_137,19-06-24,16:47:08,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233352,Joven_MS,CAD_137,19-06-24,16:47:14,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233352,Joven_MS,CAD_137,19-06-24,16:47:22,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233962,Joven_MS,CAD_137,19-06-24,16:47:43,Align
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233962,Joven_MS,CAD_137,19-06-24,16:47:48,Align
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233962,Joven_MS,CAD_137,19-06-24,16:47:52,Array Group
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32233962,Joven_MS,CAD_137,19-06-24,16:48:13,Array
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,TRUE,TRUE,Linear Dimension Style,Dimensions,30019662,Joven_MS,CAD_137,19-06-24,16:52:55,Delete Selection
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,TRUE,TRUE,Linear Dimension Style,Dimensions,30019662,Joven_MS,CAD_137,19-06-24,16:52:57,Delete Selection
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32234780,Joven_MS,CAD_137,19-06-24,16:53:10,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32234781,Joven_MS,CAD_137,19-06-24,16:53:10,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32234780,Joven_MS,CAD_137,19-06-24,16:53:11,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32234781,Joven_MS,CAD_137,19-06-24,16:53:11,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32234780,Joven_MS,CAD_137,19-06-24,16:53:12,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32234781,Joven_MS,CAD_137,19-06-24,16:53:12,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32234780,Joven_MS,CAD_137,19-06-24,16:53:19,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32234781,Joven_MS,CAD_137,19-06-24,16:53:19,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32234780,Joven_MS,CAD_137,19-06-24,16:53:30,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32234781,Joven_MS,CAD_137,19-06-24,16:53:30,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235056,Joven_MS,CAD_137,19-06-24,16:53:50,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235056,Joven_MS,CAD_137,19-06-24,16:53:50,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235056,Joven_MS,CAD_137,19-06-24,16:53:51,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235056,Joven_MS,CAD_137,19-06-24,16:54:01,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235056,Joven_MS,CAD_137,19-06-24,16:54:06,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32234780,Joven_MS,CAD_137,19-06-24,16:54:46,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32234781,Joven_MS,CAD_137,19-06-24,16:54:46,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,3500x5000 DISABLED,3500x5000 DISABLED,PK_SPAC_REG_300_NEW,Parking,32235037,Joven_MS,CAD_137,19-06-24,16:54:46,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,STANDARD,PT_FACE_LOGO_ISA_300,Planting,32235038,Joven_MS,CAD_137,19-06-24,16:54:46,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235056,Joven_MS,CAD_137,19-06-24,16:54:46,Move
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,,,,,23741,Joven_MS,CAD_137,19-06-24,16:56:18,Visibility/Graphics
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LG - RADIOLOGY_jmg,FFL,Floor Plan,Views,31070777,Joven_MS,CAD_137,19-06-24,16:56:18,Visibility/Graphics
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:00,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:02,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:02,Rotate family instance
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:08,Drag
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:12,Align
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:23,Align
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,2500x5000,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:57:29,Align
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,,,,,23741,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Work Plane Grid,,,Internal Object Styles: Work Plane Grid,24927,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,System Data,,,,86962,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,AutoJoin Tracker Element,,,,102467,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,System Data,,,,102524,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,System Data,,,,102525,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Workset Global Visibility Settings,,,,113134,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,,,,,132484,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,,,,,3283331,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,,,,,3288256,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,,,,,3879227,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Detail Lines,,,Lines: <Path of Travel Lines>,3948277,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest

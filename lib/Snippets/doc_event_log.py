@@ -215,9 +215,12 @@ def mod_element_log(custom_path):
 
 
 def del_element_log(custom_path):
-    """ will only return element id, you won't retrieve the element """
-    if doc.IsFamilyDocument:
-        sys.exit()
+    try:
+        """ will only return element id, you won't retrieve the element """
+        if doc.IsFamilyDocument:
+            sys.exit()
+    except:
+        pass
 
     else:
         # ✅ main code
