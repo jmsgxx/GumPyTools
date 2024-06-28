@@ -353,3 +353,284 @@ NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,PT_FACE_LOGO_ISA_300,PT_FACE_LOGO_ISA_300,
 NDH_SKA_ARC_NAB_LG-FIN_M3_SD,2500x5000,PK_SPAC_REG_300_NEW,PK_SPAC_REG_300_NEW,Parking,32235598,Joven_MS,CAD_137,19-06-24,16:56:58,Parking Component
 NDH_SKA_ARC_NAB_LG-FIN_M3_SD,MCP,CK_NHOST_MCP_GENC_300,CK_NHOST_MCP_GENC_300,Casework,32233254,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
 NDH_SKA_ARC_NAB_LG-FIN_M3_SD,BH,CK_NHOST_BH_GENC_300,CK_NHOST_BH_GENC_300,Casework,32233255,Joven_MS,CAD_137,19-06-24,17:13:32,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Diagonal - 1.5mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,32240863,Joven_MS,CAD_137,19-06-24,17:40:19,Place Dimensions
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Diagonal - 1.5mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,32240908,Joven_MS,CAD_137,19-06-24,17:54:40,Place Dimensions
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Constraints,32240929,Joven_MS,CAD_137,19-06-24,17:55:01,Toggle Lock
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Diagonal - 1.5mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,32240940,Joven_MS,CAD_137,19-06-24,17:56:06,Place Dimensions
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Diagonal - 1.5mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,32240957,Joven_MS,CAD_137,19-06-24,17:56:30,Place Dimensions
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241175,Joven_MS,CAD_137,19-06-24,18:05:38,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241176,Joven_MS,CAD_137,19-06-24,18:05:38,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241193,Joven_MS,CAD_137,19-06-24,18:05:59,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241194,Joven_MS,CAD_137,19-06-24,18:05:59,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241257,Joven_MS,CAD_137,19-06-24,18:07:25,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241258,Joven_MS,CAD_137,19-06-24,18:07:25,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241409,Joven_MS,CAD_137,19-06-24,18:10:41,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32241410,Joven_MS,CAD_137,19-06-24,18:10:41,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Stair,Cast-In-Place Stair,Cast-In-Place Stair,Stairs,32247989,Joven_MS,CAD_137,20-06-24,13:01:13,Stairs System
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,32248006,Joven_MS,CAD_137,20-06-24,14:22:46,Place Dimensions
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,VOID,AN_TAG_GENERAL,AN_TAG_GENERAL,Generic Annotations,32248429,Joven_MS,CAD_137,20-06-24,15:41:28,Symbol
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,VOID,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,32248701,Joven_MS,CAD_137,20-06-24,15:43:27,Symbol
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,"1000X2150_A/SB/T/31/d,g,n3,n6,s,t1/PH2",DR_WALL_ASB_RM_SLID-SING_300,DR_WALL_ASB_RM_SLID-SING_300,Doors,32248006,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,s,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248007,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,n6,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248008,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,n3,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248009,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,g,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248010,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,d,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248011,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,t1,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248012,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,0,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248013,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,0,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248014,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,0,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248015,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,0,GM_DR_FEAT_100,GM_DR_FEAT_100,Generic Models,32248016,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,DR_WALL_FR_SLID-1_300,DR_WALL_FR_SLID-1_300,Doors,32248017,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,0_B_0-0,DR_NHOST_PNL_GENC_300,DR_NHOST_PNL_GENC_300,Doors,32248018,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,SG_FACE_DR_FRR-LABEL_300,SG_FACE_DR_FRR-LABEL_300,Signage,32248019,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,SG_FACE_TEXT_FFR-LABEL_300,SG_FACE_TEXT_FFR-LABEL_300,Signage,32248020,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,ENG_REGULAR_LEFT,PT_FACE_TEXT-LINE_300,PT_FACE_TEXT-LINE_300,Planting,32248021,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,ENG_REGULAR_LEFT,PT_FACE_TEXT-LINE_300,PT_FACE_TEXT-LINE_300,Planting,32248022,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,ENG_REGULAR_LEFT,PT_FACE_TEXT-LINE_300,PT_FACE_TEXT-LINE_300,Planting,32248023,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,ENG_REGULAR_LEFT,PT_FACE_TEXT-LINE_300,PT_FACE_TEXT-LINE_300,Planting,32248024,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,GM_NHOST_WHS_GENC_300,GM_NHOST_WHS_GENC_300,Generic Models,32248027,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,IPS_Basin,CK_NHOST_IPS_BOX-OUT_300,CK_NHOST_IPS_BOX-OUT_300,Casework,32248028,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,PB_NHOST_BASIN_WASH-HD_300,PB_NHOST_BASIN_WASH-HD_300,Plumbing Fixtures,32248029,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SD,SE_NHOST_TOIL_SOAP-DISP_SD_300,SE_NHOST_TOIL_SOAP-DISP_SD_300,Specialty Equipment,32248030,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PTD,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,Specialty Equipment,32248031,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,MR-WB,SE_NHOST_TOIL_MIRROR_RECT_MR_300,SE_NHOST_TOIL_MIRROR_RECT_MR_300,Specialty Equipment,32248032,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,WB,FN_NHOST_WASTE-BIN_USER_WB_300,FN_NHOST_WASTE-BIN_USER_WB_300,Furniture,32248033,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,PB_NHOST_FAUCET_BASIN_TOP_300,PB_NHOST_FAUCET_BASIN_TOP_300,Plumbing Fixtures,32248034,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,GM_NHOST_WHS_GENC_300,GM_NHOST_WHS_GENC_300,Generic Models,32248035,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,IPS_Basin,CK_NHOST_IPS_BOX-OUT_300,CK_NHOST_IPS_BOX-OUT_300,Casework,32248036,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,PB_NHOST_BASIN_WASH-HD_300,PB_NHOST_BASIN_WASH-HD_300,Plumbing Fixtures,32248037,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SD,SE_NHOST_TOIL_SOAP-DISP_SD_300,SE_NHOST_TOIL_SOAP-DISP_SD_300,Specialty Equipment,32248038,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PTD,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,Specialty Equipment,32248039,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,MR-WB,SE_NHOST_TOIL_MIRROR_RECT_MR_300,SE_NHOST_TOIL_MIRROR_RECT_MR_300,Specialty Equipment,32248040,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,WB,FN_NHOST_WASTE-BIN_USER_WB_300,FN_NHOST_WASTE-BIN_USER_WB_300,Furniture,32248041,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,PB_NHOST_FAUCET_BASIN_TOP_300,PB_NHOST_FAUCET_BASIN_TOP_300,Plumbing Fixtures,32248042,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,GM_NHOST_WHS_GENC_300,GM_NHOST_WHS_GENC_300,Generic Models,32248043,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,IPS_Basin,CK_NHOST_IPS_BOX-OUT_300,CK_NHOST_IPS_BOX-OUT_300,Casework,32248044,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,PB_NHOST_BASIN_WASH-HD_300,PB_NHOST_BASIN_WASH-HD_300,Plumbing Fixtures,32248045,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SD,SE_NHOST_TOIL_SOAP-DISP_SD_300,SE_NHOST_TOIL_SOAP-DISP_SD_300,Specialty Equipment,32248046,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PTD,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,Specialty Equipment,32248047,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,MR-WB,SE_NHOST_TOIL_MIRROR_RECT_MR_300,SE_NHOST_TOIL_MIRROR_RECT_MR_300,Specialty Equipment,32248048,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,WB,FN_NHOST_WASTE-BIN_USER_WB_300,FN_NHOST_WASTE-BIN_USER_WB_300,Furniture,32248049,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,PB_NHOST_FAUCET_BASIN_TOP_300,PB_NHOST_FAUCET_BASIN_TOP_300,Plumbing Fixtures,32248050,Joven_MS,CAD_137,20-06-24,15:49:16,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254025,Joven_MS,CAD_137,20-06-24,16:07:09,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254026,Joven_MS,CAD_137,20-06-24,16:07:09,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254397,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254398,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254399,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254400,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254401,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254402,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254403,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254404,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254405,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254406,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254407,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254408,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254409,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254410,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254411,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254412,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254413,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254414,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254415,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254416,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254417,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254418,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254419,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254420,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254421,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254422,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254423,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254424,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254425,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254426,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,32254427,Joven_MS,CAD_137,20-06-24,16:24:18,Finish sketch
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Floor Schedule_metal platform,Schedule,Schedule,Schedules,32260608,Joven_MS,CAD_137,20-06-24,18:12:28,Modify Schedule/Quantities
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Floor Schedule_metal platform,Schedule,Schedule,Schedules,32260609,Joven_MS,CAD_137,20-06-24,18:12:28,Modify Schedule/Quantities
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,Title w Line,Viewport,Viewport,Viewports,32260610,Joven_MS,CAD_137,20-06-24,18:12:28,Modify Schedule/Quantities
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,FUR_RETAINING,Basic Wall,Basic Wall,Walls,32262649,Joven_MS,CAD_137,21-06-24,10:06:23,Split Element
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,RC - 800mm,Basic Wall,Basic Wall,Walls,32262874,Joven_MS,CAD_137,21-06-24,10:06:54,Split Element
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,VOID,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,32263369,Joven_MS,CAD_137,21-06-24,10:20:54,Symbol
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PART OF RAMP BELOW,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,32263375,Joven_MS,CAD_137,21-06-24,10:21:51,Drag Copy
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,L-5,CK_NHOST_L-5_6T_300,CK_NHOST_L-5_6T_300,Casework,32262528,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,BH_LOCKER,CK_NHOST_BH_GENC_300,CK_NHOST_BH_GENC_300,Casework,32262529,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,L-5,CK_NHOST_L-5_6T_300,CK_NHOST_L-5_6T_300,Casework,32262738,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,"MMLA-031 CABINET hazardous goods, tall, oxidising",CAS_CABINET_hazardous_goods,CAS_CABINET_hazardous_goods,Casework,32262850,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32262924,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,"MMLA-031 CABINET hazardous goods, tall, oxidising",CAS_CABINET_hazardous_goods,CAS_CABINET_hazardous_goods,Casework,32262944,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32263001,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,GM_NHOST_WHS_GENC_300,GM_NHOST_WHS_GENC_300,Generic Models,32263086,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,IPS_Basin,CK_NHOST_IPS_BOX-OUT_300,CK_NHOST_IPS_BOX-OUT_300,Casework,32263087,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,PB_NHOST_BASIN_WASH-HD_300,PB_NHOST_BASIN_WASH-HD_300,Plumbing Fixtures,32263088,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SD,SE_NHOST_TOIL_SOAP-DISP_SD_300,SE_NHOST_TOIL_SOAP-DISP_SD_300,Specialty Equipment,32263089,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PTD,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,Specialty Equipment,32263090,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,MR-WB,SE_NHOST_TOIL_MIRROR_RECT_MR_300,SE_NHOST_TOIL_MIRROR_RECT_MR_300,Specialty Equipment,32263091,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,WB,FN_NHOST_WASTE-BIN_USER_WB_300,FN_NHOST_WASTE-BIN_USER_WB_300,Furniture,32263092,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,PB_NHOST_FAUCET_BASIN_TOP_300,PB_NHOST_FAUCET_BASIN_TOP_300,Plumbing Fixtures,32263093,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32263222,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32263224,Joven_MS,CAD_137,21-06-24,10:31:22,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PART OF RAMP BELOW,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,32266567,Joven_MS,CAD_137,21-06-24,10:42:48,Drag Copy
+NDH_SKA_LAN_000_000_M3,N_LG_FFL,Floor Plan,Floor Plan,Views,5147285,Joven_MS,CAD_137,21-06-24,11:07:04,Floor Plan
+NDH_SKA_LAN_000_000_M3,{3D - ska137},3D View,3D View,Views,5147295,Joven_MS,CAD_137,21-06-24,11:07:37,Default 3D View
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147495,Joven_MS,CAD_137,21-06-24,11:25:22,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147496,Joven_MS,CAD_137,21-06-24,11:25:22,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147497,Joven_MS,CAD_137,21-06-24,11:25:22,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147498,Joven_MS,CAD_137,21-06-24,11:25:22,Finish sketch
+NDH_SKA_LAN_000_000_M3,Arc Length - 2.5mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,5147769,Joven_MS,CAD_137,21-06-24,11:37:19,Make permanent
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147931,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147932,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147933,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147934,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147935,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147936,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5147937,Joven_MS,CAD_137,21-06-24,11:38:38,Finish sketch
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149047,Joven_MS,CAD_137,21-06-24,15:09:20,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149051,Joven_MS,CAD_137,21-06-24,15:09:34,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149055,Joven_MS,CAD_137,21-06-24,15:09:44,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149059,Joven_MS,CAD_137,21-06-24,15:09:46,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149063,Joven_MS,CAD_137,21-06-24,15:09:50,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149067,Joven_MS,CAD_137,21-06-24,15:09:57,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149071,Joven_MS,CAD_137,21-06-24,15:10:02,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,5149075,Joven_MS,CAD_137,21-06-24,15:10:08,Place Dimensions
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,VEHICULAR RAMP,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,32282526,Joven_MS,CAD_137,24-06-24,09:28:19,Symbol
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,LINE OF RAMP TO L0,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,32282539,Joven_MS,CAD_137,24-06-24,09:28:59,Symbol
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282422,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282424,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282426,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282428,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282436,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282438,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,W-CL,SPE_CLOCK_digital,SPE_CLOCK_digital,Specialty Equipment,32282477,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282529,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,GEN_HWS_U2B_GENC_4D_300,GEN_HWS_U2B_GENC_4D_300,Generic Models,32282571,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SD(1000H),X_SE_NHOST_TOIL_SOAP-DISP_SD_300,X_SE_NHOST_TOIL_SOAP-DISP_SD_300,Specialty Equipment,32282572,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,U2B,PB_NHOST_BASIN_WASH-HD_U2B_300,PB_NHOST_BASIN_WASH-HD_U2B_300,Plumbing Fixtures,32282573,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,PTD-W,X_SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,X_SE_NHOST_TOIL_PT-DISP_GENC_PTD_300,Specialty Equipment,32282574,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,WB,FUR_BIN_waste_swing lid,FUR_BIN_waste_swing lid,Furniture,32282575,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282649,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282656,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282659,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,1.5mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,32282661,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,FUR_COL,Basic Wall,Basic Wall,Walls,32282763,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,FIN_GB+PT-W02,Basic Wall,Basic Wall,Walls,32282853,Joven_MS,CAD_137,24-06-24,09:30:35,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,DOC_FP_PART_LG - FOR 1_200 POPULATE Copy 1,Floor Plan,Floor Plan,Views,32285420,Joven_MS,CAD_137,24-06-24,10:00:38,Duplicate with Detailing
+NDH_SKA_ARC_BPB_000_M3,DOC_FP_SFL_L0 Copy 1,Floor Plan,Floor Plan,Views,31789041,Joven_MS,CAD_137,24-06-24,15:15:36,Duplicate with Detailing
+NDH_SKA_ARC_BPB_000_M3,SB_RF_SFL,Floor Plan,Floor Plan,Views,31789184,Joven_MS,CAD_137,24-06-24,15:22:42,Floor Plan
+NDH_SKA_ARC_BPB_000_M3,Target (Project),Spot Elevations,Spot Elevations,Spot Elevations,31789207,Joven_MS,CAD_137,24-06-24,15:25:07,Place Dimensions
+NDH_SKA_ARC_BPB_000_M3,DOC_FP_SFL_L0M Copy 1,Floor Plan,Floor Plan,Views,31789309,Joven_MS,CAD_137,25-06-24,09:21:45,Duplicate with Detailing
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789332,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789337,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789338,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789339,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789340,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789341,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789343,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_ARC_BPB_000_M3,2.0mm,AN_TAG_MULT_TMARK,AN_TAG_MULT_TMARK,Multi-Category Tags,31789344,Joven_MS,CAD_137,25-06-24,09:24:11,Delete Selection
+NDH_SKA_LAN_000_000_M3,N_00_FFL,Floor Plan,Floor Plan,Views,5154914,Joven_MS,CAD_137,25-06-24,10:56:07,Floor Plan
+NDH_SKA_ARC_NAB_L0-FIN_M3_SD,TRUE,Linear Dimension Style,Linear Dimension Style,Dimensions,33648296,Joven_MS,CAD_137,25-06-24,11:29:00,Place Dimensions
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155284,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155285,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155286,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155287,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155288,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155289,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155290,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155291,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,5155292,Joven_MS,CAD_137,25-06-24,12:07:31,Finish sketch
+NDH_SKA_LAN_000_000_M3,Generic - 200mm,Basic Wall,Basic Wall,Walls,5155336,Joven_MS,CAD_137,25-06-24,12:09:21,WallByLine
+NDH_SKA_LAN_000_000_M3,Generic - 200mm,Basic Wall,Basic Wall,Walls,5155337,Joven_MS,CAD_137,25-06-24,12:09:21,WallByLine
+NDH_SKA_LAN_000_000_M3,Generic - 200mm,Basic Wall,Basic Wall,Walls,5155338,Joven_MS,CAD_137,25-06-24,12:09:21,WallByLine
+NDH_SKA_LAN_000_000_M3,Generic - 200mm,Basic Wall,Basic Wall,Walls,5155339,Joven_MS,CAD_137,25-06-24,12:09:21,WallByLine
+NDH_SKA_LAN_000_000_M3,100mm CURB,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,5155841,Joven_MS,CAD_137,25-06-24,12:12:33,Symbol
+NDH_SKA_LAN_000_000_M3,OPEN WELL,AN_TAG_GENERAL-3.5,AN_TAG_GENERAL-3.5,Generic Annotations,5155998,Joven_MS,CAD_137,25-06-24,12:13:42,Paste Aligned
+NDH_SKA_ARC_NAB_CORE_M3,RC_2000mm,Basic Wall,Basic Wall,Walls,11603235,Joven_MS,CAD_137,25-06-24,16:23:58,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_2000mm,Basic Wall,Basic Wall,Walls,11603236,Joven_MS,CAD_137,25-06-24,16:23:58,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_2000mm,Basic Wall,Basic Wall,Walls,11603237,Joven_MS,CAD_137,25-06-24,16:23:58,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_2000mm,Basic Wall,Basic Wall,Walls,11603238,Joven_MS,CAD_137,25-06-24,16:23:58,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_2000mm,Basic Wall,Basic Wall,Walls,11603239,Joven_MS,CAD_137,25-06-24,16:23:58,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_2000mm,Basic Wall,Basic Wall,Walls,11603240,Joven_MS,CAD_137,25-06-24,16:23:58,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603549,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603550,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603551,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603552,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603553,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603554,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603555,Joven_MS,CAD_137,25-06-24,16:30:11,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11603964,Joven_MS,CAD_137,25-06-24,16:38:02,Wall - Line
+NDH_SKA_ARC_NAB_CORE_M3,RC_1000mm,Basic Wall,Basic Wall,Walls,11604085,Joven_MS,CAD_137,25-06-24,16:40:31,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_1000mm,Basic Wall,Basic Wall,Walls,11604086,Joven_MS,CAD_137,25-06-24,16:40:31,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_1000mm,Basic Wall,Basic Wall,Walls,11604087,Joven_MS,CAD_137,25-06-24,16:40:31,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,RC_1000mm,Basic Wall,Basic Wall,Walls,11604088,Joven_MS,CAD_137,25-06-24,16:40:31,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11604161,Joven_MS,CAD_137,25-06-24,16:42:49,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11604162,Joven_MS,CAD_137,25-06-24,16:42:49,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11604163,Joven_MS,CAD_137,25-06-24,16:42:49,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall 150mm + 150mm,Basic Wall,Basic Wall,Walls,11604164,Joven_MS,CAD_137,25-06-24,16:42:49,WallByLine
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11604316,Joven_MS,CAD_137,25-06-24,16:45:40,Wall - Line
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11604350,Joven_MS,CAD_137,25-06-24,16:45:46,Wall - Line
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11604478,Joven_MS,CAD_137,25-06-24,16:48:28,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11604482,Joven_MS,CAD_137,25-06-24,16:48:32,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604851,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604852,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604853,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604854,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604855,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604856,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604857,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604858,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604859,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604860,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604861,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11604862,Joven_MS,CAD_137,25-06-24,16:53:12,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11605083,Joven_MS,CAD_137,25-06-24,16:54:22,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Linear Dimension Style,Linear Dimension Style,Linear Dimension Style,Dimensions: Automatic Sketch Dimensions,11605084,Joven_MS,CAD_137,25-06-24,16:54:22,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11603582,Joven_MS,CAD_137,25-06-24,16:59:38,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11603588,Joven_MS,CAD_137,25-06-24,16:59:38,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11603594,Joven_MS,CAD_137,25-06-24,16:59:38,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11603600,Joven_MS,CAD_137,25-06-24,16:59:38,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11603603,Joven_MS,CAD_137,25-06-24,16:59:38,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,Cavity_Wall_150mm,Basic Wall,Basic Wall,Walls,11603609,Joven_MS,CAD_137,25-06-24,16:59:38,Delete Selection
+NDH_SKA_ARC_NAB_CORE_M3,STAIR_FFL_B2_JMG Copy 1,Floor Plan,Floor Plan,Views,11605306,Joven_MS,CAD_137,25-06-24,17:54:10,Duplicate with Detailing
+NDH_SKA_ARC_NAB_CORE_M3,N_B2 LIFT PIT_FFL(1),Floor Plan,Floor Plan,Views,11605999,Joven_MS,CAD_137,25-06-24,17:58:26,Floor Plan
+NDH_SKA_ARC_NAB_CORE_M3,Section 5,Section,Section,Views,11608453,Joven_MS,CAD_137,25-06-24,18:05:19,Section
+NDH_SKA_ARC_NAB_CORE_M3,Section 5,Section,Section,Views,11608454,Joven_MS,CAD_137,25-06-24,18:05:19,Section
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11608525,Joven_MS,CAD_137,25-06-24,18:08:15,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11608828,Joven_MS,CAD_137,25-06-24,18:11:33,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11608893,Joven_MS,CAD_137,25-06-24,18:12:46,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11608901,Joven_MS,CAD_137,25-06-24,18:12:57,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11608947,Joven_MS,CAD_137,25-06-24,18:13:58,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609031,Joven_MS,CAD_137,25-06-24,18:15:03,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609063,Joven_MS,CAD_137,25-06-24,18:15:08,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609079,Joven_MS,CAD_137,25-06-24,18:15:10,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609103,Joven_MS,CAD_137,25-06-24,18:15:13,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609120,Joven_MS,CAD_137,25-06-24,18:15:34,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609137,Joven_MS,CAD_137,25-06-24,18:15:41,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609144,Joven_MS,CAD_137,25-06-24,18:15:46,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609151,Joven_MS,CAD_137,25-06-24,18:16:01,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609171,Joven_MS,CAD_137,25-06-24,18:16:11,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609187,Joven_MS,CAD_137,25-06-24,18:16:18,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609203,Joven_MS,CAD_137,25-06-24,18:16:43,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609227,Joven_MS,CAD_137,25-06-24,18:16:45,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609243,Joven_MS,CAD_137,25-06-24,18:16:49,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609291,Joven_MS,CAD_137,25-06-24,18:16:52,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609323,Joven_MS,CAD_137,25-06-24,18:17:01,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609339,Joven_MS,CAD_137,25-06-24,18:17:07,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609355,Joven_MS,CAD_137,25-06-24,18:17:14,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609371,Joven_MS,CAD_137,25-06-24,18:17:23,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609387,Joven_MS,CAD_137,25-06-24,18:17:29,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,Diagonal - 2mm Arial,Linear Dimension Style,Linear Dimension Style,Dimensions,11609403,Joven_MS,CAD_137,25-06-24,18:17:35,Place Dimensions
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609453,Joven_MS,CAD_137,25-06-24,18:18:05,Drag Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609457,Joven_MS,CAD_137,25-06-24,18:18:07,Drag Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609485,Joven_MS,CAD_137,25-06-24,18:18:13,Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609498,Joven_MS,CAD_137,25-06-24,18:18:17,Drag Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609502,Joven_MS,CAD_137,25-06-24,18:18:20,Drag Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609506,Joven_MS,CAD_137,25-06-24,18:18:22,Drag Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609510,Joven_MS,CAD_137,25-06-24,18:18:24,Drag Copy
+NDH_SKA_ARC_NAB_CORE_M3,FFL,Spot Elevations,Spot Elevations,Spot Elevations,11609514,Joven_MS,CAD_137,25-06-24,18:18:26,Drag Copy
+NDH_SKA_ARC_NAB_B2-FIN_M3_SD,DOC_FP_FFL_B2_50 _AI002_GP Copy 1,Floor Plan,Floor Plan,Views,20504372,Joven_MS,CAD_137,26-06-24,09:37:08,Duplicate with Detailing
+NDH_SKA_ARC_NAB_SHT_M2,GOP_DOC_FFL_B2_LIFT PIT_300,Floor Plan,Floor Plan,Views,15272300,Joven_MS,CAD_137,26-06-24,10:02:56,Views Create
+NDH_SKA_ARC_NAB_SHT_M2,Title w Line,Viewport,Viewport,Viewports,15272320,Joven_MS,CAD_137,26-06-24,10:06:44,Add View
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SQM + DGFA,AN_TAG_RM_NAME_BLP-LEFT-1.5,AN_TAG_RM_NAME_BLP-LEFT-1.5,Room Tags,32455135,Joven_MS,CAD_137,27-06-24,14:07:12,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,AN_TAG_CL_FIN,AN_TAG_CL_FIN,Room Tags,32455136,Joven_MS,CAD_137,27-06-24,14:07:12,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,SQM + DGFA,AN_TAG_RM_NAME_BLP-LEFT-1.5,AN_TAG_RM_NAME_BLP-LEFT-1.5,Room Tags,32455145,Joven_MS,CAD_137,27-06-24,14:07:12,Reload Latest
+NDH_SKA_ARC_NAB_LG-FIN_M3_SD,STANDARD,AN_TAG_CL_FIN,AN_TAG_CL_FIN,Room Tags,32455146,Joven_MS,CAD_137,27-06-24,14:07:12,Reload Latest

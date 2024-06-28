@@ -1,0 +1,174 @@
+{
+    "request_id": "e40688ef-4721-4335-9c2f-3d2630cca482", 
+    "next_cursor": null, 
+    "page_or_database": {}, 
+    "results": [
+        {
+            "last_edited_time": "2024-06-27T09:59:00.000Z", 
+            "icon": null, 
+            "parent": {
+                "type": "database_id", 
+                "database_id": "c55d7ce9-0518-4278-ba5b-a8391029864e"
+            }, 
+            "public_url": null, 
+            "id": "20432896-f41e-4a17-acfa-b52b394d9fae", 
+            "cover": null, 
+            "url": "https://www.notion.so/JovenMSG-20432896f41e4a17acfab52b394d9fae", 
+            "created_by": {
+                "id": "fc96fbc2-52da-41b9-a993-29a78a62bbf4", 
+                "object": "user"
+            }, 
+            "last_edited_by": {
+                "id": "fc96fbc2-52da-41b9-a993-29a78a62bbf4", 
+                "object": "user"
+            }, 
+            "archived": false, 
+            "in_trash": false, 
+            "created_time": "2024-06-27T03:28:00.000Z", 
+            "object": "page", 
+            "properties": {
+                "Created time": {
+                    "id": "TJb%5C", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "10:39:56", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "10:39:56"
+                        }
+                    ]
+                }, 
+                "User": {
+                    "id": "title", 
+                    "type": "title", 
+                    "title": [
+                        {
+                            "text": {
+                                "content": "JovenMSG", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "JovenMSG"
+                        }
+                    ]
+                }, 
+                "Command": {
+                    "id": "jX%5BQ", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "PDF Current View", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "PDF Current View"
+                        }
+                    ]
+                }, 
+                "Model Name": {
+                    "id": "TSkD", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "NDH_SKA_ARC_NAB_L0-FIN_M3_SD", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "NDH_SKA_ARC_NAB_L0-FIN_M3_SD"
+                        }
+                    ]
+                }, 
+                "Date": {
+                    "id": "i%5E%3DH", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "18/1/2024", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "18/1/2024"
+                        }
+                    ]
+                }, 
+                "Computer No.": {
+                    "id": "%3A%5Bey", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "CAD_137", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "CAD_137"
+                        }
+                    ]
+                }
+            }
+        }
+    ], 
+    "has_more": false, 
+    "type": "page_or_database", 
+    "object": "list"
+}

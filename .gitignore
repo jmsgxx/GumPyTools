@@ -3,3 +3,4 @@
 .idea/GumPyTools.extension.iml
 .idea/misc.xml
 hooks/
+*.csv

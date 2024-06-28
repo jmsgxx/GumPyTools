@@ -1,0 +1,4 @@
+# -*- coding: utf-8 -*-
+
+NOTION_PAGE_ID = 'c55d7ce905184278ba5ba8391029864e'
+NOTION_TOKEN = 'secret_hkPJBQ3iE8nd09x3b5ASkoAIleWTeaqJuFjJO1G0wT1'

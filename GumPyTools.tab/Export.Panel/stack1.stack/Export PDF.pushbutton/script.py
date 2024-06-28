@@ -19,10 +19,10 @@ import sys
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.notion_com_logger import notion_com_logger
 from Autodesk.Revit.DB import *
 import os
 from datetime import datetime
-
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -83,7 +83,7 @@ with Transaction(doc, __title__) as t:
     options.ReplaceHalftoneWithThinLines = False
     options.StopOnError = True
     options.ViewLinksInBlue = True
-    options.ZoomPercentage = 25
+    options.ZoomPercentage = 75     # change the percentage when needed
     options.ZoomType = ZoomType.Zoom
 
     try:
@@ -103,3 +103,5 @@ with Transaction(doc, __title__) as t:
         print("An error occurred: {}".format(e))
 
     t.Commit()
+
+notion_com_logger(__title__)
