@@ -26,6 +26,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.notion_com_logger import notion_com_logger
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.DB.Architecture import Room
 from Autodesk.Revit.UI.Selection import ObjectType, Selection
@@ -186,6 +187,6 @@ room_name = selected_room.LookupParameter('Name')
 forms.alert("Parameters Updated", exitscript=False, warn_icon=False)
 
 
-
+# notion_com_logger(__title__)
 
 

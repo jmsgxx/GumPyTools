@@ -104,4 +104,4 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 
-notion_com_logger(__title__)
+# notion_com_logger(__title__)

@@ -8,9 +8,11 @@ Author: Joven Mark Gumana
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
-# ║║║║╠═╝║ ║╠╦╝ ║ 
+# ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.notion_com_logger import notion_com_logger
+from Snippets.notion_docop_logger import notion_doc_open_logger
 from Snippets._convert import convert_internal_to_m2
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
@@ -55,6 +57,6 @@ selection = uidoc.Selection  # type: Selection
 # formatted_area = '{:,.2f}'.format(area_pl)
 # print('{} sqm'.format(formatted_area))
 
-from Snippets.notion_com_logger import notion_com_logger
 
 notion_com_logger(__title__)
+notion_doc_open_logger()

@@ -30,6 +30,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.notion_com_logger import notion_com_logger
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from datetime import datetime
@@ -276,3 +277,4 @@ time_stamp = current_datetime.strftime('%d %b %Y %H%M hrs')
 
 forms.alert('Door Parameters updated!\nTime Stamp: {}'.format(time_stamp), warn_icon=False, exitscript=False)
 
+# notion_com_logger(__title__)

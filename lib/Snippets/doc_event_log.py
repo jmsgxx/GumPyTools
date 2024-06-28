@@ -54,7 +54,7 @@ def doc_event_logger(custom_path):
         filepath = custom_path
 
         try:
-            with open(filepath, 'a') as f:
+            with open(filepath, 'a+') as f:
                 if not os.path.isfile(filepath):
                     open(filepath, 'w').close()
                 if os.stat(filepath).st_size == 0:

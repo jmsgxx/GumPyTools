@@ -1,19 +1,19 @@
 {
-    "request_id": "06912c2e-761a-4204-9d7b-77535b35d3b6", 
+    "request_id": "accf04b9-76ea-4b55-a1d5-792f7d331c60", 
     "next_cursor": null, 
     "page_or_database": {}, 
     "results": [
         {
-            "last_edited_time": "2024-06-27T10:36:00.000Z", 
+            "last_edited_time": "2024-06-28T03:51:00.000Z", 
             "icon": null, 
             "parent": {
                 "type": "database_id", 
-                "database_id": "c55d7ce9-0518-4278-ba5b-a8391029864e"
+                "database_id": "9b54e2c5-3ec3-4c3e-b9b3-00dffeb5d881"
             }, 
             "public_url": null, 
-            "id": "e234396f-0fb8-49aa-a3b4-058f25fe542e", 
+            "id": "1ff8a62a-3626-47df-b09c-277be828fa81", 
             "cover": null, 
-            "url": "https://www.notion.so/Joven_MS-e234396f0fb849aaa3b4058f25fe542e", 
+            "url": "https://www.notion.so/Joven_MS-1ff8a62a362647dfb09c277be828fa81", 
             "created_by": {
                 "id": "9826dc06-04e1-47b4-ab20-7ceb843a379f", 
                 "object": "user"
@@ -24,7 +24,7 @@
             }, 
             "archived": false, 
             "in_trash": false, 
-            "created_time": "2024-06-27T10:36:00.000Z", 
+            "created_time": "2024-06-28T03:51:00.000Z", 
             "object": "page", 
             "properties": {
                 "Created time": {
@@ -33,7 +33,7 @@
                     "rich_text": [
                         {
                             "text": {
-                                "content": "18:36:28", 
+                                "content": "11:51:09", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -46,7 +46,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "18:36:28"
+                            "plain_text": "11:51:09"
                         }
                     ]
                 }, 
@@ -73,36 +73,13 @@
                         }
                     ]
                 }, 
-                "Command": {
-                    "id": "jX%5BQ", 
-                    "type": "rich_text", 
-                    "rich_text": [
-                        {
-                            "text": {
-                                "content": "PDF Current View", 
-                                "link": null
-                            }, 
-                            "annotations": {
-                                "code": false, 
-                                "italic": false, 
-                                "color": "default", 
-                                "bold": false, 
-                                "underline": false, 
-                                "strikethrough": false
-                            }, 
-                            "href": null, 
-                            "type": "text", 
-                            "plain_text": "PDF Current View"
-                        }
-                    ]
-                }, 
                 "Model Name": {
                     "id": "TSkD", 
                     "type": "rich_text", 
                     "rich_text": [
                         {
                             "text": {
-                                "content": "NDH_SKA_ARC_NAB_L0-FIN_M3_SD", 
+                                "content": "NDH_SKA_ARC_NAB_CORE_M3", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -115,7 +92,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "NDH_SKA_ARC_NAB_L0-FIN_M3_SD"
+                            "plain_text": "NDH_SKA_ARC_NAB_CORE_M3"
                         }
                     ]
                 }, 
@@ -125,7 +102,7 @@
                     "rich_text": [
                         {
                             "text": {
-                                "content": "27-06-24", 
+                                "content": "28-06-24", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -138,7 +115,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "27-06-24"
+                            "plain_text": "28-06-24"
                         }
                     ]
                 }, 
@@ -168,27 +145,27 @@
             }
         }, 
         {
-            "last_edited_time": "2024-06-27T09:59:00.000Z", 
+            "last_edited_time": "2024-06-28T03:35:00.000Z", 
             "icon": null, 
             "parent": {
                 "type": "database_id", 
-                "database_id": "c55d7ce9-0518-4278-ba5b-a8391029864e"
+                "database_id": "9b54e2c5-3ec3-4c3e-b9b3-00dffeb5d881"
             }, 
             "public_url": null, 
-            "id": "20432896-f41e-4a17-acfa-b52b394d9fae", 
+            "id": "a3e57cb6-dbcb-4607-86cf-77dbd7d88fa6", 
             "cover": null, 
-            "url": "https://www.notion.so/JovenMSG-20432896f41e4a17acfab52b394d9fae", 
+            "url": "https://www.notion.so/Joven_MS-a3e57cb6dbcb460786cf77dbd7d88fa6", 
             "created_by": {
-                "id": "fc96fbc2-52da-41b9-a993-29a78a62bbf4", 
+                "id": "9826dc06-04e1-47b4-ab20-7ceb843a379f", 
                 "object": "user"
             }, 
             "last_edited_by": {
-                "id": "fc96fbc2-52da-41b9-a993-29a78a62bbf4", 
+                "id": "9826dc06-04e1-47b4-ab20-7ceb843a379f", 
                 "object": "user"
             }, 
             "archived": false, 
             "in_trash": false, 
-            "created_time": "2024-06-27T03:28:00.000Z", 
+            "created_time": "2024-06-28T03:35:00.000Z", 
             "object": "page", 
             "properties": {
                 "Created time": {
@@ -197,7 +174,7 @@
                     "rich_text": [
                         {
                             "text": {
-                                "content": "10:39:56", 
+                                "content": "11:34:49", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -210,7 +187,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "10:39:56"
+                            "plain_text": "11:34:49"
                         }
                     ]
                 }, 
@@ -220,7 +197,7 @@
                     "title": [
                         {
                             "text": {
-                                "content": "JovenMSG", 
+                                "content": "Joven_MS", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -233,30 +210,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "JovenMSG"
-                        }
-                    ]
-                }, 
-                "Command": {
-                    "id": "jX%5BQ", 
-                    "type": "rich_text", 
-                    "rich_text": [
-                        {
-                            "text": {
-                                "content": "PDF Current View", 
-                                "link": null
-                            }, 
-                            "annotations": {
-                                "code": false, 
-                                "italic": false, 
-                                "color": "default", 
-                                "bold": false, 
-                                "underline": false, 
-                                "strikethrough": false
-                            }, 
-                            "href": null, 
-                            "type": "text", 
-                            "plain_text": "PDF Current View"
+                            "plain_text": "Joven_MS"
                         }
                     ]
                 }, 
@@ -266,7 +220,7 @@
                     "rich_text": [
                         {
                             "text": {
-                                "content": "NDH_SKA_ARC_NAB_L0-FIN_M3_SD", 
+                                "content": "NDH_SKA_ARC_NAB_CORE_M3", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -279,7 +233,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "NDH_SKA_ARC_NAB_L0-FIN_M3_SD"
+                            "plain_text": "NDH_SKA_ARC_NAB_CORE_M3"
                         }
                     ]
                 }, 
@@ -289,7 +243,7 @@
                     "rich_text": [
                         {
                             "text": {
-                                "content": "18/1/2024", 
+                                "content": "28-06-24", 
                                 "link": null
                             }, 
                             "annotations": {
@@ -302,7 +256,7 @@
                             }, 
                             "href": null, 
                             "type": "text", 
-                            "plain_text": "18/1/2024"
+                            "plain_text": "28-06-24"
                         }
                     ]
                 }, 
