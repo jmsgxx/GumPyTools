@@ -59,40 +59,17 @@ def notion_doc_open_logger(custom_path):
     #     json.dump(data, f, ensure_ascii=False, indent=4)
     # -------------------------------------------------------------------
 
-    """ function to log who opens the file """
-    model = None
-    date = None
-    time = None
-    username = None
-    computer_name = None
-    try:
-        if doc.IsFamilyDocument:
-            sys.exit()
-    except:
-        pass
-
-    # ✅ main code
-    # else:
-    #     model = EXEC_PARAMS.event_args.Document.Title
-    #     current_time = datetime.now()
-    #     date = str(current_time.strftime("%d-%m-%y"))
-    #     time = str(current_time.strftime("%H:%M:%S"))
-    #
-    #     # get pc and user info
-    #     username = os.environ['USERNAME']
-    #     computer_name = os.environ['COMPUTERNAME']
-
     filepath = custom_path
 
     with open(filepath, 'r') as csv_file:
         lines = csv_file.readlines()
         last_entry = lines[-1].split(',')
 
-        new_username = last_entry[0]
-        new_comp_num = last_entry[1]
-        new_model_name = last_entry[2]
-        new_date = last_entry[3]
-        new_time = last_entry[4]
+        new_username = last_entry[0].strip()
+        new_comp_num = last_entry[1].strip()
+        new_model_name = last_entry[2].strip()
+        new_date = last_entry[3].strip()
+        new_time = last_entry[4].strip()
 
     # 🟠 upload data (create page)
     payload = {
