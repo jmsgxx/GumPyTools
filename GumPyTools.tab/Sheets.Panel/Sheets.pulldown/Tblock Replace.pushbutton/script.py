@@ -92,14 +92,17 @@ selected_sheets = get_multiple_elements()
 
 # will return a list of family instance
 for sheet in selected_sheets:
-    existing_tblock = FilteredElementCollector(doc, sheet.Id).OfClass(FamilyInstance)\
-        .OfCategory(BuiltInCategory.OST_TitleBlocks)\
-        .ToElements()
+    if sheet.Category.Name != 'Sheets':
+        forms.alert("Selected view is not a view sheet.", exitscript=True)
+    else:
+        existing_tblock = FilteredElementCollector(doc, sheet.Id).OfClass(FamilyInstance)\
+            .OfCategory(BuiltInCategory.OST_TitleBlocks)\
+            .ToElements()
 
 
-    with rvt_transaction(doc, __title__):
-        # loop through the list of family instance
-        for block in existing_tblock:
-            block.Symbol = t_block_choice
+        with rvt_transaction(doc, __title__):
+            # loop through the list of family instance
+            for block in existing_tblock:
+                block.Symbol = t_block_choice
 
 
