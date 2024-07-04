@@ -36,7 +36,8 @@ output.center()
 
 file_path = r'X:\J521\BIM\00_SKA-Tools\SKA_Tools\log_info\doc_sync_log.csv'
 with open(file_path, 'r') as csvfile:
-    data = [line.strip().split(',') for line in csvfile]
+    lines = csvfile.readlines()
+    data = [line.strip().split(',') for line in lines[1:]]
 
 output.resize(800, 700)
 output.print_table(table_data=data,

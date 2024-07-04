@@ -1,0 +1,128 @@
+{
+    "request_id": "05d17d31-31e1-403a-9f58-160e8a5f302d", 
+    "next_cursor": null, 
+    "page_or_database": {}, 
+    "results": [
+        {
+            "last_edited_time": "2024-07-04T02:30:00.000Z", 
+            "icon": null, 
+            "parent": {
+                "type": "database_id", 
+                "database_id": "209af25b-3f15-459c-bcb2-2a1629c8c9ce"
+            }, 
+            "public_url": null, 
+            "id": "a2aee7dd-1f05-4ffa-9b69-2fc07a6ccc40", 
+            "cover": null, 
+            "url": "https://www.notion.so/Joven-a2aee7dd1f054ffa9b692fc07a6ccc40", 
+            "created_by": {
+                "id": "fc96fbc2-52da-41b9-a993-29a78a62bbf4", 
+                "object": "user"
+            }, 
+            "last_edited_by": {
+                "id": "fc96fbc2-52da-41b9-a993-29a78a62bbf4", 
+                "object": "user"
+            }, 
+            "archived": false, 
+            "in_trash": false, 
+            "created_time": "2024-07-04T02:29:00.000Z", 
+            "object": "page", 
+            "properties": {
+                "Date": {
+                    "id": "i%5E%3DH", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "03-07-24", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "03-07-24"
+                        }
+                    ]
+                }, 
+                "User": {
+                    "id": "title", 
+                    "type": "title", 
+                    "title": [
+                        {
+                            "text": {
+                                "content": "Joven", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "Joven"
+                        }
+                    ]
+                }, 
+                "Created time": {
+                    "id": "TJb%5C", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "10:55:36", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "10:55:36"
+                        }
+                    ]
+                }, 
+                "Computer No.": {
+                    "id": "%3A%5Bey", 
+                    "type": "rich_text", 
+                    "rich_text": [
+                        {
+                            "text": {
+                                "content": "cad-137", 
+                                "link": null
+                            }, 
+                            "annotations": {
+                                "code": false, 
+                                "italic": false, 
+                                "color": "default", 
+                                "bold": false, 
+                                "underline": false, 
+                                "strikethrough": false
+                            }, 
+                            "href": null, 
+                            "type": "text", 
+                            "plain_text": "cad-137"
+                        }
+                    ]
+                }
+            }
+        }
+    ], 
+    "has_more": false, 
+    "type": "page_or_database", 
+    "object": "list"
+}

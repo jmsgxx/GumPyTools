@@ -11,6 +11,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
+from Snippets.notion_db_query import notion_db_query
 from pyrevit import script
 import codecs
 import csv
@@ -47,28 +48,4 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-output = script.get_output()
-output.center()
-
-file_path = r'X:\J521\BIM\00_SKA-Tools\SKA_Tools\log_info\doc_sync_log.csv'
-with open(file_path, 'r') as csvfile:
-    data = [line.strip().split(',') for line in csvfile]
-
-
-output.resize(800, 700)
-output.print_table(table_data=data,
-                   title='Document Sync Log',
-                   columns=['User', 'Computer', 'Model', 'Date', 'Time'],
-                   formats=['', '', '', '', ''])
-
-# data = csvfile.readlines()[1:]
-# for line in data:
-#     part_item = line.strip().split(',')
-#     formatted = ("User: {}\n"
-#                  "Computer: {}\n"
-#                  "Model: {}\n"
-#                  "Date: {}\n"
-#                  "Time: {}\n")\
-#         .format(part_item[0], part_item[1], part_item[2], part_item[3], part_item[4])
-#     print('=' * 20)
-#     print(formatted)
+notion_db_query()
