@@ -11,12 +11,9 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets.notion_db_query import notion_db_query
 from pyrevit import script
 import codecs
 import csv
-from Snippets.notion_com_logger import notion_com_logger
-from Snippets.notion_docop_logger import notion_doc_open_logger
 from Snippets._convert import convert_internal_to_m2
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
@@ -48,4 +45,16 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-notion_db_query()
+all_room_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_RoomTags).\
+    WhereElementIsNotElementType().ToElements()
+
+with rvt_transaction(doc, __title__):
+
+    for tag in all_room_tags:
+        room = tag.Room
+        room_bb = room.get_BoundingBox(doc.ActiveView)
+        room_center = (room_bb.Max - room_bb.Min) / 2
+
+        if room.IsPointInRoom(room_center):
+            room.Location.Point = room_center
+            tag.Location.Point = room_center
