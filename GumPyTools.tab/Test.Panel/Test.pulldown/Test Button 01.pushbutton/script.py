@@ -31,21 +31,24 @@ active_level    = doc.ActiveView.GenLevel
 current_view    = [active_view.Id]
 
 # =====================================================================================================
-output = script.get_output()
-all_levels = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Levels).WhereElementIsNotElementType().ToElements()
-data = []
-for i in all_levels:
-    level_name = i.Name
-    level_val = i.get_Parameter(BuiltInParameter.LEVEL_ELEV).AsValueString()
-    data.append((level_name, level_val))
+all_room_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_RoomTags).WhereElementIsNotElementType().ToElements()
 
-sorted_data = sorted(data, key=lambda x: float(x[1]))
+selected_tags = []
 
-output.center()
-output.print_table(table_data=sorted_data,
-                   title='Levels',
-                   columns=['Level Name', 'Elevation'],
-                   formats=["", ""])
+for tag in all_room_tags:
+    tag_type_id = tag.GetTypeId()
+    tag_fam_el = doc.GetElement(tag_type_id)
+
+    tag_fam_name = tag_fam_el.get_Parameter(BuiltInParameter.SYMBOL_FAMILY_NAME_PARAM).AsString()
+
+    if tag_fam_name == 'AN_TAG_RM_LEFT_1':
+        tag_type_name = tag_fam_el.get_Parameter(BuiltInParameter.ALL_MODEL_TYPE_NAME).AsString()
+        if tag_type_name == 'SQM + DGFA':
+            selected_tags.append(tag.Id)
+            print(tag.TagText)
+            print('-----')
+
+selection.SetElementIds(List[ElementId](selected_tags))
 
 
 

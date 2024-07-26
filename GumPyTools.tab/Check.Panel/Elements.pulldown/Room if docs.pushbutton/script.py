@@ -7,7 +7,7 @@ __doc__ = """
 This script will check if the rooms are documented on sheets.
 
 NOTE: RLS Sheets to have either DEPARTMENTAL  - BLP or 
-REPEATABLE - BLP as value for Rooms_Classification_BLP.
+REPEATABLE - BLP as value for Rooms_Classification_BLP Parameter.
 
 HOW TO:
 1. Select department. This will filter the sheets.

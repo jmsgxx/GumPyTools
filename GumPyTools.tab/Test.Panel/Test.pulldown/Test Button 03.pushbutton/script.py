@@ -29,7 +29,7 @@ import sys
 import clr
 
 clr.AddReference("System")
-from System.Collections.Generic import List
+from System.Collections.Generic import List, HashSet
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -45,16 +45,23 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-all_room_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_RoomTags).\
-    WhereElementIsNotElementType().ToElements()
+# all_room_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_RoomTags).\
+#     WhereElementIsNotElementType().ToElements()
+#
+# with rvt_transaction(doc, __title__):
+#
+#     for tag in all_room_tags:
+#         room = tag.Room
+#         room_bb = room.get_BoundingBox(doc.ActiveView)
+#         room_center = (room_bb.Max - room_bb.Min) / 2
+#
+#         if room.IsPointInRoom(room_center):
+#             room.Location.Point = room_center
+#             tag.Location.Point = room_center
 
-with rvt_transaction(doc, __title__):
+all_pipe_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_PipeTags).WhereElementIsNotElementType().ToElements()
 
-    for tag in all_room_tags:
-        room = tag.Room
-        room_bb = room.get_BoundingBox(doc.ActiveView)
-        room_center = (room_bb.Max - room_bb.Min) / 2
-
-        if room.IsPointInRoom(room_center):
-            room.Location.Point = room_center
-            tag.Location.Point = room_center
+for pipe in all_pipe_tags:
+    tagged_el = pipe.GetTaggedLocalElements()
+    for i in tagged_el:
+        print(i.Name)
