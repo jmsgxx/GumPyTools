@@ -159,7 +159,3 @@ with Transaction(doc, __title__) as t:
 
     t.Commit()
 
-
-script_name = __title__
-_logger(script_name)
-
