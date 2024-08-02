@@ -72,8 +72,8 @@ current_view    = [active_view.Id]
 sheet_all = FilteredElementCollector(doc).OfClass(ViewSheet).ToElements()
 f_sheet_all = [i for i in sheet_all if i is not None]
 sheet_all = list(set(f_sheet_all))
-lst_sheet = [item.LookupParameter('Sheet Department').AsString() for item in sheet_all]
-sheet_dict_all = {name: name for name in lst_sheet}
+lst_sheet = [item.LookupParameter('Sheet Department').AsString() for item in sheet_all]     # sheet with 'Sheet Department'
+sheet_dict_all = {name: name for name in lst_sheet}     # dictionary of department
 
 # ===============================================================================
 user_dept = None
@@ -163,8 +163,8 @@ if all_sheets:
 else:
     forms.alert("'{}'\nParameter doesn't exist.".format(user_dept.upper()), exitscript=True)
 
-# 2️⃣ UI
 # =================================================================================
+# 2️⃣ UI
 try:
     components = [Label('Sheet Department:'),
                   ComboBox('sheet_dept', sheet_dict),
@@ -194,8 +194,8 @@ try:
 
     with_mark = user_inputs['with_mark']
 
-# 3️⃣ MAIN CODE
 # =================================================================================
+# 3️⃣ MAIN CODE
     sheet_rm_id_lst = []
 
     for sheet in all_sheets:

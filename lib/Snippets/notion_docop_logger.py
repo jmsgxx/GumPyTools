@@ -73,56 +73,15 @@ def notion_doc_open_logger(custom_path):
 
     # 🟠 upload data (create page)
     payload = {
-        "parent": {
-            "database_id": "9b54e2c5-3ec3-4c3e-b9b3-00dffeb5d881"
-        },
+        "parent": {"database_id": "9b54e2c5-3ec3-4c3e-b9b3-00dffeb5d881"},
         "properties": {
-            "Created time": {
-                "rich_text": [
-                    {
-                        "text": {
-                            "content": new_time
-                        }
-                    }
-                ]
-            },
-            "User": {
-                "title": [
-                    {
-                        "text": {
-                            "content": new_username
-                        }
-                    }
-                ]
-            },
-            "Model Name": {
-                "rich_text": [
-                    {
-                        "text": {
-                            "content": new_model_name
-                        }
-                    }
-                ]
-            },
-            "Date": {
-                "rich_text": [
-                    {
-                        "text": {
-                            "content": new_date
-                        }
-                    }
-                ]
-            },
-            "Computer No.": {
-                "rich_text": [
-                    {
-                        "text": {
-                            "content": new_comp_num
-                        }
-                    }
-                ]
-            }
+            "Created time": {"rich_text": [{"text": {"content": new_time}}]},
+            "User": {"title": [{"text": {"content": new_username}}]},
+            "Model Name": {"rich_text": [{"text": {"content": new_model_name}}]},
+            "Date": {"rich_text": [{"text": {"content": new_date}}]},
+            "Computer No.": {"rich_text": [{"text": {"content": new_comp_num}}]}
         }
     }
+
     response = requests.post(NOTION_ENDPOINT, json=payload, headers=headers)
     return response

@@ -45,23 +45,32 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-# all_room_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_RoomTags).\
-#     WhereElementIsNotElementType().ToElements()
-#
+current_level = active_level.Id
+level_filter = ElementLevelFilter(current_level)
+
+all_phase = list(doc.Phases)
+phase = all_phase[-1]
+# phase = None
+# for i in all_phase:
+#     if i.Name == 'MWP2':
+#         phase = i
+
+all_doors_on_level = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WherePasses(level_filter).WhereElementIsNotElementType().ToElements()
+
 # with rvt_transaction(doc, __title__):
-#
-#     for tag in all_room_tags:
-#         room = tag.Room
-#         room_bb = room.get_BoundingBox(doc.ActiveView)
-#         room_center = (room_bb.Max - room_bb.Min) / 2
-#
-#         if room.IsPointInRoom(room_center):
-#             room.Location.Point = room_center
-#             tag.Location.Point = room_center
+#     for index, door in enumerate(all_doors_on_level, start=1):
+#         room = door.FromRoom[phase]
+#         mark_param = door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
+#         if room:
+#             room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+#             if room_name:
+#                 mark_param.Set('{}-{}'.format('A', str(index).zfill(2)))
+#                 print(mark_param.AsString())
 
-all_pipe_tags = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_PipeTags).WhereElementIsNotElementType().ToElements()
+sorted_doors = sorted(all_doors_on_level, key=lambda x: x.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).AsString())
 
-for pipe in all_pipe_tags:
-    tagged_el = pipe.GetTaggedLocalElements()
-    for i in tagged_el:
-        print(i.Name)
+with rvt_transaction(doc, __title__):
+    for index, value in enumerate(sorted_doors, start=1):
+        comment_param = value.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
+        new_value = '{}-{}'.format('AA', str(index).zfill(2))
+        comment_param.Set(new_value)

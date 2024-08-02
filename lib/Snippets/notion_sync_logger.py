@@ -86,7 +86,7 @@ def notion_sync_logger():
     # 🟠 upload data (create page)
     payload = {
         "parent": {
-                "database_id": "9b54e2c5-3ec3-4c3e-b9b3-00dffeb5d881"
+                "database_id": " "
             },
         "properties": {
                 "Created time": {

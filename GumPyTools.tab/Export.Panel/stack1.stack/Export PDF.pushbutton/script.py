@@ -19,7 +19,6 @@ import sys
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets.notion_com_logger import notion_com_logger
 from Autodesk.Revit.DB import *
 import os
 from datetime import datetime
@@ -103,5 +102,3 @@ with Transaction(doc, __title__) as t:
         print("An error occurred: {}".format(e))
 
     t.Commit()
-
-# notion_com_logger(__title__)
