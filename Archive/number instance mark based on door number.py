@@ -45,37 +45,32 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-# TODO 1: get all the windows
-# TODO 2: get all the rooms FromRoom to ToRoom
-# TODO 3: prepare the parameters to write on syntax
-# TODO 4: integrate spline
-
-
-# 🟡 select spline
-filter_type = ISelectionFilter_Classes([ModelNurbSpline, DetailNurbSpline])
-spl = selection.PickObject(ObjectType.Element, filter_type, "Select Spline")
-selected_spline = doc.GetElement(spl).GeometryCurve
-
+current_level = active_level.Id
+level_filter = ElementLevelFilter(current_level)
 
 all_phase = list(doc.Phases)
 phase = all_phase[-1]
+# phase = None
+# for i in all_phase:
+#     if i.Name == 'MWP2':
+#         phase = i
 
-windows_on_level = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Windows)\
-    .WherePasses(ElementLevelFilter(active_level.Id)).WhereElementIsNotElementType().ToElements()
+all_doors_on_level = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Doors).WherePasses(level_filter).WhereElementIsNotElementType().ToElements()
 
-# selection.SetElementIds(List[ElementId]([i.Id for i in windows_on_level]))
+# with rvt_transaction(doc, __title__):
+#     for index, door in enumerate(all_doors_on_level, start=1):
+#         room = door.FromRoom[phase]
+#         mark_param = door.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
+#         if room:
+#             room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
+#             if room_name:
+#                 mark_param.Set('{}-{}'.format('A', str(index).zfill(2)))
+#                 print(mark_param.AsString())
 
-for win in windows_on_level:
-    win_curve = win.Geometry.Curve
-    print(win_curve)
+sorted_doors = sorted(all_doors_on_level, key=lambda x: x.get_Parameter(BuiltInParameter.ALL_MODEL_MARK).AsString())
 
-    # results = clr.Reference[IntersectionResultArray]()
-    # intersection_pt = win_curve.Intersect(selected_spline, results)
-    # if intersection_pt == SetComparisonResult.Overlap:
-    #     print('Found intersection')
-    # room = win.FromRoom[phase]
-    # if room:
-    #     room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
-    #     room_number = room.Number
-    #     zone_number = room.LookupParameter('Zone Number').AsValueString()
-
+with rvt_transaction(doc, __title__):
+    for index, value in enumerate(sorted_doors, start=1):
+        comment_param = value.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
+        new_value = '{}-{}'.format('AA', str(index).zfill(2))
+        comment_param.Set(new_value)
