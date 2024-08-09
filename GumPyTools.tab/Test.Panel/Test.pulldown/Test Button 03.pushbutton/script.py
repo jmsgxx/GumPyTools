@@ -24,6 +24,7 @@ import clr
 
 clr.AddReference("System")
 from System.Collections.Generic import List, HashSet
+from System import Enum
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -64,6 +65,8 @@ def get_faces_of_treads(staircase):
     for geo in stair_geo:
         if isinstance(geo, GeometryInstance):
             geo = geo.GetInstanceGeometry()
+        if isinstance(geo, Solid):
+            geo = [geo]
         for obj in geo:
             if isinstance(obj, Solid):
                 for face in obj.Faces:
@@ -107,7 +110,30 @@ def thicken_faces(document, list_faces, thick_num):
             print(e)
 
 
+all_categories = doc.Settings.Categories
+
+cat_dict = {
+    "Stairs": BuiltInCategory.OST_Stairs,
+    "Floors": BuiltInCategory.OST_Floors
+}
+
+# TODO: Error expected BuiltInCategory, got Stairs
+
 try:
+    components = [Label('Mass Creation for Headroom:'),
+                  ComboBox('cat_select', cat_dict),
+                  Label('Specify Height in mm'),
+                  TextBox('ht_input'),
+                  Separator(),
+                  Button('Create')]
+
+    form = FlexForm('Create View Plan', components)
+    form.show()
+
+    user_input = form.values
+    selection_cat = user_input['cat_select']
+    input_ht = user_input['ht_input']
+
     # ------------------------------------------------------------------------------------------
     # 🟡 stair selection
     # selected_stair = get_multiple_elements()
@@ -116,19 +142,31 @@ try:
     #     filter_type = StairsFilter()
     #     stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Stair")
     #     selected_stair = [doc.GetElement(el) for el in stair_list]
-    selected_stair = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Stairs)\
+
+    # enum_name = Enum.GetName(BuiltInCategory, selection_cat.IntegerValue)
+    # bic_dic = {
+    #     "OST_Floor": BuiltInCategory.OST_Floors,
+    #     "OST_Stairs": BuiltInCategory.OST_Stairs
+    # }
+    # for k,v in bic_dic:
+    # bic = bic_dic.get(enum_name)
+    # print(bic)
+    selected_elements = FilteredElementCollector(doc, active_view.Id).OfCategory(selection_cat)\
         .WhereElementIsNotElementType().ToElements()
     # ------------------------------------------------------------------------------------------
     # 🟩 execute
     faces = []
-    for stair in selected_stair:
-        faces.extend(get_faces_of_treads(stair))
+    for el in selected_elements:
+        faces.extend(get_faces_of_treads(el))
 
     with rvt_transaction(doc, __title__):
-        thickness = convert_m_to_feet(2.1)
-        thicken_faces(doc, faces, thickness)
+        input_to_m = input_ht / 1000
+        thickness = convert_m_to_feet(input_to_m)
+        # thicken_faces(doc, faces, thickness)
 except Exception as e:
-    print(e)
+    print("Error {}".format(e))
+else:
+    forms.alert(title="Headroom Mass", msg="Mass Created", warn_icon=False, exitscript=False)
 
 
 
