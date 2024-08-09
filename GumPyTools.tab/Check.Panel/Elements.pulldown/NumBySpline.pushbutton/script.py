@@ -27,7 +27,7 @@ v1. 08 Jun 2024
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
-from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes
 import xlrd
 from Autodesk.Revit.DB import *
 from Snippets._context_manager import rvt_transaction, try_except

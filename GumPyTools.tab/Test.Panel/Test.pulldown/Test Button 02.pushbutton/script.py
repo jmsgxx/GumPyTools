@@ -22,6 +22,7 @@ from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from Autodesk.Revit.DB.Structure import StructuralType
 import pyrevit
 import sys
+from Snippets._convert import convert_m_to_feet
 import clr
 clr.AddReference("System")
 from System.Collections.Generic import List
@@ -41,58 +42,91 @@ selection = uidoc.Selection  # type: Selection
 # ======================================================================================================
 
 
-def get_points_on_curve(curve, n):
-    points = []
-    for i in range(n+1):
-        param = float(i) / n
-        point = curve.Evaluate(float(param), True)
-        points.append(point)
-    return points
+def get_faces_of_floors(floor):
+    faces_ = []
+    try:
+        floor_geo = floor.get_Geometry(Options())
+        print("Floor Geometry: ", floor_geo)
+        for geo in floor_geo:
+            if isinstance(geo, GeometryInstance):
+                geo = geo.GetInstanceGeometry()
+            if isinstance(geo, Solid):
+                geo = [geo]
+            for obj in geo:
+                if isinstance(obj, Solid):
+                    print("Solid found: ", obj)
+                    for face in obj.Faces:
+                        normal = face.ComputeNormal(UV(0, 0))
+                        print("Face normal: ", normal)
+                        if normal.IsAlmostEqualTo(XYZ(0, 0, 1)):
+                            faces_.append(face)
+        print("Found {} faces".format(len(faces_)))
+    except Exception as e:
+        print("Error in get_faces_of_floors: {}".format(e))
+    return faces_
 
-# 1️⃣ collect the grids
 
-
-selected_model_arc = get_multiple_elements()
-all_gen = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_GenericModel).WhereElementIsNotElementType().ToElements()
-
-if not selected_model_arc:
-    with try_except():
-        filter_type = ISelectionFilter_Classes([ModelArc])
-        arc_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Arc")
-        selected_model_arc = [doc.GetElement(ell) for ell in arc_list]
-
-    if not selected_model_arc:
-        forms.alert('No wall selected', exitscript=True)
-
-with rvt_transaction(doc, __title__):
-    for arc in selected_model_arc:
-        fam_ins = None
-        for i in all_gen:   # type: FamilyInstance
-            if i.Name == 'Family1':
-                fam_ins = i
-                break
-        fam_sym = fam_ins.Symbol
-        arc_geom = arc.GeometryCurve
-        arc_geom_cen = arc_geom.Center
-        arc_line = Line.CreateUnbound(arc_geom_cen, XYZ.BasisY)
-        x_pts = get_points_on_curve(arc_geom, 4)
+def thicken_faces(_doc, _faces, _thickness):
+    solids = []
+    for face in _faces:
         try:
-            for pt in x_pts:
-                el_id = []  # Initialize the list here
-                fam_create = doc.Create.NewFamilyInstance(pt, fam_sym, StructuralType.NonStructural)
-                el_id.append(fam_create.Id)
-                cent_to_crv_pt = Line.CreateBound(arc_geom_cen, pt)
-                cent_dir = arc_line.Direction
-                line_dir = cent_to_crv_pt.Direction
-                ang = cent_dir.AngleTo(line_dir)
-                fam_loc = fam_create.Location
-                if isinstance(fam_loc, LocationPoint):
-                    fam_point = fam_loc.Point
-                    rotation_axis = Line.CreateBound(fam_point, fam_point + XYZ.BasisZ)
-                ElementTransformUtils.RotateElements(doc, List[ElementId](el_id), rotation_axis, ang)
-        except Exception as e:
-            print(e)
+            # Create a plane from the face's normal and origin
+            normal = face.ComputeNormal(UV(0, 0))
+            origin = face.Origin
+            plane = Plane.CreateByNormalAndOrigin(normal, origin)
+            sketch_plane = SketchPlane.Create(_doc, plane)
+            profile = face.GetEdgesAsCurveLoops()
+            if not profile:
+                print("No profile found for face: {}".format(face))
+                continue
+            print("Profile: ", profile)
 
-# TODO its not working as intended after the family creation, need to work on the rotation line
+            # Create a solid from the face profile and thickness
+            solid = GeometryCreationUtilities.CreateExtrusionGeometry(profile, normal, _thickness)
+            solids.append(solid)
+        except Exception as e:
+            print("Error creating solid: {}".format(e))
+
+    # Union all solids into a single solid
+    if solids:
+        try:
+            union_solid = solids[0]
+            for solid in solids[1:]:
+                union_solid = BooleanOperationsUtils.ExecuteBooleanOperation(union_solid, solid,
+                                                                             BooleanOperationsType.Union)
+
+            # Create a DirectShape element to hold the unioned solid
+            direct_shape = DirectShape.CreateElement(_doc, ElementId(BuiltInCategory.OST_Mass))
+            direct_shape.SetShape([union_solid])
+            _doc.Regenerate()
+            print("Created DirectShape: {}".format(direct_shape.Id))
+        except Exception as e:
+            print("Error creating unioned DirectShape: {}".format(e))
+
+
+try:
+    selected_floors = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Floors) \
+        .WhereElementIsNotElementType().ToElements()
+
+    print("Selected floors: ", selected_floors)
+
+    faces = []
+
+    for floor in selected_floors:
+        try:
+            faces.extend(get_faces_of_floors(floor))
+        except Exception as e:
+            print("Error processing floor: {}".format(e))
+            continue
+
+    print("Total faces found: ", len(faces))
+
+    with rvt_transaction(doc, __title__):
+        thickness = convert_m_to_feet(2.1)
+        thicken_faces(doc, faces, thickness)
+except Exception as e:
+    print("Error: {}".format(e))
+
+
 
 

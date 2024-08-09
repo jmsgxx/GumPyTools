@@ -104,3 +104,15 @@ class CurvesFilter(ISelectionFilter):
         if elem.Category.Id == ElementId(BuiltInCategory.OST_Lines):
             return True
 
+
+class StairsFilter(ISelectionFilter):
+    def __init__(self):
+        """
+        ISelection Stairs.
+        """
+
+    def AllowElement(self, elem):
+        if elem.Category.Id == ElementId(BuiltInCategory.OST_Stairs):
+            return True
+
+
