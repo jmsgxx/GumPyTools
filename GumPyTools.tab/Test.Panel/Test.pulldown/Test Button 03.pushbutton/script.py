@@ -151,8 +151,8 @@ try:
     # for k,v in bic_dic:
     # bic = bic_dic.get(enum_name)
     # print(bic)
-    selected_elements = FilteredElementCollector(doc, active_view.Id).OfCategory(selection_cat)\
-        .WhereElementIsNotElementType().ToElements()
+    selected_elements = (FilteredElementCollector(doc, active_view.Id).OfCategory(selection_cat)
+                         .WhereElementIsNotElementType().ToElements())
     # ------------------------------------------------------------------------------------------
     # 🟩 execute
     faces = []
@@ -160,9 +160,9 @@ try:
         faces.extend(get_faces_of_treads(el))
 
     with rvt_transaction(doc, __title__):
-        input_to_m = input_ht / 1000
+        input_to_m = float(input_ht) / 1000
         thickness = convert_m_to_feet(input_to_m)
-        # thicken_faces(doc, faces, thickness)
+        thicken_faces(doc, faces, thickness)
 except Exception as e:
     print("Error {}".format(e))
 else:
