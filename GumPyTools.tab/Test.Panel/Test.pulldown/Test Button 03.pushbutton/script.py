@@ -11,20 +11,14 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from pyrevit import script
-import codecs
-import csv
-from Snippets._convert import convert_internal_to_m2
+from Snippets._convert import convert_internal_to_m2, convert_m_to_feet
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
-from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter
-import xlrd
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter, StairsFilter
 from Autodesk.Revit.DB import *
 from Snippets._context_manager import rvt_transaction, try_except
-from pyrevit import forms, revit
+from pyrevit import forms, revit, script
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Autodesk.Revit.DB.Architecture import Room
 import pyrevit
-from collections import Counter
 import sys
 import clr
 
@@ -45,37 +39,99 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-# TODO 1: get all the windows
-# TODO 2: get all the rooms FromRoom to ToRoom
-# TODO 3: prepare the parameters to write on syntax
-# TODO 4: integrate spline
+# # 1️⃣ get all the revit link instance
+# all_links_view = FilteredElementCollector(doc, active_view.Id).OfClass(RevitLinkInstance).ToElements()
+#
+# # 2️⃣ filter the link that you need
+# rvt_link = None
+# for link in all_links_view:
+#     link_name = link.Name
+#     if 'ARC' in link_name:
+#         rvt_link = link
+#
+# linked_doc = rvt_link.GetLinkDocument()
+#
+# # 3️⃣ get all the rooms on your chosen revit link instance
+# all_rooms_in_link_level = FilteredElementCollector(linked_doc).OfCategory(BuiltInCategory.OST_Rooms)\
+#             .WhereElementIsNotElementType().ToElements()
+# ======================================================================================================
 
 
-# 🟡 select spline
-filter_type = ISelectionFilter_Classes([ModelNurbSpline, DetailNurbSpline])
-spl = selection.PickObject(ObjectType.Element, filter_type, "Select Spline")
-selected_spline = doc.GetElement(spl).GeometryCurve
+def get_faces_of_treads(staircase):
+    """get the faces from geometry element"""
+    faces_list = []
+    stair_geo = staircase.get_Geometry(Options())
+    for geo in stair_geo:
+        if isinstance(geo, GeometryInstance):
+            geo = geo.GetInstanceGeometry()
+        for obj in geo:
+            if isinstance(obj, Solid):
+                for face in obj.Faces:
+                    normal = face.ComputeNormal(UV(0, 0))   # face normal
+                    if normal.IsAlmostEqualTo(XYZ(0, 0, 1)):
+                        faces_list.append(face)
+    return faces_list
 
 
-all_phase = list(doc.Phases)
-phase = all_phase[-1]
+def thicken_faces(document, list_faces, thick_num):
+    """extrude the extracted normal face"""
+    solids = []
+    for face in list_faces:
+        try:
+            # plane normal origin
+            normal = face.ComputeNormal(UV(0, 0))
+            origin = face.Origin
+            plane = Plane.CreateByNormalAndOrigin(normal, origin)
+            SketchPlane.Create(document, plane)
+            profile = face.GetEdgesAsCurveLoops()
+            if not profile:
+                continue
+            # create solid
+            solid = GeometryCreationUtilities.CreateExtrusionGeometry(profile, normal, thick_num)
+            solids.append(solid)
+        except Exception as err:
+            print(err)
 
-windows_on_level = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Windows)\
-    .WherePasses(ElementLevelFilter(active_level.Id)).WhereElementIsNotElementType().ToElements()
+    # union solid
+    if solids:
+        try:
+            union_solid = solids[0]
+            for solid in solids[1:]:
+                union_solid = BooleanOperationsUtils.ExecuteBooleanOperation(union_solid, solid,
+                                                                             BooleanOperationsType.Union)
+            # Create DirectShape element
+            ds = DirectShape.CreateElement(document, ElementId(BuiltInCategory.OST_Mass))
+            ds.SetShape([union_solid])
+            document.Regenerate()
+        except Exception as e:
+            print(e)
 
-# selection.SetElementIds(List[ElementId]([i.Id for i in windows_on_level]))
 
-for win in windows_on_level:
-    win_curve = win.Geometry.Curve
-    print(win_curve)
+try:
+    # ------------------------------------------------------------------------------------------
+    # 🟡 stair selection
+    # selected_stair = get_multiple_elements()
+    #
+    # if not selected_stair:
+    #     filter_type = StairsFilter()
+    #     stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Stair")
+    #     selected_stair = [doc.GetElement(el) for el in stair_list]
+    selected_stair = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Stairs)\
+        .WhereElementIsNotElementType().ToElements()
+    # ------------------------------------------------------------------------------------------
+    # 🟩 execute
+    faces = []
+    for stair in selected_stair:
+        faces.extend(get_faces_of_treads(stair))
 
-    # results = clr.Reference[IntersectionResultArray]()
-    # intersection_pt = win_curve.Intersect(selected_spline, results)
-    # if intersection_pt == SetComparisonResult.Overlap:
-    #     print('Found intersection')
-    # room = win.FromRoom[phase]
-    # if room:
-    #     room_name = room.get_Parameter(BuiltInParameter.ROOM_NAME).AsString()
-    #     room_number = room.Number
-    #     zone_number = room.LookupParameter('Zone Number').AsValueString()
+    with rvt_transaction(doc, __title__):
+        thickness = convert_m_to_feet(2.1)
+        thicken_faces(doc, faces, thickness)
+except Exception as e:
+    print(e)
+
+
+
+
+
 
