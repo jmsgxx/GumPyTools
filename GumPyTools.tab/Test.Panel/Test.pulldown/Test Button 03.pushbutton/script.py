@@ -117,8 +117,6 @@ cat_dict = {
     "Floors": BuiltInCategory.OST_Floors
 }
 
-# TODO: Error expected BuiltInCategory, got Stairs
-
 try:
     components = [Label('Mass Creation for Headroom:'),
                   ComboBox('cat_select', cat_dict),
@@ -143,14 +141,6 @@ try:
     #     stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Stair")
     #     selected_stair = [doc.GetElement(el) for el in stair_list]
 
-    # enum_name = Enum.GetName(BuiltInCategory, selection_cat.IntegerValue)
-    # bic_dic = {
-    #     "OST_Floor": BuiltInCategory.OST_Floors,
-    #     "OST_Stairs": BuiltInCategory.OST_Stairs
-    # }
-    # for k,v in bic_dic:
-    # bic = bic_dic.get(enum_name)
-    # print(bic)
     selected_elements = (FilteredElementCollector(doc, active_view.Id).OfCategory(selection_cat)
                          .WhereElementIsNotElementType().ToElements())
     # ------------------------------------------------------------------------------------------

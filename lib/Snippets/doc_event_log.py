@@ -90,8 +90,10 @@ def add_element_log(custom_path):
 
     else:
         # ✅ main code
-        add_filepath = custom_path
         username = os.environ['USERNAME']
+        if username == 'jmgas':
+            sys.exit()
+        add_filepath = custom_path
         computer_name = os.environ['COMPUTERNAME']
         cur_time = datetime.now()
         date = str(cur_time.strftime("%d-%m-%y"))
@@ -157,8 +159,10 @@ def mod_element_log(custom_path):
 
     else:
         # ✅ main code
-        add_filepath = custom_path
         username = os.environ['USERNAME']
+        if username == 'jmgas':
+            sys.exit()
+        add_filepath = custom_path
         computer_name = os.environ['COMPUTERNAME']
         cur_time = datetime.now()
         date = str(cur_time.strftime("%d-%m-%y"))
@@ -224,8 +228,10 @@ def del_element_log(custom_path):
 
     else:
         # ✅ main code
-        add_filepath = custom_path
         username = os.environ['USERNAME']
+        if username == 'jmgas':
+            sys.exit()
+        add_filepath = custom_path
         computer_name = os.environ['COMPUTERNAME']
         cur_time = datetime.now()
         date = str(cur_time.strftime("%d-%m-%y"))
