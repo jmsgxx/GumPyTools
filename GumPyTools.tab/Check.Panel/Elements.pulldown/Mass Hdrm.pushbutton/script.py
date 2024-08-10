@@ -1,24 +1,39 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Test Button 03'
+__title__ = 'Headroom Check'
 __doc__ = """
-script test
+*** DO NOT CREATE A HEADROOM MASS ON A BIG ACTIVE VIEW. MACHINE WILL CRASH. ***
+
+This script will create a mass from an element's surface.
+
+HOW TO:
+1. Select the categories you want to check.
+    - Stairs
+    - Floor
+2. Select how you want to create the mass:
+    - By Active View - this will create a mass for all the 
+    visible elements of selected categories on the view
+    - Selection - handpick the elements you would want to create
+    the mass and hit 'Finish' at the upper left of the screen
+    
+WHEN IN DOUBT CONTACT THE AUTHOR: 👇👀
 __________________________________
 Author: Joven Mark Gumana
+
+v1. 10 Aug 2024
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets._convert import convert_internal_to_m2, convert_m_to_feet
-from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
-from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter, StairsFilter
+from Snippets._convert import convert_m_to_feet
+from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button)
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, StairsFilter
 from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction, try_except
+from Snippets._context_manager import rvt_transaction
 from pyrevit import forms, revit, script
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
-import sys
 import clr
 
 clr.AddReference("System")
@@ -36,24 +51,6 @@ app = __revit__.Application
 active_view = doc.ActiveView
 active_level = doc.ActiveView.GenLevel
 selection = uidoc.Selection  # type: Selection
-
-
-# ======================================================================================================
-# # 1️⃣ get all the revit link instance
-# all_links_view = FilteredElementCollector(doc, active_view.Id).OfClass(RevitLinkInstance).ToElements()
-#
-# # 2️⃣ filter the link that you need
-# rvt_link = None
-# for link in all_links_view:
-#     link_name = link.Name
-#     if 'ARC' in link_name:
-#         rvt_link = link
-#
-# linked_doc = rvt_link.GetLinkDocument()
-#
-# # 3️⃣ get all the rooms on your chosen revit link instance
-# all_rooms_in_link_level = FilteredElementCollector(linked_doc).OfCategory(BuiltInCategory.OST_Rooms)\
-#             .WhereElementIsNotElementType().ToElements()
 # ======================================================================================================
 
 output = script.get_output()
