@@ -45,10 +45,7 @@ active_level    = doc.ActiveView.GenLevel
 # =================================
 # 1️⃣ GET ALL VIEWS
 # =================================
-all_views = FilteredElementCollector(doc)\
-    .OfCategory(BuiltInCategory.OST_Views)\
-    .WhereElementIsNotElementType()\
-    .ToElements()
+all_views = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Views).WhereElementIsNotElementType().ToElements()
 
 # =================================
 # 2️⃣ GET VIEWS WITH FILTERS

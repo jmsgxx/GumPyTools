@@ -112,7 +112,7 @@ def convert_internal_to_cm(length):
         return UnitUtils.ConvertFromInternalUnits(length, UnitTypeId.Centimeters)
 
 
-def convert_internal_to_m2(area):
+def convert_internal_to_sqm(area):
     """Function to convert internal to meters."""
 
     # RVT >= 2022

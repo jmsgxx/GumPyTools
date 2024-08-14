@@ -52,6 +52,14 @@ selection = uidoc.Selection  # type: Selection
 
 # ======================================================================================================
 
+# TODO: 1. FLEXFORM CHOOSE OPTIONS FOR WALL OR FAMILY INSTANCE, WINDOWS, DOORS
+# TODO: if wall, choose the wall method, else if option is in list [windows, door] do the other one,
+'''create filter class for doors and window, selection by active view or rectangular selection'''
+
+
+
+
+
 # 🟡 select spline
 filter_type = ISelectionFilter_Classes([ModelNurbSpline, DetailNurbSpline])
 spl = selection.PickObject(ObjectType.Element, filter_type, "Select Spline")

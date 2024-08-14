@@ -11,7 +11,7 @@ Author: Joven Mark Gumana
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from Snippets._convert import convert_internal_to_sqm, convert_m_to_feet
+from Snippets._convert import convert_internal_to_m2, convert_m_to_feet
 from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
 from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, CurvesFilter, StairsFilter
 from Autodesk.Revit.DB import *
@@ -77,6 +77,6 @@ with rvt_transaction(doc, __title__):
         dept = rm_val[0]
         rm_obj = data[1]
         total_area = dept_total_area[dept]
-        area_conv = convert_internal_to_sqm(total_area)
+        area_conv = convert_internal_to_m2(total_area)
         rm_param = rm_obj.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
         rm_param.Set(str("{:,.2f} sqm".format(area_conv)))
