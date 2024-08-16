@@ -2,31 +2,43 @@
 
 __title__ = 'Test Button 02'
 __doc__ = """
-test script
+*** DO NOT CREATE A HEADROOM MASS ON A BIG ACTIVE VIEW. MACHINE WILL CRASH. ***
+
+This script will create a mass from an element's surface.
+
+HOW TO:
+1. Select the categories you want to check.
+    - Stairs
+    - Floor
+2. Select how you want to create the mass:
+    - By Active View - this will create a mass for all the 
+    visible elements of selected categories on the view
+    - Selection - handpick the elements you would want to create
+    the mass and hit 'Finish' at the upper left of the screen
+    
+WHEN IN DOUBT CONTACT THE AUTHOR: 👇👀
 __________________________________
 Author: Joven Mark Gumana
-v1. 21 May 2024
+
+v1. 10 Aug 2024
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║
 # ╩╩ ╩╩  ╚═╝╩╚═ ╩ # imports
 # ===================================================================================================
-from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button, CheckBox)
-from Snippets._x_selection import ISelectionFilter_Classes
-from Snippets._x_selection import get_multiple_elements
-from Autodesk.Revit.DB import *
-from Snippets._context_manager import rvt_transaction, try_except
-from pyrevit import forms, revit
-from Autodesk.Revit.UI.Selection import Selection, ObjectType
-from Autodesk.Revit.DB.Structure import StructuralType
-import pyrevit
-import sys
 from Snippets._convert import convert_m_to_feet
+from rpw.ui.forms import (FlexForm, Label, ComboBox, TextBox, Separator, Button)
+from Snippets._x_selection import get_multiple_elements, ISelectionFilter_Classes, StairsFilter
+from Autodesk.Revit.DB import *
+from Snippets._context_manager import rvt_transaction
+from pyrevit import forms, revit, script
+from Autodesk.Revit.UI.Selection import Selection, ObjectType
 import clr
-clr.AddReference("System")
-from System.Collections.Generic import List
 
+clr.AddReference("System")
+from System.Collections.Generic import List, HashSet
+from System import Enum
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -41,91 +53,64 @@ active_level = doc.ActiveView.GenLevel
 selection = uidoc.Selection  # type: Selection
 # ======================================================================================================
 
-
-def get_faces_of_floors(floor):
-    faces_ = []
-    try:
-        floor_geo = floor.get_Geometry(Options())
-        print("Floor Geometry: ", floor_geo)
-        for geo in floor_geo:
-            if isinstance(geo, GeometryInstance):
-                geo = geo.GetInstanceGeometry()
-            if isinstance(geo, Solid):
-                geo = [geo]
-            for obj in geo:
-                if isinstance(obj, Solid):
-                    print("Solid found: ", obj)
-                    for face in obj.Faces:
-                        normal = face.ComputeNormal(UV(0, 0))
-                        print("Face normal: ", normal)
-                        if normal.IsAlmostEqualTo(XYZ(0, 0, 1)):
-                            faces_.append(face)
-        print("Found {} faces".format(len(faces_)))
-    except Exception as e:
-        print("Error in get_faces_of_floors: {}".format(e))
-    return faces_
+output = script.get_output()
+output.center()
+output.resize(400, 300)
 
 
-def thicken_faces(_doc, _faces, _thickness):
-    solids = []
-    for face in _faces:
-        try:
-            # Create a plane from the face's normal and origin
-            normal = face.ComputeNormal(UV(0, 0))
-            origin = face.Origin
-            plane = Plane.CreateByNormalAndOrigin(normal, origin)
-            sketch_plane = SketchPlane.Create(_doc, plane)
-            profile = face.GetEdgesAsCurveLoops()
-            if not profile:
-                print("No profile found for face: {}".format(face))
-                continue
-            print("Profile: ", profile)
-
-            # Create a solid from the face profile and thickness
-            solid = GeometryCreationUtilities.CreateExtrusionGeometry(profile, normal, _thickness)
-            solids.append(solid)
-        except Exception as e:
-            print("Error creating solid: {}".format(e))
-
-    # Union all solids into a single solid
-    if solids:
-        try:
-            union_solid = solids[0]
-            for solid in solids[1:]:
-                union_solid = BooleanOperationsUtils.ExecuteBooleanOperation(union_solid, solid,
-                                                                             BooleanOperationsType.Union)
-
-            # Create a DirectShape element to hold the unioned solid
-            direct_shape = DirectShape.CreateElement(_doc, ElementId(BuiltInCategory.OST_Mass))
-            direct_shape.SetShape([union_solid])
-            _doc.Regenerate()
-            print("Created DirectShape: {}".format(direct_shape.Id))
-        except Exception as e:
-            print("Error creating unioned DirectShape: {}".format(e))
+all_link = FilteredElementCollector(doc).OfClass(RevitLinkInstance).ToElements()
+str_link = None
+for link in all_link:
+    if "STR_NAB_B2L1" in link.Name:
+        str_link = link
+link_doc = str_link.GetLinkDocument()
 
 
-try:
-    selected_floors = FilteredElementCollector(doc, active_view.Id).OfCategory(BuiltInCategory.OST_Floors) \
-        .WhereElementIsNotElementType().ToElements()
+def get_intersect_solid(solid_obj, doc_to_check):
+    """ will return a list of intersected objects """
+    solid_filter = ElementIntersectsSolidFilter(solid_obj)
+    collector = FilteredElementCollector(doc_to_check).WherePasses(solid_filter).ToElements()
+    return collector
 
-    print("Selected floors: ", selected_floors)
 
-    faces = []
+selected_elements = get_multiple_elements()
 
-    for floor in selected_floors:
-        try:
-            faces.extend(get_faces_of_floors(floor))
-        except Exception as e:
-            print("Error processing floor: {}".format(e))
-            continue
+if not selected_elements:
+    filter_type = ISelectionFilter_Classes([DirectShape])
+    stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Element")
+    selected_elements = [doc.GetElement(el) for el in stair_list]
 
-    print("Total faces found: ", len(faces))
+for element in selected_elements:
+    if isinstance(element, DirectShape):
+        el_geo = element.get_Geometry(Options())
+        for geo_object in el_geo:
+            if isinstance(geo_object, Solid):
+                solid = geo_object
+                collection = get_intersect_solid(solid, link_doc)
 
-    with rvt_transaction(doc, __title__):
-        thickness = convert_m_to_feet(2.1)
-        thicken_faces(doc, faces, thickness)
-except Exception as e:
-    print("Error: {}".format(e))
+                exempt_cat = [BuiltInCategory.OST_Stairs,
+                              BuiltInCategory.OST_StairsRailing,
+                              BuiltInCategory.OST_Floors]
+                sel_el = []
+                for i in collection:
+                    if i.Category.Id.IntegerValue in [int(cat) for cat in exempt_cat]:
+                        continue
+                    else:
+                        level_id = i.LevelId
+                        if level_id != ElementId.InvalidElementId:
+                            level_el = doc.GetElement(level_id)
+                            if level_el is not None:
+                                print("Level element found:", level_el.Name)
+                            else:
+                                print("No level element found for the given LevelId.")
+                        else:
+                            print("Invalid LevelId.")
+                        print(i.Category.Name, i.Id)
+                        sel_el.append(i.Id)
+                uidoc.Selection.SetElementIds(List[ElementId](sel_el))
+
+
+
 
 
 

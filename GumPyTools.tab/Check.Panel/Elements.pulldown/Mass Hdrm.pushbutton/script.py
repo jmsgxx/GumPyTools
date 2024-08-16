@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Headroom Check'
+__title__ = 'Headroom Mass'
 __doc__ = """
 *** DO NOT CREATE A HEADROOM MASS ON A BIG ACTIVE VIEW. MACHINE WILL CRASH. ***
 
@@ -21,6 +21,7 @@ __________________________________
 Author: Joven Mark Gumana
 
 v1. 10 Aug 2024
+v2. 16 Aug 2024 - Changed title for follow up script.
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -58,10 +59,10 @@ output.center()
 output.resize(400, 300)
 
 
-def get_faces_of_treads(staircase):
+def get_faces_of_geom(geom_el):
     """get the faces from geometry element"""
     faces_list = []
-    stair_geo = staircase.get_Geometry(Options())
+    stair_geo = geom_el.get_Geometry(Options())
     for geo in stair_geo:
         if isinstance(geo, GeometryInstance):
             geo = geo.GetInstanceGeometry()
@@ -79,6 +80,7 @@ def get_faces_of_treads(staircase):
 def thicken_faces(document, list_faces, thick_num):
     """extrude the extracted normal face"""
     solids = []
+    d_shapes = []
     for face in list_faces:
         try:
             # plane normal origin
@@ -105,10 +107,11 @@ def thicken_faces(document, list_faces, thick_num):
             # Create DirectShape element
             ds = DirectShape.CreateElement(document, ElementId(BuiltInCategory.OST_Mass))
             if ds.SetShape([union_solid]):
+                d_shapes.append(ds)
                 document.Regenerate()
-                return True
         except Exception as e:
             print(e)
+    return d_shapes
 
 # ==============================================================================================================
 
@@ -140,7 +143,7 @@ try:
                       Separator(),
                       Button('Select')]
 
-        form = FlexForm('Create View Plan', components)
+        form = FlexForm('Create Solid Object', components)
         form.show()
 
         user_input = form.values
@@ -163,21 +166,22 @@ try:
                 filter_type = StairsFilter()
             elif selection_cat == BuiltInCategory.OST_Floors:
                 filter_type = ISelectionFilter_Classes([Floor])
-            stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Stair")
+            stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Element")
             selected_elements = [doc.GetElement(el) for el in stair_list]
 
     # ------------------------------------------------------------------------------------------
     # 🟩 execute
     faces = []
     for el in selected_elements:
-        faces.extend(get_faces_of_treads(el))
+        faces.extend(get_faces_of_geom(el))
 
     with rvt_transaction(doc, __title__):
         input_to_m = float(input_ht) / 1000
         thickness = convert_m_to_feet(input_to_m)
         mass_creation = thicken_faces(doc, faces, thickness)
+
 except Exception as e:
-    print("Error {}".format(e))
+    forms.alert(str(e), exitscript=True)
 else:
     if mass_creation:
         forms.alert(title="Headroom Mass", msg="Mass Created", warn_icon=False, exitscript=False)

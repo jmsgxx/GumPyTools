@@ -56,11 +56,11 @@ for room in all_rooms:
 
 # 3️⃣ get the total area per department by dictionary
 dept_total_area = {}
-for dept, area in rooms_lst:
-    if dept in dept_total_area:
-        dept_total_area[dept] += area
+for department, area in rooms_lst:
+    if department in dept_total_area:
+        dept_total_area[department] += area
     else:
-        dept_total_area[dept] = area
+        dept_total_area[department] = area
 
 # 4️⃣ combine the 2 lists that was extracted from 2️⃣
 combined_list = list(zip(rooms_lst, rooms_obj))
@@ -73,10 +73,9 @@ with rvt_transaction(doc, __title__):
         the loop knows which object to set because it was sorted already beforehand, the area value to set 
         came from the dictionary
         """
-        rm_val = data[0]
-        dept = rm_val[0]
+        # (0=(0=data, 1=area), 1=room object)
         rm_obj = data[1]
-        total_area = dept_total_area[dept]
+        total_area = dept_total_area[data[0][0]]
         area_conv = convert_internal_to_m2(total_area)
         rm_param = rm_obj.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
         rm_param.Set(str("{:,.2f} sqm".format(area_conv)))
