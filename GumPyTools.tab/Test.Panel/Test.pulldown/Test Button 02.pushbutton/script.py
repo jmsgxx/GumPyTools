@@ -61,7 +61,7 @@ output.resize(400, 300)
 all_link = FilteredElementCollector(doc).OfClass(RevitLinkInstance).ToElements()
 str_link = None
 for link in all_link:
-    if "STR_NAB_B2L1" in link.Name:
+    if "STR" in link.Name:
         str_link = link
 link_doc = str_link.GetLinkDocument()
 
@@ -88,26 +88,29 @@ for element in selected_elements:
                 solid = geo_object
                 collection = get_intersect_solid(solid, link_doc)
 
+                # will return clash except for this categories
                 exempt_cat = [BuiltInCategory.OST_Stairs,
                               BuiltInCategory.OST_StairsRailing,
                               BuiltInCategory.OST_Floors]
                 sel_el = []
-                for i in collection:
-                    if i.Category.Id.IntegerValue in [int(cat) for cat in exempt_cat]:
-                        continue
-                    else:
-                        level_id = i.LevelId
+                for _element in collection:
+                    el_doc = _element.Document.Title
+                    el_id = None
+                    if _element.Category.Id.IntegerValue not in [int(cat) for cat in exempt_cat]:
+                        level_id = _element.LevelId
                         if level_id != ElementId.InvalidElementId:
                             level_el = doc.GetElement(level_id)
-                            if level_el is not None:
-                                print("Level element found:", level_el.Name)
-                            else:
-                                print("No level element found for the given LevelId.")
+                            if level_el:
+                                level_name = level_el.Name
+                                el_id = _element.Id
+                                el_cat_name = _element.Category.Name
+                                print(el_cat_name, el_id, el_doc)
+                                sel_el.append(el_id)
                         else:
-                            print("Invalid LevelId.")
-                        print(i.Category.Name, i.Id)
-                        sel_el.append(i.Id)
-                uidoc.Selection.SetElementIds(List[ElementId](sel_el))
+                            print("Invalid LevelId for {}.".format(el_id))
+                            print("No clash.")
+
+                # uidoc.Selection.SetElementIds(List[ElementId](sel_el))
 
 
 

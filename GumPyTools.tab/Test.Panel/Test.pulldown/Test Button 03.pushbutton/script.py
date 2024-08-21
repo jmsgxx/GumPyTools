@@ -39,43 +39,32 @@ selection = uidoc.Selection  # type: Selection
 
 
 # ======================================================================================================
-# 1️⃣ collect the rooms
-all_rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
+output = script.get_output()
+output.center()
+output.resize(200, 200)
 
-# 2️⃣ collect the rooms parameter and the object
-rooms_lst = []
-rooms_obj = []
+un_id = None
+try:
+    components = [Label('Enter UniqueId:'),
+                  TextBox('unique_id', ''),
+                  Separator(),
+                  Button('Select')]
 
-for room in all_rooms:
-    if room.Location:
-        room_dept = room.get_Parameter(BuiltInParameter.ROOM_OCCUPANCY).AsString()
-        room_area = room.get_Parameter(BuiltInParameter.ROOM_AREA).AsDouble()
-        if room_dept:
-            rooms_lst.append((room_dept, room_area))
-            rooms_obj.append(room)
+    form = FlexForm('Find the Element', components)
+    form.show()
 
-# 3️⃣ get the total area per department by dictionary
-dept_total_area = {}
-for department, area in rooms_lst:
-    if department in dept_total_area:
-        dept_total_area[department] += area
-    else:
-        dept_total_area[department] = area
+    user_input = form.values
+    un_id = user_input['unique_id']
 
-# 4️⃣ combine the 2 lists that was extracted from 2️⃣
-combined_list = list(zip(rooms_lst, rooms_obj))
-combined_list.sort(key=lambda x: x[0][0])
+except Exception as e:
+    forms.alert("No UniqueId input. Try again.", warn_icon=True, exitscript=True)
 
-# 5️⃣ set the parameter
-with rvt_transaction(doc, __title__):
-    for data in combined_list:
-        """
-        the loop knows which object to set because it was sorted already beforehand, the area value to set 
-        came from the dictionary
-        """
-        # (0=(0=data, 1=area), 1=room object)
-        rm_obj = data[1]
-        total_area = dept_total_area[data[0][0]]
-        area_conv = convert_internal_to_sqm(total_area)
-        rm_param = rm_obj.get_Parameter(BuiltInParameter.ALL_MODEL_INSTANCE_COMMENTS)
-        rm_param.Set(str("{:,.2f} sqm".format(area_conv)))
+element = doc.GetElement(un_id)
+print(output.linkify(element.Id, (element.Name if element else element.Id)))
+
+
+
+
+
+
+

@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Headroom Mass'
+__title__ = 'Headroom Check'
 __doc__ = """
+THIS IS A TEST TO WHAT IF VISUAL MASS IS NOT NEEDED AND JUST WANTED TO CHECK THE
+CLASHED OBJECT
+
 *** DO NOT CREATE A HEADROOM MASS ON A BIG ACTIVE VIEW. MACHINE WILL CRASH. ***
 
 This script will create a mass from an element's surface.
@@ -21,7 +24,6 @@ __________________________________
 Author: Joven Mark Gumana
 
 v1. 10 Aug 2024
-v2. 16 Aug 2024 - Changed title for follow up script.
 """
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
@@ -59,10 +61,10 @@ output.center()
 output.resize(400, 300)
 
 
-def get_faces_of_geom(geom_el):
+def get_faces_of_element(sel_element):
     """get the faces from geometry element"""
     faces_list = []
-    stair_geo = geom_el.get_Geometry(Options())
+    stair_geo = sel_element.get_Geometry(Options())
     for geo in stair_geo:
         if isinstance(geo, GeometryInstance):
             geo = geo.GetInstanceGeometry()
@@ -71,19 +73,19 @@ def get_faces_of_geom(geom_el):
         for obj in geo:
             if isinstance(obj, Solid):
                 for face in obj.Faces:
-                    normal = face.ComputeNormal(UV(0, 0))   # face normal
+                    normal = face.ComputeNormal(UV(0, 0))  # face normal
                     if normal.IsAlmostEqualTo(XYZ(0, 0, 1)):
                         faces_list.append(face)
     return faces_list
 
 
 def thicken_faces(document, list_faces, thick_num):
-    """extrude the extracted normal face"""
+    """Extrude the extracted normal face and return the union solid."""
     solids = []
-    d_shapes = []
+
     for face in list_faces:
         try:
-            # plane normal origin
+            # Plane normal origin
             normal = face.ComputeNormal(UV(0, 0))
             origin = face.Origin
             plane = Plane.CreateByNormalAndOrigin(normal, origin)
@@ -91,27 +93,25 @@ def thicken_faces(document, list_faces, thick_num):
             profile = face.GetEdgesAsCurveLoops()
             if not profile:
                 continue
-            # create solid
+            # Create solid
             solid = GeometryCreationUtilities.CreateExtrusionGeometry(profile, normal, thick_num)
             solids.append(solid)
         except Exception as err:
             print(err)
 
-    # union solid
+    # Union solid
     if solids:
         try:
-            union_solid = solids[0]
+            _union_solid = solids[0]
             for solid in solids[1:]:
-                union_solid = BooleanOperationsUtils.ExecuteBooleanOperation(union_solid, solid,
-                                                                             BooleanOperationsType.Union)
-            # Create DirectShape element
-            ds = DirectShape.CreateElement(document, ElementId(BuiltInCategory.OST_Mass))
-            if ds.SetShape([union_solid]):
-                d_shapes.append(ds)
-                document.Regenerate()
+                _union_solid = BooleanOperationsUtils.ExecuteBooleanOperation(_union_solid, solid,
+                                                                              BooleanOperationsType.Union)
+            return _union_solid
         except Exception as e:
             print(e)
-    return d_shapes
+
+    return None
+
 
 # ==============================================================================================================
 
@@ -143,7 +143,7 @@ try:
                       Separator(),
                       Button('Select')]
 
-        form = FlexForm('Create Solid Object', components)
+        form = FlexForm('Create View Plan', components)
         form.show()
 
         user_input = form.values
@@ -166,28 +166,42 @@ try:
                 filter_type = StairsFilter()
             elif selection_cat == BuiltInCategory.OST_Floors:
                 filter_type = ISelectionFilter_Classes([Floor])
-            stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Element")
+            stair_list = selection.PickObjects(ObjectType.Element, filter_type, "Select Stair")
             selected_elements = [doc.GetElement(el) for el in stair_list]
 
     # ------------------------------------------------------------------------------------------
     # 🟩 execute
-    faces = []
-    for el in selected_elements:
-        faces.extend(get_faces_of_geom(el))
+    with Transaction(doc, __title__) as t:
+        t.Start()
 
-    with rvt_transaction(doc, __title__):
         input_to_m = float(input_ht) / 1000
         thickness = convert_m_to_feet(input_to_m)
-        mass_creation = thicken_faces(doc, faces, thickness)
+
+        for element in selected_elements:
+            faces = get_faces_of_element(element)
+            union_solid = thicken_faces(doc, faces, thickness)
+
+            if union_solid:
+                solid_filter = ElementIntersectsSolidFilter(union_solid)
+                collector = FilteredElementCollector(doc, active_view.Id).WherePasses(solid_filter).ToElements()
+
+                exempt_cat = [BuiltInCategory.OST_Stairs,
+                              BuiltInCategory.OST_StairsRailing,
+                              BuiltInCategory.OST_Floors]
+
+                for el_int in collector:
+
+                    if el_int.Category.Id.IntegerValue in [int(cat) for cat in exempt_cat]:
+                        continue
+                    else:
+                        print(el_int.Category.Name, el_int.Id)
+
+        if t.GetStatus() == TransactionStatus.Started:
+            t.RollBack()
+
 
 except Exception as e:
-    forms.alert(str(e), exitscript=True)
-else:
-    if mass_creation:
-        forms.alert(title="Headroom Mass", msg="Mass Created", warn_icon=False, exitscript=False)
-
-
-
-
-
-
+    print("Error {}".format(e))
+# else:
+#     if mass_creation:
+#         forms.alert(title="Headroom Mass", msg="Mass Created", warn_icon=False, exitscript=False)
