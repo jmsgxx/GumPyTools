@@ -120,5 +120,3 @@ with rvt_transaction(doc, __title__):
         if created_wall:
             for line in line_selection:
                 doc.Delete(line.Id)
-
-

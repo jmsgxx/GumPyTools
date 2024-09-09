@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-__title__ = 'Filtered Element Collector'
+__title__ = 'Button 03'
 __doc__ = """
-This script will collect elements.
+Looks like something broke. Please contact the author.
 __________________________________
-Author: Joven Mark Gumana
+Author: 
 """
 
 
@@ -37,13 +37,8 @@ app      = __revit__.Application
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
 
-
-
 # ╔╦╗╔═╗╦╔╗╔
 # ║║║╠═╣║║║║
 # ╩ ╩╩ ╩╩╝╚╝#main
 # =========================================================================================================
-with Transaction(doc, __title__) as t:
-    t.Start()
-    # CHANGE HERE
-    t.Commit()
+forms.alert('Something Broke. Please contact the author', exitscript=True, warn_icon=True)
