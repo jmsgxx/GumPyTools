@@ -117,6 +117,17 @@ class StairsFilter(ISelectionFilter):
             return True
 
 
+class ParkingFilter(ISelectionFilter):
+    def __init__(self):
+        """
+        ISelection Parking Filter
+        """
+
+    def AllowElement(self, elem):
+        if elem.Category.Id == ElementId(BuiltInCategory.OST_Parking):
+            return True
+
+
 def get_param_of_element():
     """
     select elements and print the available parameters
