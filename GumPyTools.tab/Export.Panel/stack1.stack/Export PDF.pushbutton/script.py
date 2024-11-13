@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 __title__ = 'PDF Current View'
 __doc__ = """
 This script will export the overall
@@ -54,6 +53,10 @@ time_stamp = "_{}-{}".format(current_time, current_date)
 desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 directory = os.path.join(desktop, '_PDF_Export')
 
+# ------------
+ZOOM = 25
+# ------------
+
 if not os.path.exists(directory):
     os.makedirs(directory)
 
@@ -82,7 +85,7 @@ with Transaction(doc, __title__) as t:
     options.ReplaceHalftoneWithThinLines = False
     options.StopOnError = True
     options.ViewLinksInBlue = True
-    options.ZoomPercentage = 75     # change the percentage when needed
+    options.ZoomPercentage = ZOOM     # change the percentage when needed
     options.ZoomType = ZoomType.Zoom
 
     try:
