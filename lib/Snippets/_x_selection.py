@@ -128,6 +128,17 @@ class ParkingFilter(ISelectionFilter):
             return True
 
 
+class RailingFilter(ISelectionFilter):
+    def __init__(self):
+        """
+        ISelection Railing Filter
+        """
+
+    def AllowElement(self, elem):
+        if elem.Category.Id == ElementId(BuiltInCategory.OST_Railings):
+            return True
+
+
 def get_param_of_element():
     """
     select elements and print the available parameters

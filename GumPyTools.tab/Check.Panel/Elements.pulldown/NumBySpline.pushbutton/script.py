@@ -99,6 +99,7 @@ combined_list = list(zip(pt_at_spline, wall_list))     # combine for sorting
 combined_list.sort(key=lambda x: x[0])
 print(combined_list)
 
+
 # 3️⃣ set the parameter
 with rvt_transaction(doc, "Renumber Walls"):
     for i, (_, wall) in enumerate(combined_list, start=1):
