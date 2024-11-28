@@ -1,0 +1,78 @@
+<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="WPF Form" 
+        Height="320" Width="300" MinHeight="150"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <StackPanel 
+        Margin="10" 
+        Height="Auto" 
+        MinHeight="120">
+
+        <!--label 1-->
+        <DockPanel Margin="10,0,10,10">
+            <TextBlock Text="Input A" Margin="0,0,10,0" FontWeight="Bold"/>
+            <TextBox Text="Default Value" Foreground="#FF5D5D5D"/>
+        </DockPanel>
+
+        <!--label 2-->
+        <DockPanel Margin="10,0,10,10">
+            <TextBlock Text="Input B" Margin="0,0,10,0" FontWeight="Bold"/>
+            <TextBox Text="Default Value" Foreground="#FF5D5D5D"/>
+        </DockPanel>
+
+        <!--label 3-->
+        <DockPanel Margin="10,0,10,10">
+            <TextBlock Text="Input C" Margin="0,0,10,0" FontWeight="Bold"/>
+            <ComboBox>
+                <ComboBoxItem Content="Windows" IsSelected="True"/>
+                <ComboBoxItem Content="Doors"/>
+                <ComboBoxItem Content="Floors"/>
+
+            </ComboBox>
+        </DockPanel>
+
+        <!--checkboxes-->
+        <DockPanel Margin="10,0,0,10">
+            <CheckBox Content="Checkbox 1" Margin="0,0,10,0"/>
+            <CheckBox Content="Checkbox 2" Margin="0,0,10,0"/>
+            <CheckBox Content="Checkbox 3"/>
+        </DockPanel>
+
+        <!--separator-->
+        <Separator Margin="10,0,10,10"/>
+
+        <!--searchbox-->
+        <DockPanel Margin="10,0,10,10">
+            <TextBlock Text="🔎" FontWeight="Black"/>
+            <TextBox Margin="10,0,10,0" Foreground="Gray"/>
+        </DockPanel>
+
+        <!--LISTBOX-->
+        <ListBox Margin="10,0,10,10" Background="{x:Null}">
+            <ListBoxItem>
+                <CheckBox Content="View Name 1"/>
+            </ListBoxItem>
+
+            <ListBoxItem>
+                <CheckBox Content="View Name 2"/>
+            </ListBoxItem>
+
+            <ListBoxItem>
+                <CheckBox Content="View Name 3"/>
+            </ListBoxItem>
+
+        </ListBox>
+
+
+        <!--separator-->
+        <Separator Margin="10,0,10,10"/>
+        <!--button-->
+        <Button Content="Submit" Width="150"/>
+
+
+
+    </StackPanel>
+
+</Window>
