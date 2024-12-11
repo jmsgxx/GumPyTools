@@ -11,6 +11,7 @@ __doc__ = """
 # ===================================================================================================
 from pyrevit import script
 from Snippets._x_selection import get_multiple_elements
+from Snippets._context_manager import rvt_transaction
 from Autodesk.Revit.DB import *
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 from pyrevit import forms, script
@@ -34,47 +35,38 @@ current_view    = [active_view.Id]
 
 # =====================================================================================================
 
-
-def get_param_value(param):
-    """Get a value from a Parameter based on its StorageType."""
-    value = None
-    if param.StorageType == StorageType.Double:
-        value = param.AsDouble()
-    elif param.StorageType == StorageType.ElementId:
-        value = param.AsElementId()
-    elif param.StorageType == StorageType.Integer:
-        value = param.AsInteger()
-    elif param.StorageType == StorageType.String:
-        value = param.AsString()
-    return value
+all_floor = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Floors).\
+    WhereElementIsNotElementType().ToElements()
 
 
-output = script.get_output()
-output.center()
 
-try:
-    selected_element = get_multiple_elements()
-    if not selected_element:
-        element_list = selection.PickObjects(ObjectType.Element)
-        selected_element = [doc.GetElement(el) for el in element_list]
-except Exception as e:
-    forms.alert(str(e))
+with rvt_transaction(doc, __title__):
+    is_slope = False
+
+    selected_flr = get_multiple_elements()
+
+    for fl in selected_flr:     # type: Floor
+        ss_shape = fl.SlabShapeEditor.IsEnabled
+        if ss_shape:
+            slab_vertices = fl.SlabShapeEditor.SlabShapeVertices
+            for vertices in slab_vertices:
+                vertex_pt = vertices.Position
+                if vertex_pt.Z != 0:
+                    is_slope = True
+                    break
+
+    for fl in selected_flr:
+        mark_param = fl.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
+        if is_slope:
+            mark_param.Set("Slope")
+        else:
+            mark_param.Set("Not Slope")
 
 
-for i in selected_element:
 
-    params = i.Parameters    # get just one item
-    for p in sorted(params, key=lambda x: x.Definition.Name):    # loop thorough the parameters to get their name
-        print("Name: {}".format(p.Definition.Name))
-        print("ParameterGroup: {}".format(p.Definition.ParameterGroup))
-        print("BuiltInParameter: {}".format(p.Definition.BuiltInParameter))
-        print("IsReadOnly: {}".format(p.IsReadOnly))
-        print("HasValue: {}".format(p.HasValue))
-        print("IsShared: {}".format(p.IsShared))
-        print("StorageType: {}".format(p.StorageType))
-        print("Value: {}".format(get_param_value(p)))
-        print("AsValueString(): {}".format(p.AsValueString()))
-        print('-' * 100)
+
+
+
 
 
 
