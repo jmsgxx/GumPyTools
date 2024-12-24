@@ -28,6 +28,7 @@ doc      = __revit__.ActiveUIDocument.Document  # type: Document
 uidoc    = __revit__.ActiveUIDocument
 selection = uidoc.Selection     # type: Selection
 app      = __revit__.Application
+rvt_year = int(app.VersioNumber)
 
 active_view     = doc.ActiveView
 active_level    = doc.ActiveView.GenLevel
@@ -45,22 +46,31 @@ with rvt_transaction(doc, __title__):
 
     selected_flr = get_multiple_elements()
 
-    for fl in selected_flr:     # type: Floor
-        ss_shape = fl.SlabShapeEditor.IsEnabled
-        if ss_shape:
-            slab_vertices = fl.SlabShapeEditor.SlabShapeVertices
-            for vertices in slab_vertices:
-                vertex_pt = vertices.Position
-                if vertex_pt.Z != 0:
-                    is_slope = True
-                    break
+    # for fl in selected_flr:     # type: Floor
+    #     ss_shape = fl.SlabShapeEditor.IsEnabled
+    #     if ss_shape:
+    #         slab_vertices = fl.SlabShapeEditor.SlabShapeVertices
+    #         for vertices in slab_vertices:
+    #             vertex_pt = vertices.Position
+    #             if vertex_pt.Z != 0:
+    #                 is_slope = True
+    #                 break
+    #
+    # for fl in selected_flr:
+    #     mark_param = fl.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
+    #     if is_slope:
+    #         mark_param.Set("Slope")
+    #     else:
+    #         mark_param.Set("Not Slope")
 
-    for fl in selected_flr:
-        mark_param = fl.get_Parameter(BuiltInParameter.ALL_MODEL_MARK)
-        if is_slope:
-            mark_param.Set("Slope")
+    for fl in selected_flr:     # type: Floor
+        ss_editor = fl.SlabShapeEditor
+
+        if hasattr(ss_editor, "IsEnabled"):
+            forms.alert("This was modelled by manipulating the sub elements.")
         else:
-            mark_param.Set("Not Slope")
+            forms.alert("Modelled by slope arrow.")
+
 
 
 

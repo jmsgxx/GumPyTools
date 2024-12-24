@@ -1,0 +1,59 @@
+<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Key Schedule Overwrite"
+        Height="Auto" Width="350" MinHeight="150"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
+
+    <DockPanel Margin="5">
+
+        <!-- Main content area -->
+        <StackPanel
+            Margin="5"
+            Height="Auto"
+            MinHeight="120"
+            DockPanel.Dock="Top" Width="300">
+
+            <!--select View-->
+            <DockPanel Margin="0,0,0,10">
+                <TextBlock Text="Select View" Margin="0,5,60,0" FontWeight="Bold"/>
+                <ComboBox x:Name="UI_combo_view" SelectionChanged="UIe_select_view">
+                    <ComboBoxItem Content="Windows" IsSelected="True"/>
+                    <ComboBoxItem Content="Doors"/>
+                    <ComboBoxItem Content="Floors"/>
+                </ComboBox>
+            </DockPanel>
+
+            <!--parameter to change-->
+            <DockPanel Margin="0,0,0,10">
+                <TextBlock Text="Select Parameter" Margin="0,5,29,0" FontWeight="Bold"/>
+                <ComboBox x:Name="UI_combo_param">
+                    <ComboBoxItem Content="Windows" IsSelected="True"/>
+                    <ComboBoxItem Content="Doors"/>
+                    <ComboBoxItem Content="Floors"/>
+                </ComboBox>
+            </DockPanel>
+
+            <!--textbox-->
+            <DockPanel>
+                <TextBlock Text="Replace with" FontWeight="Bold"/>
+                <TextBox x:Name ="UI_textbox_search" Margin ="52,0,0,20" Foreground="#FF5D5D5D"/>
+            </DockPanel>
+
+            <!--separator-->
+            <Separator Margin="0,0,0,15"/>
+
+            <!--button-->
+            <Button Content="Submit" Width="150" Click="UIe_button_run"/>
+        </StackPanel>
+
+        <!-- Footnote area -->
+        <TextBlock DockPanel.Dock="Bottom"
+                   Text="jmsg.20241218.hk"
+                   Margin="0,20,0,0"
+                   Foreground="Black"
+                   FontSize="9"
+                   HorizontalAlignment="Left"/>
+    </DockPanel>
+</Window>
