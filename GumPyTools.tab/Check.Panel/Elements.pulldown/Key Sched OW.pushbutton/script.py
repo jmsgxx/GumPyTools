@@ -44,9 +44,6 @@ app = __revit__.Application
 # ║║║╠═╣║║║║  ╠╣ ║ ║╠╦╝║║║
 # ╩ ╩╩ ╩╩╝╚╝  ╚  ╚═╝╩╚═╩ ╩ MAIN FORM
 # ====================================================================================================
-# Inherit .NET Window for your UI Form Class
-# Path to the script folder
-
 
 class KeySchedOverwrite(Window):
     def __init__(self):
@@ -147,31 +144,17 @@ class KeySchedOverwrite(Window):
         if self.UI_combo_param.Items.Count > 0:
             self.UI_combo_param.SelectedIndex = 0
 
-
-
-    # ------------------------------------------------------------
-    # ╔═╗╦  ╦╔═╗╔╗╔╔╦╗╔═╗
-    # ║╣ ╚╗╔╝║╣ ║║║ ║ ╚═╗
-    # ╚═╝ ╚╝ ╚═╝╝╚╝ ╩ ╚═╝
-    # ------------------------------------------------------------
-
-
-
     # ------------------------------------------------------------
     # ╔╗ ╦ ╦╔╦╗╔╦╗╔═╗╔╗╔╔═╗
     # ╠╩╗║ ║ ║  ║ ║ ║║║║╚═╗
     # ╚═╝╚═╝ ╩  ╩ ╚═╝╝╚╝╚═╝
     # ------------------------------------------------------------
 
-
     def UIe_button_run(self, sender, event):
         with rvt_transaction(doc, __title__):
-            selected_view   = self.select_view
-            param_get       = self.select_param
-            input_search    = self.search_input
-
-            # print(param_get)
-            # print(type(param_get))
+            selected_view = self.select_view
+            param_get = self.select_param
+            input_search = self.search_input
 
             key_values = FilteredElementCollector(doc, selected_view.Id).WhereElementIsNotElementType()
 
@@ -179,14 +162,27 @@ class KeySchedOverwrite(Window):
                 try:
                     el_param = param.LookupParameter(param_get)
                     if not el_param:
-                        built_in_param = getattr(BuiltInParameter, param_get, None)
-                        if built_in_param is not None:
+                        built_in_param = getattr(BuiltInParameter, param_get, None)  # get the enum of bip
+                        if built_in_param:
                             el_param = param.get_Parameter(built_in_param)
-                    if el_param:
-                        el_param.Set(input_search)
+                    if el_param and el_param.HasValue:
+                        try:
+                            value = None
+                            if el_param.StorageType == StorageType.Double:
+                                value = float(input_search)
+                            elif el_param.StorageType == StorageType.ElementId:
+                                value = ElementId(int(input_search))
+                            elif el_param.StorageType == StorageType.Integer:
+                                value = int(input_search)
+                            elif el_param.StorageType == StorageType.String:
+                                value = str(input_search)
+                            el_param.Set(value)
+                        except:
+                            pass
                 except Exception as e:
-                    print(e)
-                self.Close()
+                    forms.alert(str(e))
+
+        self.Close()
 
 
 # ------------------------------------------------------------
