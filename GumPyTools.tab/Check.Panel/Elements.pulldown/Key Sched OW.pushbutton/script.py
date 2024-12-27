@@ -21,6 +21,7 @@ Version: v1
 from Autodesk.Revit.DB import *
 from pyrevit import forms  # By importing forms you also get references to WPF package! IT'S Very IMPORTANT !!!
 import wpf, os, clr  # wpf can be imported only after pyrevit.forms!
+from Snippets._context_manager import rvt_transaction
 
 # .NET Imports
 clr.AddReference("System")
@@ -54,6 +55,8 @@ class KeySchedOverwrite(Window):
         wpf.LoadComponent(self, path_xaml_file)
 
         self.populate_sched_views()
+        self.collect_params_in_rm()
+
 
         # Show Form
         self.ShowDialog()
@@ -74,7 +77,7 @@ class KeySchedOverwrite(Window):
 
     @property
     def search_input(self):
-        return self.UI_textbox_search.SelectedItem.Tag
+        return self.UI_textbox_search.Text
 
 
 
@@ -105,6 +108,46 @@ class KeySchedOverwrite(Window):
 
             self.UI_combo_view.Items.Add(all_views_combo)
 
+    def collect_params_in_rm(self):
+        """
+        this should only get the available parameter of a room as a string.
+        this has nothing to do with the selected room
+        """
+        all_rooms = FilteredElementCollector(doc).OfCategory(
+            BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
+
+        picked_rm = None
+        for rm in all_rooms:
+            if rm.Location:
+                picked_rm = rm
+                break
+
+        param_set = picked_rm.Parameters
+
+        param_set_dict = {}
+
+        for param in param_set:
+            if param.IsShared:
+                param_set_dict[param.Definition.Name] = param.Definition.Name
+            else:
+                param_set_dict[param.Definition.Name] = param.Definition.BuiltInParameter
+
+        self.UI_combo_param.Items.Clear()
+
+        sorted_param_set_dict = sorted(param_set_dict.items())
+
+        for param_key, param_value in sorted_param_set_dict:
+
+            combo_param_str = ComboBoxItem()
+            combo_param_str.Content = param_key
+            combo_param_str.Tag = str(param_value)
+
+            self.UI_combo_param.Items.Add(combo_param_str)
+
+        if self.UI_combo_param.Items.Count > 0:
+            self.UI_combo_param.SelectedIndex = 0
+
+
 
     # ------------------------------------------------------------
     # ╔═╗╦  ╦╔═╗╔╗╔╔╦╗╔═╗
@@ -113,9 +156,6 @@ class KeySchedOverwrite(Window):
     # ------------------------------------------------------------
 
 
-    def UIe_select_view(self):
-        pass
-
 
     # ------------------------------------------------------------
     # ╔╗ ╦ ╦╔╦╗╔╦╗╔═╗╔╗╔╔═╗
@@ -123,9 +163,30 @@ class KeySchedOverwrite(Window):
     # ╚═╝╚═╝ ╩  ╩ ╚═╝╝╚╝╚═╝
     # ------------------------------------------------------------
 
+
     def UIe_button_run(self, sender, event):
-        print("Form submitted!")
-        self.Close()
+        with rvt_transaction(doc, __title__):
+            selected_view   = self.select_view
+            param_get       = self.select_param
+            input_search    = self.search_input
+
+            # print(param_get)
+            # print(type(param_get))
+
+            key_values = FilteredElementCollector(doc, selected_view.Id).WhereElementIsNotElementType()
+
+            for param in key_values:
+                try:
+                    el_param = param.LookupParameter(param_get)
+                    if not el_param:
+                        built_in_param = getattr(BuiltInParameter, param_get, None)
+                        if built_in_param is not None:
+                            el_param = param.get_Parameter(built_in_param)
+                    if el_param:
+                        el_param.Set(input_search)
+                except Exception as e:
+                    print(e)
+                self.Close()
 
 
 # ------------------------------------------------------------
@@ -136,38 +197,3 @@ class KeySchedOverwrite(Window):
 
 UI = KeySchedOverwrite()
 
-
-"""
-selected_sched_view = self.sched_view
-
-        view_def = selected_sched_view.Definition
-        count = view_def.GetFieldCount()
-
-        params_in_sched = []
-
-        for i in range(count):
-            field = view_def.GetField(i)
-            param_ele = doc.GetElement(field.ParameterId)
-            params_in_sched.append(param_ele)
-
-        params_sched_dict = {}
-        for param in params_in_sched:
-            param_name = None
-            try:
-                param_name = param.Name
-            except:
-                pass
-            params_sched_dict[param_name] = param_name
-
-        self.populate_param_combo(self, params_sched_dict)
-
-    def populate_param_combo(self, param_sched_dict):
-        self.UI_combo_param.Items.Clear()
-
-        for param_name, param_el in sorted(param_sched_dict.items()):
-            combo_param_item = ComboBoxItem()
-            combo_param_item.Content = param_name
-            combo_param_item.Content = param_el
-
-            self.UI_combo_param.Items.Add(combo_param_item)
-"""

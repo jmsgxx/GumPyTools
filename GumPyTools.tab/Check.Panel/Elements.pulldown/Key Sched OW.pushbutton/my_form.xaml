@@ -16,10 +16,11 @@
             DockPanel.Dock="Top" Width="300">
 
             <!--select View-->
+            <!--SelectionChanged="UIe_select_view" -->
             <DockPanel Margin="0,0,0,10">
                 <TextBlock Text="Select View" Margin="0,5,60,0" FontWeight="Bold"/>
-                <ComboBox x:Name="UI_combo_view" SelectionChanged="UIe_select_view">
-                    <ComboBoxItem Content="Windows" IsSelected="True"/>
+                <ComboBox x:Name="UI_combo_view">
+                    <ComboBoxItem Content="Windows"/>
                     <ComboBoxItem Content="Doors"/>
                     <ComboBoxItem Content="Floors"/>
                 </ComboBox>
@@ -29,7 +30,7 @@
             <DockPanel Margin="0,0,0,10">
                 <TextBlock Text="Select Parameter" Margin="0,5,29,0" FontWeight="Bold"/>
                 <ComboBox x:Name="UI_combo_param">
-                    <ComboBoxItem Content="Windows" IsSelected="True"/>
+                    <ComboBoxItem Content="Windows" />
                     <ComboBoxItem Content="Doors"/>
                     <ComboBoxItem Content="Floors"/>
                 </ComboBox>
