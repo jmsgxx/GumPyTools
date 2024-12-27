@@ -181,6 +181,7 @@ class KeySchedOverwrite(Window):
                             pass
                 except Exception as e:
                     forms.alert(str(e))
+                    break
 
         self.Close()
 

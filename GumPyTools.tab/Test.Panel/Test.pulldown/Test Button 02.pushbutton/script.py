@@ -38,9 +38,18 @@ active_level = doc.ActiveView.GenLevel
 selection = uidoc.Selection  # type: Selection
 # ======================================================================================================
 
-all_view_schedule = FilteredElementCollector(doc).OfClass(ViewSchedule).WhereElementIsNotElementType().ToElements()
-all_key_schedule = [sched for sched in all_view_schedule if sched.Definition.IsKeySchedule]
-sched_dict = {view.Name: view for view in all_key_schedule}
+all_rooms = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
 
-print(sched_dict)
+picked_rm = None
+for rm in all_rooms:
+    if rm.Location:
+        picked_rm = rm
+        break
+
+
+param_set = picked_rm.Parameters
+
+for param in param_set:
+    print(param.Definition.BuiltInParameter)
+    # print(param)
 

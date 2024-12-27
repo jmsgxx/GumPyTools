@@ -50,7 +50,7 @@ selection = uidoc.Selection     # type: Selection
 # --------------------------------------------------------------
 
 # Define the key schedule parameter name
-p_key_name = 'Room Type'
+p_key_name = 'Room Style'
 key_schedule = None
 key_schedule_id = None
 
@@ -77,27 +77,29 @@ err_lst = []
 
 with rvt_transaction(doc, __title__):
     for v in key_values:
-        rm_soa = v.LookupParameter('Room SoA Ref Number')
-        if rm_soa.HasValue:
-            try:
-                set_elem = rm_soa.Set("-")
-            except:
-                err_lst.append(v)
+        print(v.Name)
+        # rm_soa = v.LookupParameter('Room Param1')
+#         rm_soa = v.get_Parameter(BuiltInParameter.ROOM_FINISH_CEILING)
+#         if rm_soa.HasValue:
+#             try:
+#                 set_elem = rm_soa.Set("-")
+#             except:
+#                 err_lst.append(v)
+#
+# if len(err_lst) == 0:
+#     forms.alert("Success!", warn_icon=False)
+# else:
+#     forms.alert("Check the code.")
 
-if len(err_lst) == 0:
-    forms.alert("Success!", warn_icon=False)
-else:
-    forms.alert("Check the code.")
-
-view_def = key_schedule.Definition
-count = view_def.GetFieldCount()
-
-f_params = []
-
-for i in range(count):
-    field = view_def.GetField(i)  # schedule field
-    ele = doc.GetElement(field.ParameterId)
-    f_params.append(ele)
+# view_def = key_schedule.Definition
+# count = view_def.GetFieldCount()
+#
+# f_params = []
+#
+# for i in range(count):
+#     field = view_def.GetField(i)  # schedule field
+#     ele = doc.GetElement(field.ParameterId)
+#     f_params.append(ele)
 #
 #
 # rm_soa = f_params[1]
