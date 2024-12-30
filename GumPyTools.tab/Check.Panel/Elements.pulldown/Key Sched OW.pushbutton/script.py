@@ -107,13 +107,16 @@ class KeySchedOverwrite(Window):
 
     def collect_params_in_rm(self):
         """
-        this should only get the available parameter of a room as a string.
-        this has nothing to do with the selected room
+        1. get the parameters of room
+        2. get the parameters of view schedule
+        3. compare the two sets/list and only get the common parameter to show
         """
+        # --------------------------------------------------------------------
+        # 🔴 get all the parameters in rooms
         all_rooms = FilteredElementCollector(doc).OfCategory(
             BuiltInCategory.OST_Rooms).WhereElementIsNotElementType().ToElements()
 
-        picked_rm = None
+        picked_rm = None    # get only one room
         for rm in all_rooms:
             if rm.Location:
                 picked_rm = rm
@@ -123,17 +126,40 @@ class KeySchedOverwrite(Window):
 
         param_set_dict = {}
 
+
         for param in param_set:
             if param.IsShared:
                 param_set_dict[param.Definition.Name] = param.Definition.Name
+
             else:
                 param_set_dict[param.Definition.Name] = param.Definition.BuiltInParameter
 
+        # --------------------------------------------------------------------
+        # 🟠 get the parameters on the schedule view
+
+        selected_view = self.select_view
+        key_values = FilteredElementCollector(doc, selected_view.Id).WhereElementIsNotElementType()
+
+        params_in_sched_dict = {}
+
+        for param in key_values:
+            for rm_param_key, rm_param_val in param_set_dict.items():
+                try:
+                    el_param = param.LookupParameter(rm_param_key)
+                    if not el_param:
+                        built_in_param = getattr(BuiltInParameter, rm_param_key, None)  # get the enum of bip
+                        if built_in_param:
+                            el_param = param.get_Parameter(built_in_param)
+                    if el_param:
+                        params_in_sched_dict[rm_param_key] = rm_param_val
+                except:
+                    pass
+
         self.UI_combo_param.Items.Clear()
 
-        sorted_param_set_dict = sorted(param_set_dict.items())
+        sorted_param_sched_tup = sorted(params_in_sched_dict.items())
 
-        for param_key, param_value in sorted_param_set_dict:
+        for param_key, param_value in sorted_param_sched_tup:
 
             combo_param_str = ComboBoxItem()
             combo_param_str.Content = param_key
