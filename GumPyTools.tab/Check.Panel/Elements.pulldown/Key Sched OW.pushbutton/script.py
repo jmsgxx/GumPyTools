@@ -26,9 +26,10 @@ from Snippets._context_manager import rvt_transaction
 # .NET Imports
 clr.AddReference("System")
 from System.Collections.Generic import List
-from System.Windows import Application, Window
+from System.Windows import Application, Window, Visibility
 from System.Windows.Controls import CheckBox, Button, TextBox, ListBoxItem, ComboBox, ComboBoxItem
 from System import Uri
+from System.Windows.Media.Imaging import BitmapImage
 
 # ╦  ╦╔═╗╦═╗╦╔═╗╔╗ ╦  ╔═╗╔═╗
 # ╚╗╔╝╠═╣╠╦╝║╠═╣╠╩╗║  ║╣ ╚═╗
@@ -46,13 +47,17 @@ app = __revit__.Application
 # ====================================================================================================
 
 class KeySchedOverwrite(Window):
-    def __init__(self):
+    def __init__(self, image_path=""):
         # Connect to .xaml File (in the same folder!)
         path_xaml_file = os.path.join(PATH_SCRIPT, 'my_form.xaml')
         wpf.LoadComponent(self, path_xaml_file)
 
         self.populate_sched_views()
         self.collect_params_in_rm()
+
+        if image_path:
+            self.UI_img.Source = BitmapImage(Uri(image_path))
+            self.UI_img.Visibility = Visibility.Visible
 
 
         # Show Form
@@ -218,5 +223,8 @@ class KeySchedOverwrite(Window):
 # ╩╚═╚═╝ ╚╝ ╩ ╩
 # ------------------------------------------------------------
 
-UI = KeySchedOverwrite()
+img_name = "gumpy.png"
+img_path = os.path.join(PATH_SCRIPT, img_name)
+
+UI = KeySchedOverwrite(image_path=img_path)
 
