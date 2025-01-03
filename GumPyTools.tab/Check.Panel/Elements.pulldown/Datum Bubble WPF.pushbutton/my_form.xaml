@@ -33,63 +33,65 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <!--Radio Button-->
-                <StackPanel Grid.Column="0">
-                    <RadioButton x:Name="UI_radio_start"
-                                 Content="Start"
-                                 Foreground="AliceBlue"
-                                 FontWeight="Bold"
-                                 IsChecked="True"
-                                 Margin="0,5,20,0"/>
+                <!--Radio Buttons Row 1-->
+                <RadioButton x:Name="UI_radio_start"
+                             Content="Start"
+                             Foreground="AliceBlue"
+                             FontWeight="Bold"
+                             IsChecked="True"
+                             Grid.Column="0"
+                             Grid.Row="0"
+                             HorizontalAlignment="Left"
+                             Margin="30,20,20,0"/>
 
-                    <RadioButton x:Name="UI_radio_end"
-                                 Content="End"
-                                 Foreground="AliceBlue"
-                                 FontWeight="Bold"
-                                  Margin="0,20,20,0"/>
+                <RadioButton x:Name="UI_radio_end"
+                             Content="End"
+                             Foreground="AliceBlue"
+                             FontWeight="Bold"
+                             Grid.Column="1"
+                             Grid.Row="0"
+                             HorizontalAlignment="Left"
+                             Margin="50,20,0,0"/>
 
-                    <RadioButton x:Name="UI_radio_show_both"
-                                 Content="Show Both"
-                                 Foreground="AliceBlue"
-                                 FontWeight="Bold"
-                                 Margin="0,20,20,0"/>
+                <!--Radio Buttons Row 2-->
+                <RadioButton x:Name="UI_radio_show_both"
+                             Content="Show Both"
+                             Foreground="AliceBlue"
+                             FontWeight="Bold"
+                             Grid.Column="0"
+                             Grid.Row="1"
+                             HorizontalAlignment="Left"
+                             Margin="30,20,20,0"/>
 
-                    <RadioButton x:Name="UI_radio_hide_both"
-                                 Content="Hide Both"
-                                 Foreground="AliceBlue"
-                                 FontWeight="Bold"
-                                 Margin="0,20,20,0"/>
-                </StackPanel>
-
-                <!--Note to check-->
-                <Border Grid.Column="1"
-                        BorderBrush="White"
-                        BorderThickness="1"
-                        CornerRadius="10"
-                        Margin="0,0,0,10">
-                    <StackPanel>
-                        <TextBlock Text="NOTE:"
-                                   Foreground="AntiqueWhite"
-                                   FontWeight="Bold"
-                                   Margin="5,5,5,5"/>
-
-                        <TextBlock Text="To determine the best option for your selection, start by choosing the 'Hide Both' button. This will allow you to see how it affects the visibility of the bubbles on both ends."
-                                   TextWrapping="Wrap"
-                                   Foreground="#D2D6D9"
-                                   Margin="5,0,5,5"/>
-                    </StackPanel>
-                </Border>
+                <RadioButton x:Name="UI_radio_hide_both"
+                             Content="Hide Both"
+                             Foreground="AliceBlue"
+                             FontWeight="Bold"
+                             Grid.Column="1"
+                             Grid.Row="1"
+                             HorizontalAlignment="Left"
+                             Margin="50,20,0,0"/>
             </Grid>
+
+            <!--button-->
+            <Button Content="Apply" Width="150" Click="UIe_button_apply" Foreground="White"
+                    Background="#4B5770" FontWeight="Bold" BorderBrush="White" BorderThickness="0.5"
+                    Margin="5,20,5,5"/>
 
             <!--separator-->
             <Separator Margin="0,10,0,10" Background="#2AA4F0"/>
 
             <StackPanel>
                 <!--Checkbox for multiple views-->
-                <CheckBox x:Name ="UI_apply_view"
+                <CheckBox x:Name="UI_apply_view"
                           Content="Apply to Parallel Views"
                           Foreground="AntiqueWhite"
                           FontWeight="Bold"
@@ -106,13 +108,11 @@
                 <ListBox x:Name="UI_listbox"
                          Height="150"
                          SelectedIndex="0"
-                         Margin= "0,0,0,20">
+                         Margin="0,0,0,20">
                     <ListBoxItem>
                         <CheckBox Content="View1"/>
                     </ListBoxItem>
-
                 </ListBox>
-
             </StackPanel>
 
             <!--separator-->
