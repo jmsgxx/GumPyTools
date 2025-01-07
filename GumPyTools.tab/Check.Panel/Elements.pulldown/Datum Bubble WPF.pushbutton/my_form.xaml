@@ -116,6 +116,22 @@
                         <!--<CheckBox Content="View1"/>-->
                     </ListBoxItem>
                 </ListBox>
+
+                <DockPanel HorizontalAlignment="Center" Margin="0,5,0,15">
+                    <Button Content="Select All"
+                            Background="#4B5770"
+                            Foreground="White"
+                            Width="130"
+                            Click="UIe_btn_select_all"
+                            Margin="0,0,10,0"/>
+
+                    <Button Content="Select None"
+                            Background="#4B5770"
+                            Foreground="White"
+                            Width="130"
+                            Click="UIe_btn_select_none"/>
+                </DockPanel>
+
             </StackPanel>
 
             <!--separator-->
@@ -123,7 +139,7 @@
 
             <!--button-->
             <Button Content="Submit" Width="150" Click="UIe_button_run" Foreground="White" Background="#4B5770" FontWeight="Bold"
-                    BorderBrush="White" BorderThickness="0.5"/>
+                    BorderBrush="White" BorderThickness="1"/>
         </StackPanel>
 
         <!-- Footnote area -->

@@ -27,7 +27,6 @@ from Snippets._x_selection import ISelectionFilter_Classes, get_multiple_element
 from Autodesk.Revit.UI.Selection import Selection, ObjectType
 
 
-
 # .NET Imports
 clr.AddReference("System")
 from System.Collections.Generic import List, HashSet
@@ -203,7 +202,23 @@ class ShowHideBubble(Window):
 
                 self.UI_listbox.Items.Add(listbox_item)
 
+    # --------------------------
+    def listbox_select_all(self, toggle):
 
+        for listbox_item in self.UI_listbox.Items:
+            if listbox_item.Visibility == Visibility.Visible:
+                checkbox = listbox_item.Content
+                checkbox.IsChecked = toggle
+    # --------------------------
+
+    def get_selected_items(self):
+        selected_items = []
+        for listbox_item in self.UI_listbox.Items:
+            checkbox = listbox_item.Content
+            if checkbox.IsChecked:
+                selected_items.append(checkbox.Tag)
+
+        return selected_items
 
     # ╔═╗╦  ╦╔═╗╔╗╔╔╦╗╔═╗
     # ║╣ ╚╗╔╝║╣ ║║║ ║ ╚═╗
@@ -240,36 +255,58 @@ class ShowHideBubble(Window):
 
 
     def UIe_button_apply(self, sender, event):
+        try:
+            for datum in self.selected_datum:
+                if self.start_bub:
 
-        print("apply button start")
-        print("selected_datum: {}".format(self.selected_datum))
-        print("start_bub: {}, end_bub: {}, start_end_show: {}, start_end_hide: {}".format(
-            self.start_bub, self.end_bub, self.start_end_show, self.start_end_hide))
+                    self.start_bub_show(datum)
+                    self.end_bub_hide(datum)
 
-        print("Inside transaction")
-        for datum in self.selected_datum:
-            if self.start_bub:
-                print("start_bub is checked")
-                self.start_bub_show(datum)
-                self.end_bub_hide(datum)
+                elif self.end_bub:
 
-            elif self.end_bub:
-                print("end_bub is checked")
-                self.start_bub_hide(datum)
-                self.end_bub_show(datum)
+                    self.start_bub_hide(datum)
+                    self.end_bub_show(datum)
 
-            elif self.start_end_show:
-                print("start_end_show is checked")
-                self.start_bub_show(datum)
-                self.end_bub_show(datum)
+                elif self.start_end_show:
 
-            elif self.start_end_hide:
-                print("start_end_hide is checked")
-                self.start_bub_hide(datum)
-                self.end_bub_hide(datum)
+                    self.start_bub_show(datum)
+                    self.end_bub_show(datum)
 
+                elif self.start_end_hide:
+
+                    self.start_bub_hide(datum)
+                    self.end_bub_hide(datum)
+
+        except Exception as e:
+            forms.alert("Error: {}".format(str(e)))
+
+    def UIe_btn_select_all(self, sender, e):
+        self.listbox_select_all(True)
+
+    def UIe_btn_select_none(self, sender, e):
+        self.listbox_select_all(False)
 
     def UIe_button_run(self, sender, event):
+        with rvt_transaction(doc, __title__):
+            try:
+                selected_items = self.get_selected_items()
+                collected_datum = self.selected_datum
+
+                if selected_items:
+                    for view in selected_items:
+                        for datum in collected_datum:
+                            if not datum.CanBeVisibleInView(view):
+                                datum.Maximize3DExtents()
+
+                    i_set_view = HashSet[ElementId]()
+                    for view in selected_items:
+                        i_set_view.Add(view.Id)
+
+                for datum in collected_datum:
+                    datum.PropagateToViews(active_view, i_set_view)
+
+            except Exception as e:
+                print(e)
 
         self.Close()
 
