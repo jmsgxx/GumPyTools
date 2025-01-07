@@ -92,7 +92,10 @@
             <StackPanel>
                 <!--Checkbox for multiple views-->
                 <CheckBox x:Name="UI_apply_view"
+                          Checked="UIe_apply_check"
+                          Unchecked="UIe_apply_uncheck"
                           Content="Apply to Parallel Views"
+                          IsChecked="False"
                           Foreground="AntiqueWhite"
                           FontWeight="Bold"
                           Width="150"
@@ -101,16 +104,16 @@
                 <!--Search box-->
                 <DockPanel Margin="0,5,0,5">
                     <TextBlock Text="Search View" Margin="0,0,5,5" Foreground="AntiqueWhite"/>
-                    <TextBox x:Name="UI_search"/>
+                    <TextBox x:Name="UI_search" TextChanged="UIe_search_text"/>
                 </DockPanel>
 
                 <!--Listbox for views-->
                 <ListBox x:Name="UI_listbox"
-                         Height="150"
+                         Height="200"
                          SelectedIndex="0"
                          Margin="0,0,0,20">
                     <ListBoxItem>
-                        <CheckBox Content="View1"/>
+                        <!--<CheckBox Content="View1"/>-->
                     </ListBoxItem>
                 </ListBox>
             </StackPanel>
