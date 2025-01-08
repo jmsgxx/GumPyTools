@@ -241,13 +241,7 @@ class ShowHideBubble(Window):
     def UIe_apply_check(self, sender, event):
         self.populate_listbox()
 
-    def UIe_apply_uncheck(self, sender, event):
-        self.populate_listbox()
-
     def UIe_max_3d_check(self, sender, event):
-        self.max_extents()
-
-    def UIe_max_3d_uncheck(self, sender, event):
         self.max_extents()
 
     def UIe_search_text(self, sender, e):

@@ -94,7 +94,6 @@
                 <!--Checkbox for multiple views-->
                 <CheckBox x:Name="UI_apply_view"
                           Checked="UIe_apply_check"
-                          Unchecked="UIe_apply_uncheck"
                           Content="Apply to Parallel Views"
                           IsChecked="False"
                           Foreground="AntiqueWhite"
@@ -149,7 +148,6 @@
 
                     <CheckBox x:Name="UI_max_extents"
                               Checked="UIe_max_3d_check"
-                              Unchecked="UIe_max_3d_uncheck"
                               Content="Maximize 3D Grid Extents"
                               IsChecked="False"
                               Foreground="AntiqueWhite"
