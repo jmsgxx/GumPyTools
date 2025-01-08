@@ -100,6 +100,10 @@ class ShowHideBubble(Window):
         return self.UI_search.Text
 
     @property
+    def extent_max_grid(self):
+        return self.UI_max_extents.IsChecked
+
+    @property
     def selected_listbox_items(self):
         selected_views = []
         for listbox_item in self.UI_listbox.Items:
@@ -219,6 +223,14 @@ class ShowHideBubble(Window):
                 selected_items.append(checkbox.Tag)
 
         return selected_items
+    # --------------------------
+
+    def max_extents(self):
+        with rvt_transaction(doc, __title__):
+            collected_datum = self.selected_datum
+            for datum in collected_datum:
+                if self.extent_max_grid:
+                    datum.Maximize3DExtents()
 
     # ╔═╗╦  ╦╔═╗╔╗╔╔╦╗╔═╗
     # ║╣ ╚╗╔╝║╣ ║║║ ║ ╚═╗
@@ -231,6 +243,12 @@ class ShowHideBubble(Window):
 
     def UIe_apply_uncheck(self, sender, event):
         self.populate_listbox()
+
+    def UIe_max_3d_check(self, sender, event):
+        self.max_extents()
+
+    def UIe_max_3d_uncheck(self, sender, event):
+        self.max_extents()
 
     def UIe_search_text(self, sender, e):
         search_text = self.search_txt.lower().strip()
@@ -293,20 +311,15 @@ class ShowHideBubble(Window):
                 collected_datum = self.selected_datum
 
                 if selected_items:
-                    for view in selected_items:
-                        for datum in collected_datum:
-                            if not datum.CanBeVisibleInView(view):
-                                datum.Maximize3DExtents()
-
                     i_set_view = HashSet[ElementId]()
                     for view in selected_items:
                         i_set_view.Add(view.Id)
 
-                for datum in collected_datum:
-                    datum.PropagateToViews(active_view, i_set_view)
+                    for datum in collected_datum:
+                        datum.PropagateToViews(active_view, i_set_view)
 
-            except Exception as e:
-                print(e)
+            except:
+                pass
 
         self.Close()
 

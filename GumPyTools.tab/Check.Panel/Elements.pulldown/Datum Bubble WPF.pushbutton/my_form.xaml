@@ -83,7 +83,8 @@
 
             <!--button-->
             <Button Content="Apply" Width="150" Click="UIe_button_apply" Foreground="White"
-                    Background="#4B5770" FontWeight="Bold" BorderBrush="White" BorderThickness="0.5"
+                    Background="#4B5770" FontWeight="Bold" BorderBrush="White"
+                    BorderThickness="0.5"
                     Margin="5,20,5,5"/>
 
             <!--separator-->
@@ -111,11 +112,12 @@
                 <ListBox x:Name="UI_listbox"
                          Height="200"
                          SelectedIndex="0"
-                         Margin="0,0,0,20">
+                         Margin="0,0,0,10">
                     <ListBoxItem>
                         <!--<CheckBox Content="View1"/>-->
                     </ListBoxItem>
                 </ListBox>
+
 
                 <DockPanel HorizontalAlignment="Center" Margin="0,5,0,15">
                     <Button Content="Select All"
@@ -135,10 +137,35 @@
             </StackPanel>
 
             <!--separator-->
-            <Separator Margin="0,0,0,15" Background="#2AA4F0"/>
+            <Separator Margin="0,0,0,5" Background="#2AA4F0"/>
+
+            <!--Checkbox for grid 3d extents-->
+            <DockPanel>
+                <Border CornerRadius="10"
+                        BorderThickness="0.5"
+                        BorderBrush="AntiqueWhite"
+                        Margin="10,10,10,15"
+                        Width="200">
+
+                    <CheckBox x:Name="UI_max_extents"
+                              Checked="UIe_max_3d_check"
+                              Unchecked="UIe_max_3d_uncheck"
+                              Content="Maximize 3D Grid Extents"
+                              IsChecked="False"
+                              Foreground="AntiqueWhite"
+                              FontWeight="Bold"
+                              Width="170"
+                              Margin="0,15,0,15"/>
+                </Border>
+
+            </DockPanel>
+
 
             <!--button-->
-            <Button Content="Submit" Width="150" Click="UIe_button_run" Foreground="White" Background="#4B5770" FontWeight="Bold"
+            <Button Content="Submit"
+                    Width="150"
+                    Click="UIe_button_run"
+                    Foreground="White" Background="#4B5770" FontWeight="Bold"
                     BorderBrush="White" BorderThickness="1"/>
         </StackPanel>
 
