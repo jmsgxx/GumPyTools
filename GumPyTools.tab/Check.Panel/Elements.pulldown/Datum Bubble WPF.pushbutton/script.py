@@ -122,22 +122,18 @@ class ShowHideBubble(Window):
 
 
     def start_bub_show(self, element):
-        with rvt_transaction(doc, __title__):
-            element.ShowBubbleInView(DatumEnds.End0, active_view)
+        element.ShowBubbleInView(DatumEnds.End0, active_view)
 
 
     def start_bub_hide(self, element):
-        with rvt_transaction(doc, __title__):
-            element.HideBubbleInView(DatumEnds.End0, active_view)
+        element.HideBubbleInView(DatumEnds.End0, active_view)
 
     def end_bub_show(self, element):
-        with rvt_transaction(doc, __title__):
-            element.ShowBubbleInView(DatumEnds.End1, active_view)
+        element.ShowBubbleInView(DatumEnds.End1, active_view)
 
 
     def end_bub_hide(self, element):
-        with rvt_transaction(doc, __title__):
-            element.HideBubbleInView(DatumEnds.End1, active_view)
+        element.HideBubbleInView(DatumEnds.End1, active_view)
 
     # --------------------------
     # 🟠 collect the grids
@@ -267,30 +263,31 @@ class ShowHideBubble(Window):
 
 
     def UIe_button_apply(self, sender, event):
-        try:
-            for datum in self.selected_datum:
-                if self.start_bub:
+        with rvt_transaction(doc, __title__):
+            try:
+                for datum in self.selected_datum:
+                    if self.start_bub:
 
-                    self.start_bub_show(datum)
-                    self.end_bub_hide(datum)
+                        self.start_bub_show(datum)
+                        self.end_bub_hide(datum)
 
-                elif self.end_bub:
+                    elif self.end_bub:
 
-                    self.start_bub_hide(datum)
-                    self.end_bub_show(datum)
+                        self.start_bub_hide(datum)
+                        self.end_bub_show(datum)
 
-                elif self.start_end_show:
+                    elif self.start_end_show:
 
-                    self.start_bub_show(datum)
-                    self.end_bub_show(datum)
+                        self.start_bub_show(datum)
+                        self.end_bub_show(datum)
 
-                elif self.start_end_hide:
+                    elif self.start_end_hide:
 
-                    self.start_bub_hide(datum)
-                    self.end_bub_hide(datum)
+                        self.start_bub_hide(datum)
+                        self.end_bub_hide(datum)
 
-        except Exception as e:
-            forms.alert("Error: {}".format(str(e)))
+            except Exception as e:
+                forms.alert("Error: {}".format(str(e)))
 
     def UIe_btn_select_all(self, sender, e):
         self.listbox_select_all(True)
