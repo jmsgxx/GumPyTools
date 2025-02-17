@@ -103,14 +103,14 @@ with rvt_transaction(doc, __title__):
                     duplicate_view = view.Duplicate(dup_opt)
                     new_views.append(duplicate_view)
 
-            for x, new_view_id in enumerate(new_views, start=1):
-                n_view = doc.GetElement(new_view_id)
-                if n_view.Name in view_names:
-                    forms.alert("View name is already in the model.\nTry again.",
-                                warn_icon=True, exitscript=True)
-                else:
-                    n_view.Name = "{}_{}".format(parent_view_name, str(x + int(prev_number)).zfill(2))
+            if len(new_views) != 0:
+                forms.alert("Duplicate views as dependents created!", warn_icon=False, exitscript=False)
 
-forms.alert("Duplicate views as dependents created!", warn_icon=False, exitscript=False)
-
-
+            # for x, new_view_id in enumerate(new_views, start=1):
+            #     n_view = doc.GetElement(new_view_id)
+            #     if n_view.Name in view_names:
+            #         forms.alert("View name is already in the model.\nTry again.",
+            #                     warn_icon=True, exitscript=True)
+            #     else:
+            #         n_view.Name = "{}_{}".format(parent_view_name, str(x + int(prev_number)).zfill(2))
+            #         forms.alert("Duplicate views as dependents created!", warn_icon=False, exitscript=False)
