@@ -44,6 +44,7 @@ def convert_internal_units(value, get_internal=True, units='m'):
         elif units == "cm":
             units = DisplayUnitType.DUT_CENTIMETERS
 
+
     if get_internal:
         return UnitUtils.ConvertToInternalUnits(value, units)
     return UnitUtils.ConvertFromInternalUnits(value, units)

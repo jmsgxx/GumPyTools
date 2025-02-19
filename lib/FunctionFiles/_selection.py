@@ -40,6 +40,11 @@ class SelectElementBIGClass(ISelectionFilter):
 
 class FECollectorCat:
     def __init__(self, big_enum, selected_view_id="", by_instance=True):
+        """
+        @param big_enum:
+        @param selected_view_id: view_id
+        @param by_instance:
+        """
         self.big_enum = big_enum
         self.selected_view_id = selected_view_id
         self.by_instance = by_instance
@@ -66,7 +71,7 @@ class FECollectorCat:
 def highlight_selected_elements(element_id_lst):
     """
     Will highlight the selected elements
-    @param element_id_lst: element list
+    @param element_id_lst: element id list
     @return: selected elements
     """
     return selection.SetElementIds(List[ElementId](element_id_lst))
@@ -77,12 +82,12 @@ def get_multiple_elements():
     return [doc.GetElement(el_id) for el_id in selection.GetElementIds()]
 
 
-def selection_filter(filter_type):
+def selection_filter(filter_type, selected_els):
     """
-    @param filter_type: SelectElementBIGClass
-    @return: selected element object
+    @param filter_type: Iselection filter
+    @param selected_els: elements to check
+    @return:
     """
-    selected_els = get_multiple_elements()
 
     if not selected_els:
         with try_except():
