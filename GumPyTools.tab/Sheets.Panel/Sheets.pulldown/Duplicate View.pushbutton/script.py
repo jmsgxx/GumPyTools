@@ -16,7 +16,7 @@ v2. 26 Feb 2024 - Additional Duplicate Option
 Author: Joven Mark Gumana
 """
 
-import sys
+
 
 # ╦╔╦╗╔═╗╔═╗╦═╗╔╦╗
 # ║║║║╠═╝║ ║╠╦╝ ║ 
@@ -26,8 +26,8 @@ from rpw.ui.forms import (FlexForm, Label, ComboBox, Separator, Button, TextBox)
 from Snippets._context_manager import rvt_transaction
 from Autodesk.Revit.DB import *
 from Snippets._x_selection import get_multiple_elements
-from pyrevit import forms
-
+from pyrevit import forms, revit
+import sys
 import clr
 clr.AddReference("System")
 
@@ -91,26 +91,34 @@ for v in all_view_names:
     if v:
         view_names.append(v.Name)
 
-with rvt_transaction(doc, __title__):
+with Transaction(doc, __title__) as t:
+    t.Start()
     parent_view_name = None
+    new_views = []
+    try:
+        for view in selected_view:
+            if type(view) == ViewPlan:
+                parent_view_name = view.Name
 
-    for view in selected_view:
-        if type(view) == ViewPlan:
-            parent_view_name = view.Name
-            new_views = []
-            if view.CanViewBeDuplicated(dup_opt):
-                for num in range(int(num_add)):
-                    duplicate_view = view.Duplicate(dup_opt)
-                    new_views.append(duplicate_view)
+                if view.CanViewBeDuplicated(dup_opt):
+                    for num in range(int(num_add)):
+                        duplicate_view = view.Duplicate(dup_opt)
+                        new_views.append(duplicate_view)
 
-            if len(new_views) != 0:
-                forms.alert("Duplicate views as dependents created!", warn_icon=False, exitscript=False)
 
-            # for x, new_view_id in enumerate(new_views, start=1):
-            #     n_view = doc.GetElement(new_view_id)
-            #     if n_view.Name in view_names:
-            #         forms.alert("View name is already in the model.\nTry again.",
-            #                     warn_icon=True, exitscript=True)
-            #     else:
-            #         n_view.Name = "{}_{}".format(parent_view_name, str(x + int(prev_number)).zfill(2))
-            #         forms.alert("Duplicate views as dependents created!", warn_icon=False, exitscript=False)
+    except Exception as e:
+        forms.alert(str(e))
+
+    else:
+        for x, new_view_id in enumerate(new_views, start=1):
+            n_view = doc.GetElement(new_view_id)
+            if n_view.Name in view_names:
+                forms.alert("View name is already in the model.\nTry again.",
+                            warn_icon=True, exitscript=True)
+            else:
+                n_view.Name = "{}_{}".format(parent_view_name, str(x + int(prev_number)).zfill(2))
+        t.Commit()
+
+
+    if len(new_views) != 0:
+        forms.alert("Duplicate views as dependents created!", warn_icon=False, exitscript=False)
