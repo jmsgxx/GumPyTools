@@ -84,19 +84,18 @@ with rvt_transaction(doc, __title__):
             # 2️⃣ separating the layers of the wall
             for layer in wall_layers:
                 new_layers = []
-                wall_mat            = doc.GetElement(layer.MaterialId)
-                wall_func           = layer.Function
-                wall_width          = layer.Width
-                wall_mat_id         = layer.MaterialId
+                wall_mat = doc.GetElement(layer.MaterialId)
+                wall_func = layer.Function
+                wall_width = layer.Width
+                wall_mat_id = layer.MaterialId
 
                 # 3️⃣ creating new wall type
                 new_layers.append(CompoundStructureLayer(wall_width, wall_func, wall_mat_id))
-                new_wall_type       = wall_type.Duplicate(str(wall_func) + wall_mat.Name)
-                new_wall_type.Name  = wall_mat.Name
+                new_wall_type = wall_type.Duplicate(str(wall_func) + wall_mat.Name)
+                new_wall_type.Name = wall_mat.Name
 
                 compound = CompoundStructure.CreateSimpleCompoundStructure(new_layers)
                 new_wall_type.SetCompoundStructure(compound)
-
 
                 # 4️⃣ figuring the center of layers for new walls
                 offset = ((total_thickness - (2 * counter_thickness)) - wall_width) / 2
@@ -121,15 +120,15 @@ with rvt_transaction(doc, __title__):
         for new_wall in new_walls:
             for ex_wall in selected_walls:
 
-                base_off        = ex_wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).AsDouble()
-                top_cons        = ex_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE).AsElementId()
-                top_off         = ex_wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET).AsDouble()
-                unconnected_ht  = ex_wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble()
+                base_off = ex_wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET).AsDouble()
+                top_cons = ex_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE).AsElementId()
+                top_off = ex_wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET).AsDouble()
+                unconnected_ht = ex_wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM).AsDouble()
 
-                base_off_param          = new_wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET)
-                top_cons_param          = new_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
-                top_off_param           = new_wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET)
-                unconnected_ht_param    = new_wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)
+                base_off_param = new_wall.get_Parameter(BuiltInParameter.WALL_BASE_OFFSET)
+                top_cons_param = new_wall.get_Parameter(BuiltInParameter.WALL_HEIGHT_TYPE)
+                top_off_param = new_wall.get_Parameter(BuiltInParameter.WALL_TOP_OFFSET)
+                unconnected_ht_param = new_wall.get_Parameter(BuiltInParameter.WALL_USER_HEIGHT_PARAM)
 
                 if base_off:
                     base_off_param.Set(base_off)
@@ -146,25 +145,4 @@ with rvt_transaction(doc, __title__):
             for i in selected_walls:
                 doc.Delete(i.Id)
 
-# TODO: fix the duplication wall type names
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            # TODO: fix the duplication wall type names
